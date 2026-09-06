@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPI Truck Volume Exposure Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+  <header class="page-head">
+    <h1>GPI Truck Volume Exposure Tracker</h1>
+    <p class="subtitle">Group 1 Automotive (NYSE: GPI) — tracking truck-market demand signals relevant to GPI's new-vehicle mix, alongside company-specific execution items.</p>
+    <p class="ticker-line">Sections tagged by data tier. Live series update monthly via GitHub Actions; real/tracked entries are hand-maintained from filings, IR releases, and earnings calls.</p>
+    <div class="legend-key">
+      <span><span class="dot" style="background:var(--live)"></span>LIVE — auto-fetched from FRED</span>
+      <span><span class="dot" style="background:var(--real)"></span>REAL — manually entered from reports</span>
+      <span><span class="dot" style="background:var(--tracked)"></span>TRACKED — qualitative status, updated by hand</span>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="tracker-section" id="sec-1">
+      <div class="sec-head">
+        <h2 class="sec-title">1. Truck Market SAAR — Domestic vs. Imported vs. Total Light Vehicle</h2>
+        <span class="tier-tag live">Live</span>
+      </div>
+      <p class="one-liner" id="sec1-oneliner">Loading latest SAAR readings…</p>
+      <div class="chart-wrap"><canvas id="chart-saar"></canvas></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> Overlaying domestic and foreign (imported) light truck SAAR against total light-vehicle SAAR isolates whether truck demand is diverging from the broader market — and whether that divergence is coming from domestic or import share shifts. GPI's new-vehicle mix skews toward trucks/SUVs, particularly in its Texas footprint, so a widening gap here is a leading read on the volume backdrop before it shows up in GPI's own same-store sales.
+      </div>
+    </section>
+
+    <section class="tracker-section" id="sec-2">
+      <div class="sec-head">
+        <h2 class="sec-title">2. OEM Truck Deliveries — Ford &amp; GM</h2>
+        <span class="tier-tag real">Real</span>
+      </div>
+      <p class="one-liner">Quarterly truck delivery volumes and segment commentary from the two OEMs most exposed to GPI's truck-heavy store mix.</p>
+      <div id="sec2-content"></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> Ford and GM truck delivery trends are the upstream supply-side complement to the FRED SAAR series — they show whether the OEMs GPI sells the most trucks for are gaining or losing share within the truck category, and what they're saying qualitatively about incentive levels and order backlogs.
+      </div>
+    </section>
+
+    <section class="tracker-section" id="sec-3">
+      <div class="sec-head">
+        <h2 class="sec-title">3. GPI New-Vehicle SSS &amp; Texas Unit Growth</h2>
+        <span class="tier-tag real">Real</span>
+      </div>
+      <p class="one-liner">GPI's own reported same-store new-vehicle sales growth, plus the Texas-specific new unit growth called out in filings.</p>
+      <div id="sec3-content"></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> This is the direct read on whether the market-level truck demand backdrop (Section 1) and OEM delivery trends (Section 2) are actually converting into GPI's own top line, with Texas broken out given its concentration in GPI's store base.
+      </div>
+    </section>
+
+    <section class="tracker-section" id="sec-4">
+      <div class="sec-head">
+        <h2 class="sec-title">4. Truck Average Transaction Price (ATP)</h2>
+        <span class="tier-tag real">Real</span>
+      </div>
+      <p class="one-liner">Cox Automotive / KBB truck ATP, tracking pricing power alongside volume.</p>
+      <div id="sec4-content"></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> Volume and price can move independently — flat unit volume with rising ATP is a very different signal for GPI's gross profit per unit than flat volume with falling ATP. This series may remain thin if a clean historical run isn't available via AlphaSense; that limitation is flagged directly rather than papered over.
+      </div>
+    </section>
+
+    <section class="tracker-section" id="sec-5">
+      <div class="sec-head">
+        <h2 class="sec-title">5. Rebranding Progress / SEO Recovery</h2>
+        <span class="tier-tag tracked">Tracked</span>
+      </div>
+      <p class="one-liner">Status of GPI's dealership rebranding rollout and any measurable SEO/organic-traffic recovery.</p>
+      <div id="sec5-content"></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> Rebranding can create a temporary digital-discovery air pocket (lost domain authority, redirect issues) before it pays off in unified brand equity — this note tracks where GPI is in that curve.
+      </div>
+    </section>
+
+    <section class="tracker-section" id="sec-6">
+      <div class="sec-head">
+        <h2 class="sec-title">6. Val-U-Line — Used Car Inventory Mix</h2>
+        <span class="tier-tag tracked">Tracked</span>
+      </div>
+      <p class="one-liner">Progress toward Val-U-Line representing 8–9% of GPI's used vehicle inventory.</p>
+      <div id="sec6-content"></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> Val-U-Line is GPI's value/budget used-car play — its penetration is a read on how GPI is managing affordability-constrained demand and used inventory turn, distinct from the new-truck volume story above.
+      </div>
+    </section>
+
+    <section class="tracker-section" id="sec-7">
+      <div class="sec-head">
+        <h2 class="sec-title">7. $600M Dealership Disposal Program</h2>
+        <span class="tier-tag tracked">Tracked</span>
+      </div>
+      <p class="one-liner">Progress toward the announced $600M dealership disposal program — LOIs signed, closings, and timing.</p>
+      <div id="sec7-content"></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> The disposal program is a capital-allocation and deleveraging lever independent of underlying volume trends — tracking it separately avoids conflating portfolio pruning with organic demand weakness.
+      </div>
+    </section>
+
+    <section class="tracker-section" id="sec-8">
+      <div class="sec-head">
+        <h2 class="sec-title">8. Leverage Trajectory</h2>
+        <span class="tier-tag tracked">Tracked</span>
+      </div>
+      <p class="one-liner">Net leverage relative to the ~4x current level and the targeted 9–12 month delever path.</p>
+      <div id="sec8-content"></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> Leverage is the balance-sheet constraint against which the volume, disposal, and rebranding threads all ultimately have to net out — this is the scoreboard for whether the plan is on track.
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="disclosure">
+    <h2>Data honesty</h2>
+    <p>This tracker mixes three tiers of data, tagged on every section so it's never ambiguous which is which:</p>
+    <ul>
+      <li><strong>Live</strong> — Section 1 only. Pulled automatically from the St. Louis Fed's public FRED database (series <code>DLTRUCKSSAAR</code>, <code>FLTRUCKSSAAR</code>, <code>ALTSALES</code>) by a GitHub Actions job that runs monthly and appends new observations to <code>data/fred-series.json</code>. It is never overwritten — the full pull history is versioned in git.</li>
+      <li><strong>Real</strong> — Sections 2–4. Structured numbers entered by hand into <code>data/manual-data.json</code> after being sourced from OEM investor-relations releases, GPI's own 10-Q/10-K filings and earnings calls, or Cox Automotive/KBB press releases (via AlphaSense). No figure in these sections is estimated or interpolated — an empty chart with "awaiting data" means exactly that.</li>
+      <li><strong>Tracked</strong> — Sections 5–8. Qualitative status notes maintained by hand, with no numeric series backing them. These reflect the maintainer's read of company disclosures at a point in time, not a live feed.</li>
+    </ul>
+    <p>Nothing manual is ever styled or labeled to look like a live feed. See <code>data/manual-data.json</code> for edit instructions and full source citations per data point.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

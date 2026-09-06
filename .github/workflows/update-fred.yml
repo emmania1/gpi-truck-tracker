@@ -1,0 +1,35 @@
+name: Update FRED live series
+
+on:
+  schedule:
+    # 08:00 UTC on the 5th of every month (after FRED's monthly SAAR release)
+    - cron: "0 8 5 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch FRED series
+        run: python3 scripts/fetch_fred.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "gpi-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/fred-series.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-update FRED live series ($(date -u +%Y-%m-%d))"
+            git push
+          fi

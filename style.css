@@ -1,0 +1,255 @@
+:root {
+  --bg: #f7f7f5;
+  --panel: #ffffff;
+  --border: #e1e0db;
+  --text: #1c1c1a;
+  --text-muted: #6b6a64;
+  --accent: #1f5c8b;
+  --live: #1a7f4b;
+  --live-bg: #e6f5ec;
+  --real: #8a5a00;
+  --real-bg: #fbf0dc;
+  --tracked: #5a4a9e;
+  --tracked-bg: #ece7fa;
+  --warn: #b3261e;
+  --warn-bg: #fdeceb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16171a;
+    --panel: #1e2024;
+    --border: #33353a;
+    --text: #eceae4;
+    --text-muted: #9b9a94;
+    --accent: #6fb3e0;
+    --live: #4fd08a;
+    --live-bg: #123324;
+    --real: #e0b04f;
+    --real-bg: #3a2c0e;
+    --tracked: #b3a1f5;
+    --tracked-bg: #2a2440;
+    --warn: #ef6b63;
+    --warn-bg: #3a1d1b;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+header.page-head {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 20px 16px;
+}
+
+header.page-head h1 {
+  font-size: 1.55rem;
+  margin: 0 0 6px;
+}
+
+header.page-head .subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+}
+
+header.page-head .ticker-line {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.legend-key {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 0.78rem;
+}
+
+.legend-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-key .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+section.tracker-section {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+}
+
+.sec-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.sec-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tier-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.tier-tag.live { color: var(--live); background: var(--live-bg); }
+.tier-tag.real { color: var(--real); background: var(--real-bg); }
+.tier-tag.tracked { color: var(--tracked); background: var(--tracked-bg); }
+
+.one-liner {
+  color: var(--text);
+  font-size: 0.92rem;
+  margin: 4px 0 16px;
+  font-weight: 500;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 280px;
+  margin-bottom: 14px;
+}
+
+.why-box {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  border-top: 1px dashed var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.why-box strong {
+  color: var(--text);
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+}
+
+table.data-table th, table.data-table td {
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+table.data-table th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.empty-state {
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+}
+
+.empty-state .flag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  color: var(--warn);
+  background: var(--warn-bg);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.tracked-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tracked-status {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.tracked-target {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.tracked-detail {
+  font-size: 0.85rem;
+  margin-top: 8px;
+  color: var(--text);
+}
+
+.tracked-updated {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+footer.disclosure {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 8px 20px 50px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+footer.disclosure h2 {
+  font-size: 0.85rem;
+  color: var(--text);
+  margin: 20px 0 8px;
+}
+
+footer.disclosure ul {
+  margin: 0 0 10px;
+  padding-left: 18px;
+}
+
+footer.disclosure code {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
