@@ -36,6 +36,18 @@ SERIES = {
         "name": "Total Light Vehicle Sales (Autos + Trucks), SAAR",
         "unit": "Millions of Units",
     },
+    "TERMCBAUTO48NS": {
+        "name": "Finance Rate, 48-Month New Auto Loans, Commercial Banks",
+        "unit": "Percent",
+    },
+    "GASREGW": {
+        "name": "US Regular All Formulations Gas Price",
+        "unit": "$/Gallon",
+    },
+    "TXUR": {
+        "name": "Texas Unemployment Rate",
+        "unit": "Percent",
+    },
 }
 
 FRED_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"

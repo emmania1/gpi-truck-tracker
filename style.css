@@ -143,6 +143,32 @@ section.tracker-section {
   margin-bottom: 14px;
 }
 
+.chart-wrap.mini {
+  height: 180px;
+  margin-bottom: 4px;
+}
+
+.mini-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 720px) {
+  .mini-chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mini-chart-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
 .why-box {
   font-size: 0.83rem;
   color: var(--text-muted);

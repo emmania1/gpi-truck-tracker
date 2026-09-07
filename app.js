@@ -105,6 +105,75 @@
     }
   }
 
+  function renderMiniChart(canvasId, seriesObj, opts) {
+    const ctx = document.getElementById(canvasId);
+    if (!ctx || !seriesObj || !seriesObj.data || !seriesObj.data.length) return null;
+
+    const cutoff = new Date();
+    cutoff.setFullYear(cutoff.getFullYear() - YEARS_LOOKBACK);
+    const pts = seriesObj.data.filter((p) => new Date(p.date) >= cutoff);
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        datasets: [
+          {
+            label: seriesObj.name,
+            data: pts.map((p) => ({ x: p.date, y: p.value })),
+            borderColor: opts.color,
+            backgroundColor: opts.color,
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.15,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        scales: {
+          x: {
+            type: "time",
+            time: { unit: "year" },
+            ticks: { color: axisColor(), font: { size: 9 } },
+            grid: { color: gridColor() },
+          },
+          y: {
+            ticks: { color: axisColor(), font: { size: 9 } },
+            grid: { color: gridColor() },
+          },
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (items) => fmtDate(items[0].parsed.x),
+              label: (item) => `${opts.prefix ?? ""}${fmtNum(item.parsed.y, opts.decimals ?? 1)}${opts.suffix ?? ""}`,
+            },
+          },
+        },
+      },
+    });
+
+    return seriesObj.data[seriesObj.data.length - 1];
+  }
+
+  function renderDemandBackdrop(fredData) {
+    const series = fredData.series || {};
+    const loan = renderMiniChart("chart-autoloan", series.TERMCBAUTO48NS, { color: "#1f5c8b", decimals: 2, suffix: "%" });
+    const gas = renderMiniChart("chart-gas", series.GASREGW, { color: "#c0562b", decimals: 2, prefix: "$" });
+    const txur = renderMiniChart("chart-txunemployment", series.TXUR, { color: "#5a4a9e", decimals: 1, suffix: "%" });
+
+    const oneLiner = document.getElementById("sec2-oneliner");
+    if (!oneLiner) return;
+    if (loan && gas && txur) {
+      oneLiner.textContent = `Latest: 48-mo auto loan rate ${fmtNum(loan.value, 2)}% (${fmtDate(loan.date)}), gas $${fmtNum(gas.value, 2)}/gal (${fmtDate(gas.date)}), Texas unemployment ${fmtNum(txur.value, 1)}% (${fmtDate(txur.date)}).`;
+    } else {
+      oneLiner.textContent = "FRED data unavailable — check data/fred-series.json.";
+    }
+  }
+
   function emptyStateHTML(label, sourceGuidance, flag) {
     return `
       <div class="empty-state">
@@ -179,10 +248,13 @@
     try {
       const fredData = await loadJSON("data/fred-series.json");
       renderSAARChart(fredData);
+      renderDemandBackdrop(fredData);
     } catch (e) {
       console.error(e);
-      const oneLiner = document.getElementById("sec1-oneliner");
-      if (oneLiner) oneLiner.textContent = "Could not load live FRED data.";
+      const oneLiner1 = document.getElementById("sec1-oneliner");
+      if (oneLiner1) oneLiner1.textContent = "Could not load live FRED data.";
+      const oneLiner2 = document.getElementById("sec2-oneliner");
+      if (oneLiner2) oneLiner2.textContent = "Could not load live FRED data.";
     }
 
     try {
@@ -190,23 +262,23 @@
       const rs = manual.real_series || {};
       const tn = manual.tracked_notes || {};
 
-      renderRealTable(document.getElementById("sec2-content"), rs.ford_truck_deliveries, ["Period", "Ford Value"]);
-      const sec2b = document.createElement("div");
-      document.getElementById("sec2-content").appendChild(sec2b);
-      renderRealTable(sec2b, rs.gm_truck_deliveries, ["Period", "GM Value"]);
-
-      const sec3a = document.getElementById("sec3-content");
-      renderRealTable(sec3a, rs.gpi_new_vehicle_sss, ["Period", "SSS % YoY"]);
+      renderRealTable(document.getElementById("sec3-content"), rs.ford_truck_deliveries, ["Period", "Ford Value"]);
       const sec3b = document.createElement("div");
-      sec3a.appendChild(sec3b);
-      renderRealTable(sec3b, rs.gpi_texas_new_unit_growth, ["Period", "Texas Growth % YoY"]);
+      document.getElementById("sec3-content").appendChild(sec3b);
+      renderRealTable(sec3b, rs.gm_truck_deliveries, ["Period", "GM Value"]);
 
-      renderRealTable(document.getElementById("sec4-content"), rs.truck_atp, ["Period", "ATP ($)"]);
+      const sec4a = document.getElementById("sec4-content");
+      renderRealTable(sec4a, rs.gpi_new_vehicle_sss, ["Period", "SSS % YoY"]);
+      const sec4b = document.createElement("div");
+      sec4a.appendChild(sec4b);
+      renderRealTable(sec4b, rs.gpi_texas_new_unit_growth, ["Period", "Texas Growth % YoY"]);
 
-      renderTrackedCard(document.getElementById("sec5-content"), tn.rebranding_seo);
-      renderTrackedCard(document.getElementById("sec6-content"), tn.val_u_line);
-      renderTrackedCard(document.getElementById("sec7-content"), tn.dealership_disposal);
-      renderTrackedCard(document.getElementById("sec8-content"), tn.leverage_trajectory);
+      renderRealTable(document.getElementById("sec5-content"), rs.truck_atp, ["Period", "ATP ($)"]);
+
+      renderTrackedCard(document.getElementById("sec6-content"), tn.rebranding_seo);
+      renderTrackedCard(document.getElementById("sec7-content"), tn.val_u_line);
+      renderTrackedCard(document.getElementById("sec8-content"), tn.dealership_disposal);
+      renderTrackedCard(document.getElementById("sec9-content"), tn.leverage_trajectory);
     } catch (e) {
       console.error(e);
     }

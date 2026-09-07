@@ -4,7 +4,7 @@ Static dashboard tracking truck-market demand exposure relevant to Group 1 Autom
 
 ## Data tiers
 
-- **Live** (`data/fred-series.json`) — auto-fetched monthly from FRED (`DLTRUCKSSAAR`, `FLTRUCKSSAAR`, `ALTSALES`) via `scripts/fetch_fred.py`, run by `.github/workflows/update-fred.yml`. Appends only; never overwrites history.
+- **Live** (`data/fred-series.json`) — auto-fetched monthly from FRED (`DLTRUCKSSAAR`, `FLTRUCKSSAAR`, `ALTSALES`, `TERMCBAUTO48NS`, `GASREGW`, `TXUR`) via `scripts/fetch_fred.py`, run by `.github/workflows/update-fred.yml`. Appends only; never overwrites history. To add another FRED series, add an entry to the `SERIES` dict in `scripts/fetch_fred.py` and re-run it — the fetcher and chart helpers are generic.
 - **Real** (`data/manual-data.json` → `real_series`) — structured figures entered by hand from OEM IR releases, GPI 10-Q/10-K filings, earnings calls, and Cox Automotive/KBB ATP releases (sourced via AlphaSense). See the `_instructions` block at the top of that file for exactly how to add a data point.
 - **Tracked** (`data/manual-data.json` → `tracked_notes`) — qualitative status notes (rebranding/SEO, Val-U-Line, dealership disposal program, leverage), updated by hand as things develop.
 
