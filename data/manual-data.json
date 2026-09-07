@@ -2,12 +2,22 @@
   "_instructions": {
     "purpose": "This file holds the REAL tier (structured numbers pulled by hand from AlphaSense/IR releases/filings) and the TRACKED tier (qualitative status notes). Nothing in this file is fetched automatically. Edit it directly and commit.",
     "how_to_add_a_real_data_point": [
-      "1. Find the series under `real_series` by its key (e.g. 'ford_truck_deliveries').",
+      "1. Find the series under `real_series` by its key (e.g. 'gpi_new_vehicle_sss').",
       "2. Append a new object to that series' `data` array: {\"period\": \"2026Q2\", \"value\": <number>, \"source\": \"<where you got it>\", \"note\": \"<optional 1-line commentary>\"}.",
       "3. Use fiscal-quarter labels like '2026Q2' for `period` consistently within a series.",
       "4. Update the series' `last_updated` field to today's date (YYYY-MM-DD).",
       "5. If a series has no clean historical run available, leave `data` as an empty array and keep `status: \"awaiting data\"` rather than estimating or fabricating a number.",
       "6. Never overwrite prior entries — this file is the full history, versioned in git."
+    ],
+    "how_to_add_an_oem_truck_delivery_data_point": [
+      "The 'oem_truck_deliveries' series (Section 3) uses a STRICT explicit schema instead of freeform note text — every entry MUST have exactly these fields, in this order:",
+      "  - `quarter` (string, e.g. \"2026Q2\")",
+      "  - `oem` (string, e.g. \"Ford\" or \"GM\" — keep OEM names consistent across entries so the UI can group/filter by OEM)",
+      "  - `truck_units` (number — total truck/pickup units delivered that quarter, as defined in `note`)",
+      "  - `yoy_pct` (number or null — year-over-year % change if the source discloses one for this exact figure; use null rather than computing/estimating one yourself)",
+      "  - `note` (string — 1-2 sentences of qualitative color: what exactly `truck_units` covers, incentive/backlog commentary, etc.)",
+      "  - `source` (string — publication + date + URL)",
+      "Append new quarters as new objects to `data`; never overwrite prior entries. Update the series' `last_updated` to today's date (YYYY-MM-DD) whenever you add a row."
     ],
     "how_to_update_a_tracked_note": [
       "1. Find the item under `tracked_notes` by its key (e.g. 'val_u_line').",
@@ -19,49 +29,46 @@
   },
 
   "real_series": {
-    "ford_truck_deliveries": {
-      "label": "Ford Truck Deliveries / Segment Commentary",
+    "oem_truck_deliveries": {
+      "label": "OEM Truck Deliveries",
       "tier": "real",
       "cadence": "quarterly",
-      "unit": "units",
-      "source_guidance": "Ford IR quarterly sales release (media.ford.com / fromtheroad.ford.com)",
+      "schema": ["quarter", "oem", "truck_units", "yoy_pct", "note", "source"],
+      "source_guidance": "Ford: Ford IR quarterly sales release (media.ford.com / fromtheroad.ford.com). GM: GM U.S. sales release (news.gm.com / investor.gm.com), as compiled by GM Authority — GM stopped publishing a detailed numeric sales table in its own releases.",
       "status": "populated",
       "last_updated": "2026-09-07",
       "data": [
         {
-          "period": "2026Q1",
-          "value": 257475,
-          "source": "Derived: Ford Q2 2026 U.S. Sales Release (H1 2026 truck total of 576,288 minus reported Q2 2026 truck total of 318,813). https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf",
-          "note": "Not directly reported by Ford as a standalone Q1 figure — computed by subtraction from the two cumulative totals in the same release. Q1 2025 comparable (290,387) computed the same way; YoY -11.3%."
+          "quarter": "2026Q1",
+          "oem": "Ford",
+          "truck_units": 257475,
+          "yoy_pct": -11.3,
+          "note": "Ford-brand 'Trucks' category. Not directly reported by Ford as a standalone Q1 figure — computed by subtraction from the two cumulative totals in the Q2 2026 release (H1 2026 truck total of 576,288 minus reported Q2 2026 truck total of 318,813; Q1 2025 comparable of 290,387 computed the same way).",
+          "source": "Derived from Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf"
         },
         {
-          "period": "2026Q2",
-          "value": 318813,
-          "source": "Ford Motor Company Second Quarter 2026 U.S. Sales release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf",
-          "note": "Ford-brand 'Trucks' category (F-Series, Ranger, Maverick, Transit, E-Series, Heavy Trucks). -7.0% YoY vs 342,761 in Q2 2025. F-Series alone: 197,900 units in Q2 (-11.0% YoY); H1 F-Series 357,801 units."
-        }
-      ]
-    },
-    "gm_truck_deliveries": {
-      "label": "GM/GMC Truck Deliveries / Segment Commentary",
-      "tier": "real",
-      "cadence": "quarterly",
-      "unit": "units (Chevrolet Silverado + GMC Sierra, full-size pickup nameplates)",
-      "source_guidance": "GM U.S. sales release (news.gm.com / investor.gm.com), as compiled by GM Authority — GM stopped publishing a detailed numeric sales table in its own releases",
-      "status": "populated",
-      "last_updated": "2026-09-07",
-      "data": [
-        {
-          "period": "2026Q1",
-          "value": 204425,
-          "source": "GM Authority, compiling GM's Q1 2026 U.S. sales release: \"GM Sold A Lot More Full-Size Trucks Than Ford In Q1 2026,\" April 2026. https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/",
-          "note": "Silverado 127,412 (incl. Silverado EV 1,406) + Sierra 74,319 (incl. Sierra EV 1,288) = 204,425. 40% full-size pickup segment share; GM outsold Ford F-Series by ~45,000 units in Q1."
+          "quarter": "2026Q1",
+          "oem": "GM",
+          "truck_units": 204425,
+          "yoy_pct": null,
+          "note": "Combined Chevrolet Silverado + GMC Sierra, incl. EV variants (Silverado 127,412 + Sierra 74,319). 40% full-size pickup segment share; GM outsold Ford F-Series by ~45,000 units in Q1. No blended YoY % was disclosed in the source for this combined figure — left null rather than estimated.",
+          "source": "GM Authority, compiling GM's Q1 2026 U.S. sales release: \"GM Sold A Lot More Full-Size Trucks Than Ford In Q1 2026,\" April 2026. https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/"
         },
         {
-          "period": "2026Q2",
-          "value": 242403,
-          "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/",
-          "note": "Combined Silverado + Sierra incl. EV variants = 242,403 (41% full-size pickup segment share). ICE nameplate-only breakout reported elsewhere: Silverado 142,745 (-7.7% YoY), Sierra 93,391 (+5.0% YoY)."
+          "quarter": "2026Q2",
+          "oem": "Ford",
+          "truck_units": 318813,
+          "yoy_pct": -7.0,
+          "note": "Ford-brand 'Trucks' category (F-Series, Ranger, Maverick, Transit, E-Series, Heavy Trucks); vs 342,761 in Q2 2025. F-Series alone: 197,900 units in Q2 (-11.0% YoY); H1 F-Series 357,801 units.",
+          "source": "Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf"
+        },
+        {
+          "quarter": "2026Q2",
+          "oem": "GM",
+          "truck_units": 242403,
+          "yoy_pct": null,
+          "note": "Combined Chevrolet Silverado + GMC Sierra, incl. EV variants (41% full-size pickup segment share). ICE nameplate-only breakout reported elsewhere: Silverado 142,745 (-7.7% YoY), Sierra 93,391 (+5.0% YoY) — but no single blended YoY % for the combined 242,403 figure was disclosed in the source, so left null rather than estimated.",
+          "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/"
         }
       ]
     },

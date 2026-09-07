@@ -195,6 +195,39 @@
     return escaped.replace(/(https?:\/\/[^\s)]+)/g, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
   }
 
+  function renderOemTable(containerEl, seriesObj) {
+    if (!seriesObj || !seriesObj.data || seriesObj.data.length === 0) {
+      containerEl.innerHTML = emptyStateHTML(seriesObj ? seriesObj.label : "This series", seriesObj ? seriesObj.source_guidance : "", seriesObj ? seriesObj.flag : null);
+      return;
+    }
+    const sorted = seriesObj.data
+      .slice()
+      .sort((a, b) => (a.quarter === b.quarter ? a.oem.localeCompare(b.oem) : b.quarter.localeCompare(a.quarter)));
+
+    const rows = sorted
+      .map((d) => {
+        const yoy = d.yoy_pct === null || d.yoy_pct === undefined ? "n/a" : `${d.yoy_pct > 0 ? "+" : ""}${fmtNum(d.yoy_pct, 1)}%`;
+        return `
+        <div class="real-datapoint">
+          <div class="oem-fields">
+            <span class="oem-field"><span class="oem-field-label">Quarter</span>${escapeHTML(d.quarter ?? "—")}</span>
+            <span class="oem-field"><span class="oem-field-label">OEM</span>${escapeHTML(d.oem ?? "—")}</span>
+            <span class="oem-field"><span class="oem-field-label">Truck Units</span>${escapeHTML(fmtNum(d.truck_units, 0))}</span>
+            <span class="oem-field"><span class="oem-field-label">YoY %</span>${escapeHTML(yoy)}</span>
+          </div>
+          ${d.note ? `<div class="real-datapoint-note">${escapeHTML(d.note)}</div>` : ""}
+          ${d.source ? `<div class="real-datapoint-source">📎 Source: ${linkify(d.source)}</div>` : ""}
+        </div>`;
+      })
+      .join("");
+
+    containerEl.innerHTML = `
+      <div class="real-datapoint-label">${escapeHTML(seriesObj.label)}</div>
+      ${rows}
+      <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Series last updated: ${escapeHTML(seriesObj.last_updated ?? "—")}</div>
+    `;
+  }
+
   function renderRealTable(containerEl, seriesObj, columns) {
     if (!seriesObj || !seriesObj.data || seriesObj.data.length === 0) {
       containerEl.innerHTML = emptyStateHTML(seriesObj ? seriesObj.label : "This series", seriesObj ? seriesObj.source_guidance : "", seriesObj ? seriesObj.flag : null);
@@ -211,7 +244,7 @@
             <span class="real-datapoint-value">${escapeHTML(String(d.value ?? "—"))}</span>
           </div>
           ${d.note ? `<div class="real-datapoint-note">${escapeHTML(d.note)}</div>` : ""}
-          ${d.source ? `<div class="real-datapoint-source">Source: ${linkify(d.source)}</div>` : ""}
+          ${d.source ? `<div class="real-datapoint-source">📎 Source: ${linkify(d.source)}</div>` : ""}
         </div>`
       )
       .join("");
@@ -244,9 +277,54 @@
     `;
   }
 
+  function fmtTimestamp(iso) {
+    if (!iso) return "—";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+    return d.toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "UTC", timeZoneName: "short" });
+  }
+
+  function daysSince(iso) {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return null;
+    return (Date.now() - d.getTime()) / 86400000;
+  }
+
+  function renderFreshnessBar(fredData, manualData) {
+    const bar = document.getElementById("freshness-bar");
+    if (!bar) return;
+
+    const liveUpdated = fredData?.meta?.last_updated ?? null;
+    const liveAgeDays = liveUpdated ? daysSince(liveUpdated) : null;
+    const liveStale = liveAgeDays !== null && liveAgeDays > 40;
+
+    let manualLatest = null;
+    const rs = manualData?.real_series ?? {};
+    const tn = manualData?.tracked_notes ?? {};
+    for (const s of Object.values(rs)) {
+      if (s.last_updated && (!manualLatest || s.last_updated > manualLatest)) manualLatest = s.last_updated;
+    }
+    for (const n of Object.values(tn)) {
+      if (n.last_updated && (!manualLatest || n.last_updated > manualLatest)) manualLatest = n.last_updated;
+    }
+
+    bar.innerHTML = `
+      <span class="freshness-item">
+        <span class="dot" style="background:var(--live)"></span>
+        Live data last refreshed: <strong>${liveUpdated ? fmtTimestamp(liveUpdated) : "unavailable"}</strong>
+        ${liveStale ? `<span class="stale-flag">STALE — ${Math.floor(liveAgeDays)}d old</span>` : ""}
+      </span>
+      <span class="freshness-item">
+        <span class="dot" style="background:var(--real)"></span>
+        Manual/tracked entries last edited: <strong>${manualLatest ?? "unknown"}</strong>
+      </span>
+    `;
+  }
+
   async function init() {
+    let fredData = null;
     try {
-      const fredData = await loadJSON("data/fred-series.json");
+      fredData = await loadJSON("data/fred-series.json");
       renderSAARChart(fredData);
       renderDemandBackdrop(fredData);
     } catch (e) {
@@ -257,15 +335,13 @@
       if (oneLiner2) oneLiner2.textContent = "Could not load live FRED data.";
     }
 
+    let manual = null;
     try {
-      const manual = await loadJSON("data/manual-data.json");
+      manual = await loadJSON("data/manual-data.json");
       const rs = manual.real_series || {};
       const tn = manual.tracked_notes || {};
 
-      renderRealTable(document.getElementById("sec3-content"), rs.ford_truck_deliveries, ["Period", "Ford Value"]);
-      const sec3b = document.createElement("div");
-      document.getElementById("sec3-content").appendChild(sec3b);
-      renderRealTable(sec3b, rs.gm_truck_deliveries, ["Period", "GM Value"]);
+      renderOemTable(document.getElementById("sec3-content"), rs.oem_truck_deliveries);
 
       const sec4a = document.getElementById("sec4-content");
       renderRealTable(sec4a, rs.gpi_new_vehicle_sss, ["Period", "SSS % YoY"]);
@@ -282,6 +358,8 @@
     } catch (e) {
       console.error(e);
     }
+
+    renderFreshnessBar(fredData, manual);
   }
 
   document.addEventListener("DOMContentLoaded", init);
