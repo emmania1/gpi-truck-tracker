@@ -115,29 +115,41 @@
     `;
   }
 
+  function escapeHTML(s) {
+    const div = document.createElement("div");
+    div.textContent = s ?? "";
+    return div.innerHTML;
+  }
+
+  function linkify(text) {
+    const escaped = escapeHTML(text);
+    return escaped.replace(/(https?:\/\/[^\s)]+)/g, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
+  }
+
   function renderRealTable(containerEl, seriesObj, columns) {
     if (!seriesObj || !seriesObj.data || seriesObj.data.length === 0) {
       containerEl.innerHTML = emptyStateHTML(seriesObj ? seriesObj.label : "This series", seriesObj ? seriesObj.source_guidance : "", seriesObj ? seriesObj.flag : null);
       return;
     }
-    const rows = seriesObj.data
+    const cards = seriesObj.data
       .slice()
       .reverse()
       .map(
-        (d) => `<tr>
-          <td>${d.period ?? "—"}</td>
-          <td>${d.value ?? "—"}</td>
-          <td>${d.note ?? ""}</td>
-          <td>${d.source ?? ""}</td>
-        </tr>`
+        (d) => `
+        <div class="real-datapoint">
+          <div class="real-datapoint-head">
+            <span class="real-datapoint-period">${escapeHTML(d.period ?? "—")}</span>
+            <span class="real-datapoint-value">${escapeHTML(String(d.value ?? "—"))}</span>
+          </div>
+          ${d.note ? `<div class="real-datapoint-note">${escapeHTML(d.note)}</div>` : ""}
+          ${d.source ? `<div class="real-datapoint-source">Source: ${linkify(d.source)}</div>` : ""}
+        </div>`
       )
       .join("");
     containerEl.innerHTML = `
-      <table class="data-table">
-        <thead><tr><th>${columns[0]}</th><th>${columns[1]}</th><th>Note</th><th>Source</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-      <div style="font-size:0.75rem;color:var(--text-muted);">Last updated: ${seriesObj.last_updated ?? "—"}</div>
+      <div class="real-datapoint-label">${escapeHTML(seriesObj.label)} <span style="color:var(--text-muted);font-weight:400;">(${escapeHTML(columns[1])})</span></div>
+      ${cards}
+      <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Last updated: ${escapeHTML(seriesObj.last_updated ?? "—")}</div>
     `;
   }
 

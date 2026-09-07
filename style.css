@@ -176,6 +176,59 @@ table.data-table th {
   letter-spacing: 0.03em;
 }
 
+.real-datapoint-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  margin: 14px 0 6px;
+}
+
+.real-datapoint-label:first-child {
+  margin-top: 0;
+}
+
+.real-datapoint {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.real-datapoint-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.real-datapoint-period {
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.real-datapoint-value {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.real-datapoint-note {
+  font-size: 0.83rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.real-datapoint-source {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  word-break: break-word;
+}
+
+.real-datapoint-source a {
+  color: var(--accent);
+}
+
 .empty-state {
   border: 1px dashed var(--border);
   border-radius: 8px;

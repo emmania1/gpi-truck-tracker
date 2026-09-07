@@ -23,52 +23,140 @@
       "label": "Ford Truck Deliveries / Segment Commentary",
       "tier": "real",
       "cadence": "quarterly",
-      "unit": "units (or commentary)",
-      "source_guidance": "Ford IR quarterly sales release (media.ford.com) / earnings call transcript via AlphaSense",
-      "status": "awaiting data",
-      "last_updated": null,
-      "data": []
+      "unit": "units",
+      "source_guidance": "Ford IR quarterly sales release (media.ford.com / fromtheroad.ford.com)",
+      "status": "populated",
+      "last_updated": "2026-09-07",
+      "data": [
+        {
+          "period": "2026Q1",
+          "value": 257475,
+          "source": "Derived: Ford Q2 2026 U.S. Sales Release (H1 2026 truck total of 576,288 minus reported Q2 2026 truck total of 318,813). https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf",
+          "note": "Not directly reported by Ford as a standalone Q1 figure — computed by subtraction from the two cumulative totals in the same release. Q1 2025 comparable (290,387) computed the same way; YoY -11.3%."
+        },
+        {
+          "period": "2026Q2",
+          "value": 318813,
+          "source": "Ford Motor Company Second Quarter 2026 U.S. Sales release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf",
+          "note": "Ford-brand 'Trucks' category (F-Series, Ranger, Maverick, Transit, E-Series, Heavy Trucks). -7.0% YoY vs 342,761 in Q2 2025. F-Series alone: 197,900 units in Q2 (-11.0% YoY); H1 F-Series 357,801 units."
+        }
+      ]
     },
     "gm_truck_deliveries": {
       "label": "GM/GMC Truck Deliveries / Segment Commentary",
       "tier": "real",
       "cadence": "quarterly",
-      "unit": "units (or commentary)",
-      "source_guidance": "GM IR quarterly sales release / earnings call transcript via AlphaSense",
-      "status": "awaiting data",
-      "last_updated": null,
-      "data": []
+      "unit": "units (Chevrolet Silverado + GMC Sierra, full-size pickup nameplates)",
+      "source_guidance": "GM U.S. sales release (news.gm.com / investor.gm.com), as compiled by GM Authority — GM stopped publishing a detailed numeric sales table in its own releases",
+      "status": "populated",
+      "last_updated": "2026-09-07",
+      "data": [
+        {
+          "period": "2026Q1",
+          "value": 204425,
+          "source": "GM Authority, compiling GM's Q1 2026 U.S. sales release: \"GM Sold A Lot More Full-Size Trucks Than Ford In Q1 2026,\" April 2026. https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/",
+          "note": "Silverado 127,412 (incl. Silverado EV 1,406) + Sierra 74,319 (incl. Sierra EV 1,288) = 204,425. 40% full-size pickup segment share; GM outsold Ford F-Series by ~45,000 units in Q1."
+        },
+        {
+          "period": "2026Q2",
+          "value": 242403,
+          "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/",
+          "note": "Combined Silverado + Sierra incl. EV variants = 242,403 (41% full-size pickup segment share). ICE nameplate-only breakout reported elsewhere: Silverado 142,745 (-7.7% YoY), Sierra 93,391 (+5.0% YoY)."
+        }
+      ]
     },
     "gpi_new_vehicle_sss": {
       "label": "GPI New-Vehicle Same-Store Sales Growth",
       "tier": "real",
       "cadence": "quarterly",
-      "unit": "% YoY SSS",
-      "source_guidance": "GPI 10-Q / 10-K and earnings call — new vehicle SSS disclosure",
-      "status": "awaiting data",
-      "last_updated": null,
-      "data": []
+      "unit": "% YoY, same-store (comparable dealership) new-vehicle retail units sold",
+      "source_guidance": "GPI Form 8-K Exhibit 99.1 earnings release, \"Key Performance Metrics\" table",
+      "status": "populated",
+      "last_updated": "2026-09-07",
+      "data": [
+        {
+          "period": "2026Q1",
+          "value": -5.2,
+          "source": "GPI Q1 2026 earnings release (8-K Ex. 99.1, filed 2026-04-30). https://www.sec.gov/Archives/edgar/data/1031203/000103120326000104/a2026q1exhibit991.htm",
+          "note": "Same-store NV units sold: 50,812, -5.2% YoY. Reported (incl. acquisitions) NV units: 52,398, -6.6% YoY. U.S.-only reported retail NV units: 34,666, -8.4% YoY. Company cited a tough comp (pre-tariff pull-forward demand in Q1 2025) plus ongoing affordability pressure."
+        },
+        {
+          "period": "2026Q2",
+          "value": -2.8,
+          "source": "GPI Q2 2026 earnings release (8-K Ex. 99.1, filed 2026-07-30). https://www.sec.gov/Archives/edgar/data/0001031203/000103120326000121/a2026q2exhibit991.htm",
+          "note": "Same-store NV units sold: 51,840, -2.8% YoY; same-store NV gross profit per retail unit -9.0%. Reported (incl. acquisitions) NV units: 53,335, -4.4% YoY. U.S.-only reported retail NV units: 38,549, -6.1% YoY. On the earnings call, CEO Daryl Kenningham separately cited a '5% same-store new-vehicle sales decline' (a different cut/basis than the formally tabled 2.8% same-store metric above) and attributed roughly two-thirds of it to transitional rebranding/SEO effects, with the rest to affordability and fuel-price-driven mix shift away from trucks/SUVs. Source: Q2 2026 earnings call transcript, July 30, 2026 (via Investing.com)."
+        }
+      ]
     },
     "gpi_texas_new_unit_growth": {
       "label": "GPI Texas-Specific New Unit Growth",
       "tier": "real",
       "cadence": "quarterly",
-      "unit": "% YoY units",
-      "source_guidance": "GPI 10-Q / 10-K regional disclosure and earnings call Q&A",
-      "status": "awaiting data",
-      "last_updated": null,
-      "data": []
+      "unit": "% YoY units (qualitative, CEO commentary — not a formally tabled segment metric)",
+      "source_guidance": "GPI does not disclose Texas as a formal reporting segment (only U.S./U.K.); Texas color comes from earnings call Q&A/prepared remarks",
+      "status": "populated (qualitative only)",
+      "last_updated": "2026-09-07",
+      "data": [
+        {
+          "period": "2026Q2",
+          "value": -6,
+          "source": "GPI Q2 2026 earnings call transcript, July 30, 2026 (via Investing.com). https://www.investing.com/news/transcripts/earnings-call-transcript-group-1-automotive-posts-q2-2026-miss-shares-sink-93CH-4825412",
+          "note": "CEO Daryl Kenningham, verbatim: \"Our Texas business down 6% new. El Paso was up six. The rest of our markets were down three to eight-ish kind of thing.\" Also noted ~80% of GPI's Ford/GM business is in Texas, which is why the rebranding transition (concentrated in Texas, e.g. former Sterling McCall/Advantage/Beck & Masten stores in Houston) weighed disproportionately on the Texas figure."
+        }
+      ]
     },
     "truck_atp": {
-      "label": "Truck Average Transaction Price (ATP)",
+      "label": "Truck Average Transaction Price (ATP) — Full-Size Pickup Truck segment",
       "tier": "real",
-      "cadence": "monthly or quarterly",
+      "cadence": "monthly",
       "unit": "$",
-      "source_guidance": "Cox Automotive / KBB ATP press releases via AlphaSense",
-      "status": "awaiting data",
-      "flag": "may remain thin — no clean historical run confirmed yet",
-      "last_updated": null,
-      "data": []
+      "source_guidance": "Kelley Blue Book / Cox Automotive monthly ATP report data tables (coxautoinc.com/insights)",
+      "status": "populated",
+      "last_updated": "2026-09-07",
+      "data": [
+        {
+          "period": "2025-12",
+          "value": 66386,
+          "source": "Cox Automotive, December 2025 KBB ATP data tables. https://www.coxautoinc.com/wp-content/uploads/2026/01/December-2025-Kelley-Blue-Book-Average-Transaction-Price-tables.pdf",
+          "note": "Full-Size Pickup Truck segment ATP. December set a near-record; article notes it was slightly below the October 2025 record."
+        },
+        {
+          "period": "2026-02",
+          "value": 66141,
+          "source": "Cox Automotive, March 2026 KBB ATP data tables (Feb 2026 comparison column). https://www.coxautoinc.com/wp-content/uploads/2026/04/Cox-Automotive-ATP-Data-FilesMarch.pdf",
+          "note": "Full-Size Pickup Truck segment ATP."
+        },
+        {
+          "period": "2026-03",
+          "value": 65964,
+          "source": "Cox Automotive, March 2026 KBB ATP data tables. https://www.coxautoinc.com/wp-content/uploads/2026/04/Cox-Automotive-ATP-Data-FilesMarch.pdf",
+          "note": "Full-Size Pickup Truck segment ATP, +2.8% YoY vs March 2025 ($64,167). For reference, Small/Mid-size Pickup Truck ATP was $43,042 (+3.1% YoY) the same month."
+        },
+        {
+          "period": "2026-04",
+          "value": 66705,
+          "source": "Cox Automotive, April 2026 KBB ATP data tables. https://www.coxautoinc.com/wp-content/uploads/2026/05/April-ATP-Data-Files.pdf",
+          "note": "Full-Size Pickup Truck segment ATP, +2.9% YoY — pricing gains above the 1.8% industry-average gain that month."
+        },
+        {
+          "period": "2026-05",
+          "value": 66288,
+          "source": "Cox Automotive, May 2026 KBB ATP data tables. https://www.coxautoinc.com/wp-content/uploads/2026/06/May-ATP-Data-Files68.pdf",
+          "note": "Full-Size Pickup Truck segment ATP, +2.4% YoY, well above the 1.2% industry-average gain that month."
+        },
+        {
+          "period": "2026-06",
+          "value": 66427,
+          "source": "Cox Automotive, June 2026 KBB ATP data tables. https://www.coxautoinc.com/wp-content/uploads/2026/07/June-ATP-Data-Files.pdf",
+          "note": "Full-Size Pickup Truck segment ATP, +2.1% YoY. Article notes full-size pickup unit sales grew only 2.5% YoY that month, below the industry average."
+        },
+        {
+          "period": "2026-07",
+          "value": 66980,
+          "source": "Cox Automotive, July 2026 KBB ATP data tables. https://www.coxautoinc.com/wp-content/uploads/2026/08/July-ATP-Data-Files-revised.pdf",
+          "note": "Full-Size Pickup Truck segment ATP, +2.8% YoY. Incentives were 8.6% of ATP that month; segment was 3rd highest-priced among the top-5 best-selling categories."
+        }
+      ]
     }
   },
 
@@ -76,36 +164,36 @@
     "rebranding_seo": {
       "label": "Rebranding Progress / SEO Recovery",
       "tier": "tracked",
-      "status": "awaiting data",
-      "detail": "",
-      "last_updated": null,
+      "status": "~60% complete company-wide as of Q2 2026; actively weighing on Texas volume",
+      "detail": "GPI's Q2 2026 earnings release states the company \"advanced our corporate rebranding to more than 60% completion.\" On the Q2 2026 earnings call, CEO Daryl Kenningham attributed roughly two-thirds of the quarter's ~5% same-store new-vehicle unit decline to transitional rebranding/organic-search effects, concentrated in Texas (~80% of GPI's Ford/GM business) as legacy store names (e.g. Sterling McCall, Advantage, Beck & Masten in Houston) are consolidated under the new brand. No separate SEO-traffic metric has been disclosed.",
+      "last_updated": "2026-09-07",
       "history": []
     },
     "val_u_line": {
       "label": "Val-U-Line (Used Car Inventory Mix)",
       "tier": "tracked",
-      "target": "8-9% of used car inventory",
+      "target": "8-9% of used car inventory (per user brief); GPI's original public target at 2018 launch was ~10% of used-vehicle business",
       "status": "awaiting data",
-      "detail": "",
-      "last_updated": null,
+      "detail": "Searched GPI's Q1/Q2 2026 earnings releases, 10-Q/10-K, and earnings call transcripts — no current-quarter Val-U-Line penetration percentage was disclosed. Q1/Q2 2026 calls did reference general used-vehicle sourcing pressure (U.S. used days' supply flat at 26 days; used GPU -3% same-store) but did not break out Val-U-Line specifically. Leaving this empty rather than reusing the stale 2018 launch target as if current.",
+      "last_updated": "2026-09-07",
       "history": []
     },
     "dealership_disposal": {
-      "label": "$600M Dealership Disposal Program",
+      "label": "Dealership Disposal Program",
       "tier": "tracked",
-      "target": "$600M in disposals",
-      "status": "awaiting data",
-      "detail": "",
-      "last_updated": null,
+      "target": "$600M in disposals (per user brief) — note: no formal $600M target was located in the Q1/Q2 2026 primary-source releases checked; see detail",
+      "status": "$900M of annualized revenue disposed YTD through Q2 2026",
+      "detail": "GPI's Q2 2026 earnings release: during Q2 the company disposed of four Jaguar/Land Rover dealerships in the U.K. (~$330M in annual revenue), bringing year-to-date 2026 disposals to $900M in annualized revenue (up from $570M YTD as of Q1 2026). Since 2021 GPI has disposed of ~$2.6B in revenue from smaller/less-profitable stores while acquiring ~$9.2B in revenue from strategic additions. Could not confirm a specific formal '$600M' program target in the releases/calls checked this pass — flagging for the user to verify against AlphaSense/the original source that cited that figure.",
+      "last_updated": "2026-09-07",
       "history": []
     },
     "leverage_trajectory": {
       "label": "Leverage Trajectory",
       "tier": "tracked",
-      "target": "delever over 9-12 months from ~4x currently",
-      "status": "awaiting data",
-      "detail": "",
-      "last_updated": null,
+      "target": "delever over 9-12 months from ~4x currently (per user brief) — note: disclosed rent-adjusted leverage was 3.3x, not ~4x; see detail",
+      "status": "3.3x rent-adjusted leverage at June 30, 2026 (up from 2.7x a year earlier); expected to stay below 4x through Hennessy deal close, targeting return to target leverage by mid-to-late 2027",
+      "detail": "Per Q2 2026 earnings call commentary: rent-adjusted leverage ratio was 3.3x at June 30, 2026, up from 2.7x a year earlier due to acquisition activity (incl. the pending Hennessy Automobile Companies acquisition in Atlanta). Total debt was $3.36B (-9.1% YoY) and cash was $164.5M (up from $32.5M at YE2025). Management expects leverage to stay below 4x through the Hennessy close and to return to GPI's target leverage level by mid-to-late 2027, with Q3/Q4 disposition proceeds helping pay down acquisition-related debt. The user's brief cited '~4x currently' — the actual disclosed figure this quarter is 3.3x; flagging the discrepancy rather than silently overwriting either number.",
+      "last_updated": "2026-09-07",
       "history": []
     }
   }
