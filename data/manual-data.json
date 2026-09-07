@@ -12,9 +12,9 @@
     "how_to_add_an_oem_truck_delivery_data_point": [
       "The 'oem_truck_deliveries' series (Section 3) uses a STRICT explicit schema instead of freeform note text — every entry MUST have exactly these fields, in this order:",
       "  - `quarter` (string, e.g. \"2026Q2\")",
-      "  - `oem` (string, e.g. \"Ford\" or \"GM\" — keep OEM names consistent across entries so the UI can group/filter by OEM)",
+      "  - `oem` (string — \"Ford\" for Ford's aggregate Trucks category; GM is reported per nameplate as \"GM - Silverado\" / \"GM - Sierra\" since GM Authority discloses each separately with its own YoY %, unlike Ford's single blended Trucks total. Keep these exact strings consistent across entries so the UI can group/filter by OEM.)",
       "  - `truck_units` (number — total truck/pickup units delivered that quarter, as defined in `note`)",
-      "  - `yoy_pct` (number or null — year-over-year % change if the source discloses one for this exact figure; use null rather than computing/estimating one yourself)",
+      "  - `yoy_pct` (number or null — year-over-year % change if the source discloses one for this exact figure, OR if it can be cleanly derived by subtracting/dividing two totals already disclosed in that same source (as done for Ford Q1 2026 and GM Silverado Q1 2026); use null rather than estimating one from unrelated figures)",
       "  - `note` (string — 1-2 sentences of qualitative color: what exactly `truck_units` covers, incentive/backlog commentary, etc.)",
       "  - `source` (string — publication + date + URL)",
       "Append new quarters as new objects to `data`; never overwrite prior entries. Update the series' `last_updated` to today's date (YYYY-MM-DD) whenever you add a row."
@@ -48,10 +48,18 @@
         },
         {
           "quarter": "2026Q1",
-          "oem": "GM",
-          "truck_units": 204425,
-          "yoy_pct": null,
-          "note": "Combined Chevrolet Silverado + GMC Sierra, incl. EV variants (Silverado 127,412 + Sierra 74,319). 40% full-size pickup segment share; GM outsold Ford F-Series by ~45,000 units in Q1. No blended YoY % was disclosed in the source for this combined figure — left null rather than estimated.",
+          "oem": "GM - Silverado",
+          "truck_units": 127412,
+          "yoy_pct": 0.1,
+          "note": "Chevrolet Silverado, incl. Silverado EV (1,406 units). Q1 2026 total of 127,412 vs Q1 2025's 127,331 — essentially flat; +0.1% YoY is derived from these two totals disclosed in the same article (article's own language called it 'nearly flat' without stating a precise %).",
+          "source": "GM Authority, compiling GM's Q1 2026 U.S. sales release: \"GM Sold A Lot More Full-Size Trucks Than Ford In Q1 2026,\" April 2026. https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/"
+        },
+        {
+          "quarter": "2026Q1",
+          "oem": "GM - Sierra",
+          "truck_units": 74319,
+          "yoy_pct": -3.9,
+          "note": "GMC Sierra, incl. Sierra EV (1,288 units). -3.9% YoY as stated directly in the source.",
           "source": "GM Authority, compiling GM's Q1 2026 U.S. sales release: \"GM Sold A Lot More Full-Size Trucks Than Ford In Q1 2026,\" April 2026. https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/"
         },
         {
@@ -64,10 +72,18 @@
         },
         {
           "quarter": "2026Q2",
-          "oem": "GM",
-          "truck_units": 242403,
-          "yoy_pct": null,
-          "note": "Combined Chevrolet Silverado + GMC Sierra, incl. EV variants (41% full-size pickup segment share). ICE nameplate-only breakout reported elsewhere: Silverado 142,745 (-7.7% YoY), Sierra 93,391 (+5.0% YoY) — but no single blended YoY % for the combined 242,403 figure was disclosed in the source, so left null rather than estimated.",
+          "oem": "GM - Silverado",
+          "truck_units": 142745,
+          "yoy_pct": -7.7,
+          "note": "Chevrolet Silverado, incl. EV variant. -7.7% YoY as stated directly in the source.",
+          "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/"
+        },
+        {
+          "quarter": "2026Q2",
+          "oem": "GM - Sierra",
+          "truck_units": 93391,
+          "yoy_pct": 5.0,
+          "note": "GMC Sierra, incl. EV variant. +5.0% YoY as stated directly in the source — best-performing full-size pickup nameplate this quarter among Ford/GM.",
           "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/"
         }
       ]

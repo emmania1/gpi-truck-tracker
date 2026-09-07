@@ -93,6 +93,30 @@ main {
   padding: 0 20px 60px;
 }
 
+.exec-summary {
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+}
+
+.exec-summary-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.exec-summary p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
 section.tracker-section {
   background: var(--panel);
   border: 1px solid var(--border);

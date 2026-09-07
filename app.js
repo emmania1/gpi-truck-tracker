@@ -78,7 +78,7 @@
             grid: { color: gridColor() },
           },
           y: {
-            ticks: { color: axisColor() },
+            ticks: { color: axisColor(), callback: (v) => `${fmtNum(v, 1)}M` },
             grid: { color: gridColor() },
             title: { display: true, text: "Millions of Units (SAAR)", color: axisColor() },
           },
@@ -140,7 +140,11 @@
             grid: { color: gridColor() },
           },
           y: {
-            ticks: { color: axisColor(), font: { size: 9 } },
+            ticks: {
+              color: axisColor(),
+              font: { size: 9 },
+              callback: (v) => `${opts.prefix ?? ""}${fmtNum(v, opts.decimals ?? 1)}${opts.suffix ?? ""}`,
+            },
             grid: { color: gridColor() },
           },
         },
@@ -290,6 +294,69 @@
     return (Date.now() - d.getTime()) / 86400000;
   }
 
+  function findPointNearDaysAgo(data, days) {
+    if (!data || !data.length) return null;
+    const target = Date.now() - days * 86400000;
+    let best = data[0];
+    let bestDiff = Math.abs(new Date(data[0].date).getTime() - target);
+    for (const p of data) {
+      const diff = Math.abs(new Date(p.date).getTime() - target);
+      if (diff < bestDiff) {
+        best = p;
+        bestDiff = diff;
+      }
+    }
+    return best;
+  }
+
+  function renderExecSummary(fredData, manualData) {
+    const el = document.getElementById("exec-summary-body");
+    if (!el) return;
+    try {
+      const rs = manualData?.real_series ?? {};
+      const tn = manualData?.tracked_notes ?? {};
+      const series = fredData?.series ?? {};
+
+      // 1. GPI same-store new-vehicle unit trend (narrowing/holding/widening)
+      const sssPts = (rs.gpi_new_vehicle_sss?.data ?? []).slice().sort((a, b) => a.period.localeCompare(b.period));
+      let sssSentence = "GPI's same-store new-vehicle trend isn't yet populated in the tracker.";
+      if (sssPts.length >= 2) {
+        const prev = sssPts[sssPts.length - 2];
+        const cur = sssPts[sssPts.length - 1];
+        const direction = Math.abs(cur.value) < Math.abs(prev.value) ? "narrowed" : Math.abs(cur.value) > Math.abs(prev.value) ? "widened" : "held steady";
+        sssSentence = `GPI's own same-store new-vehicle unit decline ${direction} from ${fmtNum(prev.value, 1)}% YoY in ${prev.period} to ${fmtNum(cur.value, 1)}% YoY in ${cur.period} — the tracker doesn't carry a peer same-store series, so this reflects GPI's own trajectory only, not a peer-relative gap.`;
+      }
+
+      // 2. Leverage trajectory — reuse the already-sourced status string verbatim
+      const lev = tn.leverage_trajectory;
+      const levSentence = lev?.status
+        ? `Leverage stood at ${lev.status}.`
+        : "Leverage data isn't yet populated in the tracker.";
+
+      // 3. Truck SAAR stability vs affordability backdrop (Sections 1-2 only)
+      let saarSentence = "Live SAAR/affordability data isn't yet available to characterize truck-specific softness.";
+      const dlData = series.DLTRUCKSSAAR?.data;
+      const loanData = series.TERMCBAUTO48NS?.data;
+      const gasData = series.GASREGW?.data;
+      const txurData = series.TXUR?.data;
+      if (dlData?.length && loanData?.length && gasData?.length && txurData?.length) {
+        const dlLatest = dlData[dlData.length - 1];
+        const dlYearAgo = findPointNearDaysAgo(dlData, 365);
+        const dlChangePct = dlYearAgo ? ((dlLatest.value - dlYearAgo.value) / dlYearAgo.value) * 100 : null;
+        const dlWord = dlChangePct === null ? "moved" : Math.abs(dlChangePct) < 3 ? "held roughly stable" : dlChangePct > 0 ? "risen" : "declined";
+        const loanLatest = loanData[loanData.length - 1];
+        const gasLatest = gasData[gasData.length - 1];
+        const txurLatest = txurData[txurData.length - 1];
+        saarSentence = `Meanwhile, domestic light-truck SAAR has ${dlWord}${dlChangePct !== null ? ` (${dlChangePct >= 0 ? "+" : ""}${fmtNum(dlChangePct, 1)}% vs a year earlier)` : ""} at ${fmtNum(dlLatest.value, 2)}M units (Section 1), even as the 48-month new-auto loan rate (${fmtNum(loanLatest.value, 2)}%), gas prices ($${fmtNum(gasLatest.value, 2)}/gal), and Texas unemployment (${fmtNum(txurLatest.value, 1)}%) — all cited by GPI management as demand drags (Section 2) — stay elevated, suggesting the truck softness GPI describes reads more as an affordability/execution story than a broad SAAR collapse.`;
+      }
+
+      el.textContent = `${sssSentence} ${levSentence} ${saarSentence}`;
+    } catch (e) {
+      console.error(e);
+      el.textContent = "Could not compute executive summary from current data.";
+    }
+  }
+
   function renderFreshnessBar(fredData, manualData) {
     const bar = document.getElementById("freshness-bar");
     if (!bar) return;
@@ -360,6 +427,7 @@
     }
 
     renderFreshnessBar(fredData, manual);
+    renderExecSummary(fredData, manual);
   }
 
   document.addEventListener("DOMContentLoaded", init);
