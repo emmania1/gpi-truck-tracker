@@ -353,7 +353,7 @@
       el.textContent = `${sssSentence} ${levSentence} ${saarSentence}`;
     } catch (e) {
       console.error(e);
-      el.textContent = `Could not compute executive summary from current data. [debug: ${e && e.message}]`;
+      el.textContent = "Could not compute executive summary from current data.";
     }
   }
 
