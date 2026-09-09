@@ -410,18 +410,20 @@
 
       renderOemTable(document.getElementById("sec3-content"), rs.oem_truck_deliveries);
 
-      const sec4a = document.getElementById("sec4-content");
-      renderRealTable(sec4a, rs.gpi_new_vehicle_sss, ["Period", "SSS % YoY"]);
-      const sec4b = document.createElement("div");
-      sec4a.appendChild(sec4b);
-      renderRealTable(sec4b, rs.gpi_texas_new_unit_growth, ["Period", "Texas Growth % YoY"]);
+      renderRealTable(document.getElementById("sec4-content"), rs.truck_atp, ["Period", "ATP ($)"]);
 
-      renderRealTable(document.getElementById("sec5-content"), rs.truck_atp, ["Period", "ATP ($)"]);
+      const sec5a = document.getElementById("sec5-content");
+      renderRealTable(sec5a, rs.gpi_new_vehicle_sss, ["Period", "SSS % YoY"]);
+      const sec5b = document.createElement("div");
+      sec5a.appendChild(sec5b);
+      renderRealTable(sec5b, rs.gpi_texas_new_unit_growth, ["Period", "Texas Growth % YoY"]);
 
       renderTrackedCard(document.getElementById("sec6-content"), tn.rebranding_seo);
       renderTrackedCard(document.getElementById("sec7-content"), tn.val_u_line);
       renderTrackedCard(document.getElementById("sec8-content"), tn.dealership_disposal);
       renderTrackedCard(document.getElementById("sec9-content"), tn.leverage_trajectory);
+
+      renderRealTable(document.getElementById("sec10-content"), rs.gpi_ps_growth, ["Period", "P&S Customer-Pay SSS % YoY"]);
     } catch (e) {
       console.error(e);
     }

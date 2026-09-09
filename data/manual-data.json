@@ -180,6 +180,23 @@
           "note": "Full-Size Pickup Truck segment ATP, +2.8% YoY. Incentives were 8.6% of ATP that month; segment was 3rd highest-priced among the top-5 best-selling categories."
         }
       ]
+    },
+    "gpi_ps_growth": {
+      "label": "GPI Parts & Service (P&S) Same-Store Growth",
+      "tier": "real",
+      "cadence": "quarterly",
+      "unit": "% YoY, same-store customer-pay P&S revenue (best available proxy for the modeled 'P&S annuity' growth rate — see note for what is and isn't formally disclosed)",
+      "source_guidance": "GPI Q2 2026 earnings call transcript (spoken remarks, not a formally tabled metric) + GPI Q2 2026 earnings release (8-K Ex. 99.1, Key Performance Metrics table, which discloses P&S gross profit/margin but not a P&S revenue growth line)",
+      "status": "populated (mixed: one directly-disclosed % + formally tabled GP/GM data + qualitative color)",
+      "last_updated": "2026-09-09",
+      "data": [
+        {
+          "period": "2026Q2",
+          "value": 4.0,
+          "source": "GPI Q2 2026 earnings call transcript, July 30, 2026 (via Investing.com). https://www.investing.com/news/transcripts/earnings-call-transcript-group-1-automotive-posts-q2-2026-miss-shares-sink-93CH-4825412",
+          "note": "CFO Daniel McHenry, verbatim: \"Same-store customer pay and warranty revenues increased approximately 4% and 1% respectively\" (Q2 2026 vs Q2 2025). CEO Daryl Kenningham added this 4% customer-pay growth \"lapped a 14% growth quarter last year, and it was 10% before the CDK impact\" — i.e. a tough prior-year comp, not a clean run-rate read. Neither figure is a formally tabled same-store metric (unlike the NV same-store data in Section 5) — both are spoken remarks only. VS. THE 6%/4% ASSUMPTION: at +4% same-store customer-pay growth on a tough comp, the actual disclosed trend sits at or below the ~4% revised-down case, not the historical ~6% assumption. The formally tabled numbers reinforce this: consolidated same-store P&S gross profit was actually -0.2% YoY with same-store gross margin down 1.3pts (56.0% vs 57.3%), and consolidated REPORTED P&S gross profit was -3.4% YoY ($389.0M vs $402.8M) — so even the revenue-side +4% isn't converting to GP growth. Context: Q2 2025 had one-time same-store U.S. warranty revenue growth of ~32% (Tundra + GM engine recalls), inflating the comp base GPI is lapping this quarter — Kenningham: \"Setting aside last year's one-time recall benefit, the underlying performance of the after-sales business remains resilient.\" RETENTION/COMPETITIVE COLOR (same call): vehicles bought during the low-volume 2020-2022 period are now reaching the end of factory warranty, \"which is generally a high defection point\" to independent/aftermarket service; Kenningham called the aftermarket \"our real competition as franchise dealers,\" noting consumers have \"more provider options, and they have more increased affordability pressures.\" GPI's response: a $17.76 oil-change promotion the company says \"recaptured some at-risk customers that were going to the aftermarket,\" and a chain-wide rollout of \"One Care,\" a discounted maintenance plan targeting 4-7 year-old-vehicle owners. Could not verify the 'underbenchmarking' comment on deals referenced in the request — searched the freely-accessible portions of the Q1 and Q2 2026 call transcripts (Investing.com, Motley Fool) and could not locate that specific term; omitting rather than guessing at its content. Source for the P&S GP/GM figures: GPI Q2 2026 earnings release (8-K Ex. 99.1, filed 2026-07-30), Key Performance Metrics table. https://www.sec.gov/Archives/edgar/data/0001031203/000103120326000121/a2026q2exhibit991.htm"
+        }
+      ]
     }
   },
 

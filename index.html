@@ -79,25 +79,25 @@
 
     <section class="tracker-section" id="sec-4">
       <div class="sec-head">
-        <h2 class="sec-title">4. GPI New-Vehicle SSS &amp; Texas Unit Growth</h2>
+        <h2 class="sec-title">4. Truck Average Transaction Price (ATP)</h2>
         <span class="tier-tag real">Real</span>
       </div>
-      <p class="one-liner">GPI's own reported same-store new-vehicle sales growth, plus the Texas-specific new unit growth called out in filings.</p>
+      <p class="one-liner">Kelley Blue Book / Cox Automotive monthly ATP for the full-size pickup truck segment — the price companion to Section 3's OEM delivery volumes.</p>
       <div id="sec4-content"></div>
       <div class="why-box">
-        <strong>What this shows &amp; why it matters:</strong> This is the direct read on whether the market-level truck demand backdrop (Sections 1–2) and OEM delivery trends (Section 3) are actually converting into GPI's own top line, with Texas broken out given its concentration in GPI's store base.
+        <strong>What this shows &amp; why it matters:</strong> Volume and price can move independently — flat unit volume with rising ATP is a very different signal for GPI's gross profit per unit than flat volume with falling ATP. Cox Automotive publishes a clean monthly full-size-pickup-truck ATP series (unlike the OEM/GPI figures, which only arrive quarterly), so this section updates on a faster cadence than the rest of the real tier.
       </div>
     </section>
 
     <section class="tracker-section" id="sec-5">
       <div class="sec-head">
-        <h2 class="sec-title">5. Truck Average Transaction Price (ATP)</h2>
+        <h2 class="sec-title">5. GPI New-Vehicle SSS &amp; Texas Unit Growth</h2>
         <span class="tier-tag real">Real</span>
       </div>
-      <p class="one-liner">Kelley Blue Book / Cox Automotive monthly ATP for the full-size pickup truck segment.</p>
+      <p class="one-liner">GPI's own reported same-store new-vehicle sales growth, plus the Texas-specific new unit growth called out in filings.</p>
       <div id="sec5-content"></div>
       <div class="why-box">
-        <strong>What this shows &amp; why it matters:</strong> Volume and price can move independently — flat unit volume with rising ATP is a very different signal for GPI's gross profit per unit than flat volume with falling ATP. Cox Automotive publishes a clean monthly full-size-pickup-truck ATP series (unlike the OEM/GPI figures, which only arrive quarterly), so this section updates on a faster cadence than the rest of the real tier.
+        <strong>What this shows &amp; why it matters:</strong> This is the direct read on whether the market-level truck demand backdrop (Sections 1–2) and the OEM volume/price backdrop (Sections 3–4) are actually converting into GPI's own top line, with Texas broken out given its concentration in GPI's store base.
       </div>
     </section>
 
@@ -149,6 +149,22 @@
       </div>
     </section>
 
+    <div class="section-divider">
+      <span>Adjacent context — not part of the truck-volume thesis above</span>
+    </div>
+
+    <section class="tracker-section" id="sec-10">
+      <div class="sec-head">
+        <h2 class="sec-title">10. Parts &amp; Service Growth — 6% vs. 4% Annuity Assumption</h2>
+        <span class="tier-tag real">Real</span>
+      </div>
+      <p class="one-liner">Testing whether GPI's Parts &amp; Service (P&amp;S) business still supports the historical ~6%-growing-annuity assumption, or whether the ~4% revised-down case is what the actual disclosed trend shows.</p>
+      <div id="sec10-content"></div>
+      <div class="why-box">
+        <strong>What this shows &amp; why it matters:</strong> This is a model-assumption input, not a truck-specific volume signal — it's included because P&amp;S is a separate, adjacent piece of the GPI thesis (fixed-operations economics under OEM-vs-aftermarket competitive pressure), not part of the truck-volume story the rest of this tracker covers. Treat it as background context for whichever P&amp;S growth rate feeds the model, not as an input to the SAAR/OEM/GPI-truck-demand read above.
+      </div>
+    </section>
+
   </main>
 
   <footer class="disclosure">
@@ -156,9 +172,10 @@
     <p>This tracker mixes three tiers of data, tagged on every section so it's never ambiguous which is which:</p>
     <ul>
       <li><strong>Live</strong> — Sections 1–2. Pulled automatically from the St. Louis Fed's public FRED database (series <code>DLTRUCKSSAAR</code>, <code>FLTRUCKSSAAR</code>, <code>ALTSALES</code>, <code>TERMCBAUTO48NS</code>, <code>GASREGW</code>, <code>TXUR</code>) by a GitHub Actions job that runs monthly and appends new observations to <code>data/fred-series.json</code>. It is never overwritten — the full pull history is versioned in git.</li>
-      <li><strong>Real</strong> — Sections 3–5. Structured numbers entered by hand into <code>data/manual-data.json</code> after being sourced from OEM investor-relations releases, GPI's own 10-Q/10-K filings and earnings calls, or Cox Automotive/KBB press releases (via AlphaSense). No figure in these sections is estimated or interpolated — an empty chart with "awaiting data" means exactly that.</li>
+      <li><strong>Real</strong> — Sections 3–5, plus Section 10. Structured numbers entered by hand into <code>data/manual-data.json</code> after being sourced from OEM investor-relations releases, GPI's own 10-Q/10-K filings and earnings calls, or Cox Automotive/KBB press releases (via AlphaSense). No figure in these sections is estimated or interpolated — an empty chart with "awaiting data" means exactly that.</li>
       <li><strong>Tracked</strong> — Sections 6–9. Qualitative status notes maintained by hand, with no numeric series backing them. These reflect the maintainer's read of company disclosures at a point in time, not a live feed.</li>
     </ul>
+    <p>Section 10 (Parts &amp; Service growth) sits below a visual divider and is deliberately outside the truck-volume narrative Sections 1–9 build — it's adjacent context for a separate model assumption, not a truck demand signal.</p>
     <p>Nothing manual is ever styled or labeled to look like a live feed. See <code>data/manual-data.json</code> for edit instructions and full source citations per data point.</p>
   </footer>
 
