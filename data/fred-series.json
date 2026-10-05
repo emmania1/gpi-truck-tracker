@@ -2,7 +2,7 @@
   "meta": {
     "tier": "live",
     "source": "FRED (fredgraph.csv, no API key)",
-    "last_updated": "2026-09-07T19:15:16Z"
+    "last_updated": "2026-10-05T16:32:24Z"
   },
   "series": {
     "DLTRUCKSSAAR": {
