@@ -662,6 +662,12 @@
     `;
   }
 
+  function nextQuarterLabel(q) {
+    const y = parseInt(q.slice(0, 4), 10);
+    const n = parseInt(q.slice(5), 10);
+    return n === 4 ? `${y + 1}Q1` : `${y}Q${n + 1}`;
+  }
+
   function renderExecSummary(fredData, manualData) {
     const el = document.getElementById("exec-summary-body");
     if (!el) return;
@@ -669,18 +675,21 @@
       const rs = manualData?.real_series ?? {};
       const tn = manualData?.tracked_notes ?? {};
       const series = fredData?.series ?? {};
-      const parts = [];
+      const E = escapeHTML;
+      const bullets = []; // { html, sub: [html] }
+      const bl = (label, text) => `<strong>${E(label)}</strong> ${E(text)}`;
+      let lead = "";
 
       // 1. New-vehicle same-store trend
       const sssPts = (rs.gpi_new_vehicle_sss?.data ?? []).slice().sort((a, b) => a.period.localeCompare(b.period));
       const newLatest = sssPts[sssPts.length - 1];
       if (sssPts.length >= 2) {
         const prev = sssPts[sssPts.length - 2];
-        const direction = Math.abs(newLatest.value) < Math.abs(prev.value) ? "narrowed" : Math.abs(newLatest.value) > Math.abs(prev.value) ? "widened" : "held steady";
-        parts.push(`GPI's same-store new-vehicle unit decline ${direction} from ${fmtNum(prev.value, 1)}% YoY in ${prev.period} to ${fmtNum(newLatest.value, 1)}% in ${newLatest.period} (the tracker carries no peer same-store series, so this is GPI's own trajectory, not a peer-relative gap).`);
+        const direction = Math.abs(newLatest.value) < Math.abs(prev.value) ? "narrowed from" : Math.abs(newLatest.value) > Math.abs(prev.value) ? "widened from" : "held steady vs";
+        bullets.push({ html: bl("New-vehicle same-store units:", `${fmtSigned(newLatest.value)} YoY in ${newLatest.period}, ${direction} ${fmtSigned(prev.value)} in ${prev.period} — GPI's own trajectory; the tracker carries no peer same-store series, so not a peer-relative gap.`) });
       }
 
-      // 2. Used — where the shortfall sat
+      // 2. Used — where the shortfall sat (units; GPU + mix) and 3. spread / days' supply
       const usedRows = (rs.gpi_used_vehicle?.data ?? []).slice().sort((a, b) => a.quarter.localeCompare(b.quarter));
       const uL = usedRows[usedRows.length - 1];
       const mkt = rs.used_market_monthly?.data ?? [];
@@ -689,22 +698,35 @@
         const gpShare = (uL.used_gp_musd / uL.total_gp_musd) * 100;
         const qMonths = usedMonthsFor(rs.used_market_monthly, uL.quarter);
         const pace = qMonths.length === 3 ? avgOf(qMonths, "retail_sales_pace_yoy_pct") : null;
-        let s = `Used is where the ${uL.quarter} shortfall was concentrated: same-store used retail units were ${fmtSigned(uL.ss_units_yoy_pct)} YoY${newLatest ? ` vs ${fmtSigned(newLatest.value)} for new` : ""}, U.S. used retail GPU was $${fmtNum(uL.us_retail_gpu, 0)} (${fmtSigned(uL.us_gpu_yoy_pct)}), and used is ${fmtNum(revShare, 0)}% of revenue but only ${fmtNum(gpShare, 0)}% of gross profit.`;
-        if (pace !== null) s += ` The market was softer too (Cox retail used sales pace averaged ${fmtSigned(pace)} YoY over the quarter), but GPI trailed it by ~${fmtNum(Math.abs(uL.ss_units_yoy_pct - pace), 0)} pts, pointing at sourcing/execution rather than demand alone.`;
+        bullets.push({ html: bl("Used results:", `shortfall was concentrated here — ${uL.quarter} same-store used retail units ${fmtSigned(uL.ss_units_yoy_pct)} YoY${newLatest ? ` vs ${fmtSigned(newLatest.value)} for new` : ""}; U.S. used retail GPU $${fmtNum(uL.us_retail_gpu, 0)} (${fmtSigned(uL.us_gpu_yoy_pct)}).`) });
+        let mm = `used is ${fmtNum(revShare, 0)}% of revenue but only ${fmtNum(gpShare, 0)}% of gross profit.`;
+        if (pace !== null) mm = `market softer too (Cox retail used pace averaged ${fmtSigned(pace)} YoY over the quarter), but GPI trailed it by ~${fmtNum(Math.abs(uL.ss_units_yoy_pct - pace), 0)} pts → sourcing/execution rather than demand alone; ` + mm;
+        bullets.push({ html: bl("Used vs. market and mix:", mm) });
+
+        const nextQ = nextQuarterLabel(uL.quarter);
+        lead = usedMonthsFor(rs.used_market_monthly, nextQ).length === 3 ? `Heading into GPI's ${nextQ} earnings (Oct 28):` : `Latest read (${uL.quarter} results):`;
+
         const fullM = mkt.filter((r) => /^\d{4}-\d{2}$/.test(r.month));
         const m = fullM[fullM.length - 1];
         const mPrev = fullM[fullM.length - 2];
         if (m && spreadOf(m) !== null) {
-          s += ` Heading into the Q3 print: ${monthLabel(m.month)} wholesale (MUVVI) was ${fmtSigned(m.muvvi_yoy_pct)} YoY against retail listing prices ${fmtSigned(m.retail_listing_yoy_pct, 0)}, a ${fmtNum(spreadOf(m), 1)}-pt spread, but retail days' supply rose to ${m.retail_days_supply}${mPrev ? ` from ${mPrev.retail_days_supply}` : ""}.`;
+          let t = `${monthLabel(m.month)} wholesale (MUVVI) ${fmtSigned(m.muvvi_yoy_pct)} YoY vs retail listing prices ${fmtSigned(m.retail_listing_yoy_pct, 0)} → ${fmtNum(spreadOf(m), 1)}-pt spread`;
+          if (mPrev) {
+            const r0 = mPrev.retail_days_supply;
+            const r1 = m.retail_days_supply;
+            t += `, but retail days' supply ${r1 > r0 ? "rose to" : r1 < r0 ? "fell to" : "held at"} ${r1} from ${r0}.`;
+          } else {
+            t += `; retail days' supply ${m.retail_days_supply}.`;
+          }
+          bullets.push({ html: bl("Wholesale/retail spread, days' supply:", t) });
         }
-        parts.push(s);
       }
 
-      // 3. Leverage
+      // 4. Leverage
       const lev = tn.leverage_trajectory;
-      parts.push(lev?.status ? `Leverage stood at ${lev.status}.` : "Leverage data isn't yet populated in the tracker.");
+      bullets.push({ html: lev?.status ? bl("Leverage:", lev.status.replace(/[.\s]*$/, "") + ".") : bl("Leverage:", "data isn't yet populated in the tracker.") });
 
-      // 4. Trucks: SAAR, OEM, affordability
+      // 5. Trucks: SAAR, OEM, affordability
       const dl = series.DLTRUCKSSAAR;
       const fl = series.FLTRUCKSSAAR;
       const al = series.ALTSALES;
@@ -716,24 +738,25 @@
         const yd = yoyFromSeries(dl, date);
         const yf = yoyFromSeries(fl, date);
         const ya = yoyFromSeries(al, date);
-        let s = "";
-        if (yd && yf && ya) {
-          s += `On trucks, domestic light-truck SAAR was ${fmtNum(yd.value, 2)}M in ${fmtDate(date)} (${fmtSigned(yd.pct)} YoY) while imported trucks were ${fmtSigned(yf.pct)} and total light-vehicle SAAR ${fmtSigned(ya.pct)} (Section 1)`;
-        }
+        const parts = [];
+        if (yd && yf && ya) parts.push(`domestic light-truck SAAR ${fmtNum(yd.value, 2)}M in ${fmtDate(date)} (${fmtSigned(yd.pct)} YoY), imported trucks ${fmtSigned(yf.pct)}, total light-vehicle SAAR ${fmtSigned(ya.pct)} (Section 1)`);
         const oem = rs.oem_truck_deliveries?.data ?? [];
         const fordRows = oem.filter((r) => r.oem === "Ford").sort((a, b) => b.quarter.localeCompare(a.quarter));
         const fseries = oem.filter((r) => r.oem === "Ford - F-Series").sort((a, b) => b.quarter.localeCompare(a.quarter));
         if (fordRows.length >= 2 && fordRows[0].yoy_pct !== null && fordRows[1].yoy_pct !== null) {
           const fs = fseries.find((r) => r.quarter === fordRows[0].quarter);
-          s += `${s ? "; " : "On trucks, "}Ford's ${fordRows[0].quarter} truck sales were ${fmtSigned(fordRows[0].yoy_pct)} YoY${fs ? ` (F-Series ${fmtSigned(fs.yoy_pct)})` : ""} vs ${fmtSigned(fordRows[1].yoy_pct)} in ${fordRows[1].quarter} (Section 4)`;
+          parts.push(`Ford ${fordRows[0].quarter} truck sales ${fmtSigned(fordRows[0].yoy_pct)} YoY${fs ? ` (F-Series ${fmtSigned(fs.yoy_pct)})` : ""} vs ${fmtSigned(fordRows[1].yoy_pct)} in ${fordRows[1].quarter} (Section 4)`);
         }
+        const sub = [];
         if (loanData?.length && gasData?.length && txurData?.length) {
-          s += `; financing and fuel remain headwinds GPI management has cited — 48-month auto loan rate ${fmtNum(loanData[loanData.length - 1].value, 2)}%, gas $${fmtNum(gasData[gasData.length - 1].value, 2)}/gal, Texas unemployment ${fmtNum(txurData[txurData.length - 1].value, 1)}% (Section 2)`;
+          sub.push(bl("Headwinds GPI management has cited (Section 2):", `48-month auto loan rate ${fmtNum(loanData[loanData.length - 1].value, 2)}%, gas $${fmtNum(gasData[gasData.length - 1].value, 2)}/gal, Texas unemployment ${fmtNum(txurData[txurData.length - 1].value, 1)}%.`));
         }
-        if (s) parts.push(s + ".");
+        if (parts.length) bullets.push({ html: bl("Trucks:", parts.join("; ") + "."), sub });
       }
 
-      el.textContent = parts.join(" ");
+      el.innerHTML =
+        (lead ? `<p class="exec-lead">${E(lead)}</p>` : "") +
+        `<ul class="exec-list">${bullets.map((b) => `<li>${b.html}${b.sub?.length ? `<ul>${b.sub.map((x) => `<li>${x}</li>`).join("")}</ul>` : ""}</li>`).join("")}</ul>`;
     } catch (e) {
       console.error(e);
       el.textContent = "Could not compute executive summary from current data.";

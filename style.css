@@ -635,3 +635,16 @@ details.disclosure > summary:focus-visible { outline: 2px solid var(--accent); o
   cursor: pointer;
 }
 .disclosure-controls button:hover { border-color: var(--accent); }
+
+/* ---- executive summary bullets ---- */
+.exec-summary .exec-lead { font-weight: 600; margin: 0 0 6px; }
+.exec-summary ul.exec-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.exec-summary ul.exec-list li { margin: 0 0 6px; }
+.exec-summary ul.exec-list li:last-child { margin-bottom: 0; }
+.exec-summary ul.exec-list ul { margin: 4px 0 0; padding-left: 1.1rem; font-size: 0.88rem; }
+.exec-summary ul.exec-list strong { font-weight: 700; }
