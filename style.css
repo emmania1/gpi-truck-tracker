@@ -562,3 +562,16 @@ table.data-table a { color: var(--accent); white-space: nowrap; font-size: 0.74r
 .due-flag.overdue { color: var(--warn); background: var(--warn-bg); border-color: var(--warn); }
 .due-flag.soon { color: var(--caution); background: var(--caution-bg); border-color: var(--caution); }
 .table-note.overdue-note { color: var(--warn); font-weight: 600; }
+
+/* long unbroken URLs inside notes must wrap on narrow screens */
+.real-datapoint-note,
+.real-datapoint-source,
+.tracked-detail,
+.tracked-target,
+.one-liner,
+.why-box,
+.exec-summary p,
+.row-notes,
+.table-note {
+  overflow-wrap: anywhere;
+}
