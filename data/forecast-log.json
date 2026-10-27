@@ -1,0 +1,80 @@
+{
+  "_readme": "Frozen pre-release predictions vs actuals. scripts/backtest.py --freeze <quarter> writes a prediction BEFORE a release; afterwards fill each metric's `actual` (and optionally `lean`/`actual_direction`) by hand, add the quarter to data/gpi-history.json, and re-run scripts/backtest.py so the comparison becomes a new data point.",
+  "forecasts": [
+    {
+      "quarter": "2026Q3",
+      "frozen_at": "2026-10-27T22:33:16Z",
+      "release_date": "2026-10-28",
+      "status": "awaiting actuals",
+      "street_estimate": {
+        "fxempire_eps": 9.88,
+        "fxempire_analysts": 7,
+        "benzinga_eps": 10.11,
+        "note": "vendor-reported consensus for the Oct 28, 2026 print; secondary source"
+      },
+      "metrics": [
+        {
+          "metric": "nv_ss_units_yoy_pct",
+          "label": "New-vehicle same-store units, YoY %",
+          "predicted": -0.9,
+          "method": "indicator model (saar_total_yoy, model_same_quarter)",
+          "range_low": null,
+          "range_high": null,
+          "range_basis": null,
+          "lean": null,
+          "actual": null,
+          "actual_direction": null
+        },
+        {
+          "metric": "uv_ss_units_yoy_pct",
+          "label": "Used same-store retail units, YoY %",
+          "predicted": -9.8,
+          "method": "persistence (no indicator model beat the naive baselines in leave-one-out testing)",
+          "range_low": null,
+          "range_high": null,
+          "range_basis": null,
+          "lean": null,
+          "actual": null,
+          "actual_direction": null
+        },
+        {
+          "metric": "uv_ss_gpu_yoy_pct",
+          "label": "Used same-store retail GPU, YoY %",
+          "predicted": -5.3,
+          "method": "persistence (no indicator model beat the naive baselines in leave-one-out testing)",
+          "range_low": -7.2,
+          "range_high": -0.1,
+          "range_basis": "seasonal-ratio benchmark (Q2->Q3 ratios from prior years)",
+          "lean": null,
+          "actual": null,
+          "actual_direction": null
+        },
+        {
+          "metric": "nv_ss_gpu_yoy_pct",
+          "label": "New-vehicle same-store GPU, YoY %",
+          "predicted": -9.0,
+          "method": "persistence (no indicator model beat the naive baselines in leave-one-out testing)",
+          "range_low": null,
+          "range_high": null,
+          "range_basis": null,
+          "lean": null,
+          "actual": null,
+          "actual_direction": null
+        },
+        {
+          "metric": "adj_eps",
+          "label": "Adjusted diluted EPS ($)",
+          "predicted": 9.44,
+          "method": "seasonal-ratio benchmark (Q2->Q3 EPS ratios 2023-2025, mean); indicators have no demonstrated skill on EPS",
+          "range_low": 8.72,
+          "range_high": 9.89,
+          "range_basis": "min/max of the three prior-year Q2->Q3 ratios (2023, 2024, 2025)",
+          "lean": null,
+          "actual": null,
+          "actual_direction": null
+        }
+      ],
+      "note": "Prediction frozen BEFORE the release. After GPI reports, fill `actual` for each metric (same units as `predicted`: YoY % for same-store metrics, $ for EPS) and add the quarter to data/gpi-history.json, then re-run scripts/backtest.py."
+    }
+  ]
+}

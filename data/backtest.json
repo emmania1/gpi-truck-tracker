@@ -1,0 +1,8261 @@
+{
+ "narrative": {
+  "findings": [
+   {
+    "strength": "supported",
+    "title": "One relationship holds up: new-vehicle units move with total SAAR in the same quarter",
+    "text": "GPI's same-store new-vehicle unit growth vs total light-vehicle SAAR growth, same quarter: r = +0.93 on levels (n=12) and r = +0.83 on quarter-over-quarter changes (n=11, p = 0.002 after autocorrelation adjustment). Leave-one-out validation confirms real skill (28% lower error than 'same as last quarter'). This is a coincident relationship, not a leading one."
+   },
+   {
+    "strength": "not supported",
+    "title": "As a LEADING indicator (1 quarter ahead) it does not work",
+    "text": "Last quarter's SAAR vs this quarter's new-unit growth: r = +0.80 looks strong, but the series trend so strongly that the effective sample is ~4 quarters (adjusted p = 0.20), and out-of-sample the lead-1 model beats 'same as last quarter' by only 2%."
+   },
+   {
+    "strength": "not supported",
+    "title": "Used-vehicle units, used GPU and EPS: no indicator shows predictive skill",
+    "text": "8 in-sample correlations for used units, used GPU or EPS clear p<0.05 even after the trend adjustment (e.g. gas-price growth vs used-unit growth r = -0.75; change in loan rate vs change in used units r = -0.75), but that is about what chance produces from 280 tests (none survive a multiple-testing correction), and none of the 6 leave-one-out models for used units, used GPU or EPS beat both naive baselines by the 15% margin (0 do). That includes the wholesale index (Manheim). This is the key limitation: the used business is where GPI's recent shortfall sits, and the tracker's indicators cannot yet forecast it."
+   },
+   {
+    "strength": "caution",
+    "title": "Several very high correlations are trend artefacts",
+    "text": "E.g. new-vehicle GPU growth vs the Manheim index: r = +0.94, but both series trend steadily over the window, leaving ~4 effective observations (adjusted p = 0.06). Of 280 correlations tested, 48 are nominally significant at 5% versus ~14 expected by pure chance; 17 remain after the autocorrelation adjustment and 4 survive a strict multiple-testing correction."
+   },
+   {
+    "strength": "limited",
+    "title": "Wholesale/retail spread, ATP, GM: windows too short",
+    "text": "Retail listing-price history starts 2025 (<=7 quarters), wholesale days' supply and KBB truck ATP only cover 2025-26 (<=4 quarters and 2 quarters), and GM's official delivery tables cannot be fetched automatically. These were not used to build the forecast; any correlation computed on them would be meaningless."
+   }
+  ],
+  "q3_reads": [
+   {
+    "metric": "New-vehicle same-store units, YoY",
+    "last": -2.8,
+    "estimate": -0.9,
+    "range": [
+     -5.5,
+     3.7
+    ],
+    "lean": "slightly better than Q2 (-2.8%), but inside the error band",
+    "confidence": "moderate-low",
+    "basis": "Only model with demonstrated skill: same-quarter total SAAR (Q3 SAAR -1.2% YoY, already known) -> -0.9%, +/-4.6 pts (2x leave-one-out error 2.3); it called the direction of the quarter-to-quarter change correctly in 8 of 10 backtested quarters. Coincident, so it is a nowcast, not a forecast, and the band includes Q2's -2.8%."
+   },
+   {
+    "metric": "Used same-store retail units, YoY",
+    "last": -9.8,
+    "estimate": -9.8,
+    "range": null,
+    "lean": "no call",
+    "confidence": "none from the model",
+    "basis": "No indicator model has skill, so the estimate is simply 'same as Q2'. Context only (not validated historically): Cox's retail used sales pace averaged -1.1% YoY in Q3 vs -4.0% in Q2, which would favor some improvement; GPI's shortfall vs the market in Q2 was GPI-specific (sourcing)."
+   },
+   {
+    "metric": "Used same-store retail GPU, YoY",
+    "last": -5.3,
+    "estimate": -5.3,
+    "range": [
+     -7.2,
+     -0.1
+    ],
+    "lean": "flat to modestly better than Q2 (-5.3%)",
+    "confidence": "low",
+    "basis": "No model has skill. Seasonal benchmark (Q2->Q3 GPU ratios 2024-25) implies -7.2% to -0.1% (mean -3.6%), helped by an easy comp (Q3'25 GPU was -8.5% YoY). Based on only two prior years."
+   },
+   {
+    "metric": "New-vehicle same-store GPU, YoY",
+    "last": -9.0,
+    "estimate": -9.0,
+    "range": null,
+    "lean": "no call",
+    "confidence": "none",
+    "basis": "The best-looking correlations are trend artefacts; no model clears the skill bar."
+   },
+   {
+    "metric": "Adjusted EPS ($) vs Street",
+    "last": 9.61,
+    "estimate": 9.44,
+    "range": [
+     8.72,
+     9.89
+    ],
+    "lean": "in line to slight miss vs Street",
+    "confidence": "low",
+    "basis": "Not from the indicators (they show no EPS skill). Seasonal benchmark: Q2->Q3 EPS ratios of 2023: 1.029, 2024: 1.010, 2025: 0.907 imply $8.72-$9.89 (mean $9.44) vs vendor Street estimates of $9.88-$10.11, i.e. a required ratio of 1.028-1.052, at or above the top of the historical range. GPI also missed consensus in 4 of the last 6 quarters (4 straight). Offsets: easier GPU comp, wider retail-wholesale spread."
+   }
+  ],
+  "bottom_line": "Honest summary: with 12 quarters of history, the tracker's indicators explain GPI's NEW-vehicle volume in the same quarter (via total SAAR) but show no demonstrated ability to predict used units, used GPU or EPS \u2014 the metrics that matter most right now. The Q3 read below is therefore a data-driven lean, not a forecast: new-vehicle units probably a bit better than Q2; used still the weak spot with no reliable edge; EPS more likely in line to slightly below the Street than above it, mainly because the Street's number sits at the top of GPI's own seasonal range and GPI has missed four straight quarters.",
+  "skill_rule": "A model may set a frozen central estimate only if its leave-one-out error beats BOTH the 'same as last quarter' and the 'historical mean' baselines by more than 15%. Disclosure: this threshold was fixed after seeing the leave-one-out results (it was raised from 10% to 15% when new-vehicle GPU showed a marginal 11% edge) and before the forecast was frozen \u2014 a documented rule, not a strict pre-registration."
+ },
+ "generated_at": "2026-10-27T22:33:36Z",
+ "window": {
+  "target_quarters": [
+   "2023Q3",
+   "2026Q2"
+  ],
+  "n_quarters": 12
+ },
+ "availability": [
+  {
+   "feature": "saar_dom_yoy",
+   "label": "Domestic light-truck SAAR, YoY %",
+   "first": "1968Q1",
+   "last": "2026Q3",
+   "n": 235,
+   "note": "FRED DLTRUCKSSAAR, quarterly average"
+  },
+  {
+   "feature": "saar_imp_yoy",
+   "label": "Imported light-truck SAAR, YoY %",
+   "first": "1977Q1",
+   "last": "2026Q3",
+   "n": 199,
+   "note": "FRED FLTRUCKSSAAR"
+  },
+  {
+   "feature": "saar_total_yoy",
+   "label": "Total light-vehicle SAAR, YoY %",
+   "first": "1977Q1",
+   "last": "2026Q3",
+   "n": 199,
+   "note": "FRED ALTSALES"
+  },
+  {
+   "feature": "loan_rate_level",
+   "label": "48-mo new-auto loan rate, level %",
+   "first": "1972Q1",
+   "last": "2026Q3",
+   "n": 219,
+   "note": "FRED TERMCBAUTO48NS (one observation per quarter)"
+  },
+  {
+   "feature": "loan_rate_chg",
+   "label": "48-mo auto loan rate, YoY change (pp)",
+   "first": "1973Q1",
+   "last": "2026Q3",
+   "n": 215,
+   "note": "FRED TERMCBAUTO48NS"
+  },
+  {
+   "feature": "gas_yoy",
+   "label": "Regular gasoline price, YoY %",
+   "first": "1991Q3",
+   "last": "2026Q4",
+   "n": 142,
+   "note": "FRED GASREGW, quarterly average of weekly"
+  },
+  {
+   "feature": "tx_unemp_chg",
+   "label": "Texas unemployment rate, YoY change (pp)",
+   "first": "1977Q1",
+   "last": "2026Q3",
+   "n": 198,
+   "note": "FRED TXUR"
+  },
+  {
+   "feature": "cpi_used_yoy",
+   "label": "CPI used cars & trucks, YoY %",
+   "first": "1954Q1",
+   "last": "2026Q3",
+   "n": 291,
+   "note": "FRED CUSR0000SETA02"
+  },
+  {
+   "feature": "cpi_new_yoy",
+   "label": "CPI new vehicles, YoY %",
+   "first": "1954Q1",
+   "last": "2026Q3",
+   "n": 291,
+   "note": "FRED CUSR0000SETA01"
+  },
+  {
+   "feature": "cpi_used_minus_new",
+   "label": "CPI used YoY minus new YoY (pts)",
+   "first": "1954Q1",
+   "last": "2026Q3",
+   "n": 291,
+   "note": "derived from the two CPI series"
+  },
+  {
+   "feature": "muvvi_yoy",
+   "label": "Manheim wholesale index (MUVVI), YoY %",
+   "first": "2023Q2",
+   "last": "2026Q3",
+   "n": 14,
+   "note": "Cox/Manheim monthly reports, quarterly average of monthly YoY (2023 months parsed from page text, unvalidated)"
+  },
+  {
+   "feature": "retail_listing_yoy",
+   "label": "Retail used listing price, YoY % (Cox/vAuto)",
+   "first": "2025Q1",
+   "last": "2026Q3",
+   "n": 7,
+   "note": "2025 values rely on a regex parse of 2024 pages (unvalidated); history starts 2025"
+  },
+  {
+   "feature": "retail_minus_wholesale",
+   "label": "Retail-minus-wholesale YoY spread (pts)",
+   "first": "2025Q1",
+   "last": "2026Q3",
+   "n": 7,
+   "note": "the tracker's Section 6 spread; history starts 2025"
+  },
+  {
+   "feature": "ford_trucks_yoy",
+   "label": "Ford truck deliveries, YoY %",
+   "first": "2024Q4",
+   "last": "2026Q3",
+   "n": 8,
+   "note": "Ford sales releases; history starts 2024Q4 (GM unavailable)"
+  },
+  {
+   "feature": "atp_full_size_pickup",
+   "label": "KBB full-size pickup ATP",
+   "first": "2025-12",
+   "last": "2026-07",
+   "n": 8,
+   "note": "monthly, too short: overlaps only 2 GPI quarters \u2014 excluded"
+  },
+  {
+   "feature": "wholesale_days_supply",
+   "label": "Manheim wholesale days' supply",
+   "first": "2025-10",
+   "last": "2026-09",
+   "n": 4,
+   "note": "pre-2026 history could not be parsed reliably \u2014 excluded"
+  },
+  {
+   "feature": "gm_deliveries",
+   "label": "GM Silverado/Sierra deliveries",
+   "first": "2026Q1",
+   "last": "2026Q3",
+   "n": 3,
+   "note": "GM's official tables block automated access \u2014 excluded"
+  }
+ ],
+ "tests": {
+  "total": 280,
+  "nominal_p05": 48,
+  "expected_by_chance_at_5pct": 14.0,
+  "nominal_p05_after_autocorr_adjust": 17,
+  "bonferroni_alpha": 0.000179,
+  "survive_bonferroni": 4,
+  "with_n_ge_10": 210
+ },
+ "strongest": [
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.935,
+   "spearman": 0.958,
+   "p": 0.0,
+   "n_eff": 4.0,
+   "p_neff": 0.0649,
+   "ci95": [
+    0.78,
+    0.98
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.928,
+   "spearman": 0.921,
+   "p": 0.0,
+   "n_eff": 4.9,
+   "p_neff": 0.0231,
+   "ci95": [
+    0.76,
+    0.98
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.924,
+   "spearman": -0.804,
+   "p": 0.0,
+   "n_eff": 4.0,
+   "p_neff": 0.0764,
+   "ci95": [
+    -0.98,
+    -0.74
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.897,
+   "spearman": -0.839,
+   "p": 0.0001,
+   "n_eff": 4.0,
+   "p_neff": 0.1035,
+   "ci95": [
+    -0.97,
+    -0.66
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.879,
+   "spearman": 0.83,
+   "p": 0.0002,
+   "n_eff": 4.0,
+   "p_neff": 0.1206,
+   "ci95": [
+    0.62,
+    0.97
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.868,
+   "spearman": 0.802,
+   "p": 0.0002,
+   "n_eff": 4.0,
+   "p_neff": 0.1318,
+   "ci95": [
+    0.59,
+    0.96
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.833,
+   "spearman": 0.791,
+   "p": 0.0015,
+   "n_eff": 10.9,
+   "p_neff": 0.0015,
+   "ci95": [
+    0.47,
+    0.96
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.831,
+   "spearman": -0.832,
+   "p": 0.0008,
+   "n_eff": 4.0,
+   "p_neff": 0.1692,
+   "ci95": [
+    -0.95,
+    -0.49
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.806,
+   "spearman": 0.741,
+   "p": 0.0015,
+   "n_eff": 4.0,
+   "p_neff": 0.1937,
+   "ci95": [
+    0.43,
+    0.94
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.801,
+   "spearman": 0.636,
+   "p": 0.003,
+   "n_eff": 11.0,
+   "p_neff": 0.003,
+   "ci95": [
+    0.39,
+    0.95
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.798,
+   "spearman": 0.753,
+   "p": 0.0019,
+   "n_eff": 4.0,
+   "p_neff": 0.2018,
+   "ci95": [
+    0.41,
+    0.94
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.797,
+   "spearman": 0.806,
+   "p": 0.0019,
+   "n_eff": 7.6,
+   "p_neff": 0.0179,
+   "ci95": [
+    0.41,
+    0.94
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  }
+ ],
+ "by_target": {
+  "nv_ss_units_yoy_pct": [
+   {
+    "target": "nv_ss_units_yoy_pct",
+    "feature": "saar_total_yoy",
+    "mode": "levels",
+    "lag": 0,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": 0.928,
+    "spearman": 0.921,
+    "p": 0.0,
+    "n_eff": 4.9,
+    "p_neff": 0.0231,
+    "ci95": [
+     0.76,
+     0.98
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "nv_ss_units_yoy_pct",
+    "feature": "saar_imp_yoy",
+    "mode": "levels",
+    "lag": 0,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": 0.879,
+    "spearman": 0.83,
+    "p": 0.0002,
+    "n_eff": 4.0,
+    "p_neff": 0.1206,
+    "ci95": [
+     0.62,
+     0.97
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "nv_ss_units_yoy_pct",
+    "feature": "saar_imp_yoy",
+    "mode": "levels",
+    "lag": 1,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": 0.868,
+    "spearman": 0.802,
+    "p": 0.0002,
+    "n_eff": 4.0,
+    "p_neff": 0.1318,
+    "ci95": [
+     0.59,
+     0.96
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "nv_ss_units_yoy_pct",
+    "feature": "saar_total_yoy",
+    "mode": "changes",
+    "lag": 0,
+    "n": 11,
+    "quarters": [
+     "2023Q4",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": 0.833,
+    "spearman": 0.791,
+    "p": 0.0015,
+    "n_eff": 10.9,
+    "p_neff": 0.0015,
+    "ci95": [
+     0.47,
+     0.96
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   },
+   {
+    "target": "nv_ss_units_yoy_pct",
+    "feature": "saar_dom_yoy",
+    "mode": "changes",
+    "lag": 0,
+    "n": 11,
+    "quarters": [
+     "2023Q4",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": 0.801,
+    "spearman": 0.636,
+    "p": 0.003,
+    "n_eff": 11.0,
+    "p_neff": 0.003,
+    "ci95": [
+     0.39,
+     0.95
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   }
+  ],
+  "uv_ss_units_yoy_pct": [
+   {
+    "target": "uv_ss_units_yoy_pct",
+    "feature": "gas_yoy",
+    "mode": "levels",
+    "lag": 0,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": -0.754,
+    "spearman": -0.42,
+    "p": 0.0047,
+    "n_eff": 7.9,
+    "p_neff": 0.0309,
+    "ci95": [
+     -0.93,
+     -0.32
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "uv_ss_units_yoy_pct",
+    "feature": "loan_rate_chg",
+    "mode": "changes",
+    "lag": 1,
+    "n": 11,
+    "quarters": [
+     "2023Q4",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": -0.749,
+    "spearman": -0.818,
+    "p": 0.0079,
+    "n_eff": 11.0,
+    "p_neff": 0.0079,
+    "ci95": [
+     -0.93,
+     -0.27
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   },
+   {
+    "target": "uv_ss_units_yoy_pct",
+    "feature": "tx_unemp_chg",
+    "mode": "levels",
+    "lag": 0,
+    "n": 11,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": -0.678,
+    "spearman": -0.691,
+    "p": 0.0219,
+    "n_eff": 9.5,
+    "p_neff": 0.0449,
+    "ci95": [
+     -0.91,
+     -0.13
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   },
+   {
+    "target": "uv_ss_units_yoy_pct",
+    "feature": "cpi_used_minus_new",
+    "mode": "changes",
+    "lag": 1,
+    "n": 11,
+    "quarters": [
+     "2023Q4",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": 0.669,
+    "spearman": 0.755,
+    "p": 0.0244,
+    "n_eff": 11.0,
+    "p_neff": 0.0244,
+    "ci95": [
+     0.12,
+     0.91
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   },
+   {
+    "target": "uv_ss_units_yoy_pct",
+    "feature": "saar_imp_yoy",
+    "mode": "levels",
+    "lag": 1,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": 0.644,
+    "spearman": 0.497,
+    "p": 0.0238,
+    "n_eff": 6.4,
+    "p_neff": 0.1674,
+    "ci95": [
+     0.11,
+     0.89
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   }
+  ],
+  "uv_ss_gpu_yoy_pct": [
+   {
+    "target": "uv_ss_gpu_yoy_pct",
+    "feature": "muvvi_yoy",
+    "mode": "changes",
+    "lag": 0,
+    "n": 11,
+    "quarters": [
+     "2023Q4",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": 0.625,
+    "spearman": 0.727,
+    "p": 0.0398,
+    "n_eff": 10.2,
+    "p_neff": 0.0534,
+    "ci95": [
+     0.04,
+     0.89
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   },
+   {
+    "target": "uv_ss_gpu_yoy_pct",
+    "feature": "loan_rate_chg",
+    "mode": "levels",
+    "lag": 1,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": 0.586,
+    "spearman": 0.613,
+    "p": 0.0454,
+    "n_eff": 11.6,
+    "p_neff": 0.0454,
+    "ci95": [
+     0.02,
+     0.87
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "uv_ss_gpu_yoy_pct",
+    "feature": "saar_imp_yoy",
+    "mode": "levels",
+    "lag": 1,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": 0.584,
+    "spearman": 0.655,
+    "p": 0.046,
+    "n_eff": 11.6,
+    "p_neff": 0.046,
+    "ci95": [
+     0.02,
+     0.87
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "uv_ss_gpu_yoy_pct",
+    "feature": "cpi_used_minus_new",
+    "mode": "levels",
+    "lag": 0,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "not significant",
+    "r": -0.571,
+    "spearman": -0.556,
+    "p": 0.0526,
+    "n_eff": 11.7,
+    "p_neff": 0.0526,
+    "ci95": [
+     -0.86,
+     0.0
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "uv_ss_gpu_yoy_pct",
+    "feature": "cpi_used_minus_new",
+    "mode": "levels",
+    "lag": 1,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "not significant",
+    "r": -0.569,
+    "spearman": -0.563,
+    "p": 0.0537,
+    "n_eff": 11.7,
+    "p_neff": 0.0537,
+    "ci95": [
+     -0.86,
+     0.01
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   }
+  ],
+  "nv_ss_gpu_yoy_pct": [
+   {
+    "target": "nv_ss_gpu_yoy_pct",
+    "feature": "muvvi_yoy",
+    "mode": "levels",
+    "lag": 0,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": 0.935,
+    "spearman": 0.958,
+    "p": 0.0,
+    "n_eff": 4.0,
+    "p_neff": 0.0649,
+    "ci95": [
+     0.78,
+     0.98
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "nv_ss_gpu_yoy_pct",
+    "feature": "loan_rate_level",
+    "mode": "levels",
+    "lag": 0,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": -0.924,
+    "spearman": -0.804,
+    "p": 0.0,
+    "n_eff": 4.0,
+    "p_neff": 0.0764,
+    "ci95": [
+     -0.98,
+     -0.74
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "nv_ss_gpu_yoy_pct",
+    "feature": "loan_rate_chg",
+    "mode": "levels",
+    "lag": 1,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": -0.897,
+    "spearman": -0.839,
+    "p": 0.0001,
+    "n_eff": 4.0,
+    "p_neff": 0.1035,
+    "ci95": [
+     -0.97,
+     -0.66
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "nv_ss_gpu_yoy_pct",
+    "feature": "loan_rate_chg",
+    "mode": "levels",
+    "lag": 0,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": -0.831,
+    "spearman": -0.832,
+    "p": 0.0008,
+    "n_eff": 4.0,
+    "p_neff": 0.1692,
+    "ci95": [
+     -0.95,
+     -0.49
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "nv_ss_gpu_yoy_pct",
+    "feature": "muvvi_yoy",
+    "mode": "levels",
+    "lag": 1,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": 0.806,
+    "spearman": 0.741,
+    "p": 0.0015,
+    "n_eff": 4.0,
+    "p_neff": 0.1937,
+    "ci95": [
+     0.43,
+     0.94
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   }
+  ],
+  "adj_eps_yoy_pct": [
+   {
+    "target": "adj_eps_yoy_pct",
+    "feature": "loan_rate_level",
+    "mode": "changes",
+    "lag": 0,
+    "n": 11,
+    "quarters": [
+     "2023Q4",
+     "2026Q2"
+    ],
+    "verdict": "holds up",
+    "r": -0.699,
+    "spearman": -0.791,
+    "p": 0.0167,
+    "n_eff": 10.4,
+    "p_neff": 0.0245,
+    "ci95": [
+     -0.92,
+     -0.17
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   },
+   {
+    "target": "adj_eps_yoy_pct",
+    "feature": "saar_dom_yoy",
+    "mode": "levels",
+    "lag": 0,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "likely trend artefact",
+    "r": 0.628,
+    "spearman": 0.671,
+    "p": 0.0287,
+    "n_eff": 8.5,
+    "p_neff": 0.0699,
+    "ci95": [
+     0.09,
+     0.88
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   },
+   {
+    "target": "adj_eps_yoy_pct",
+    "feature": "saar_dom_yoy",
+    "mode": "changes",
+    "lag": 0,
+    "n": 11,
+    "quarters": [
+     "2023Q4",
+     "2026Q2"
+    ],
+    "verdict": "not significant",
+    "r": 0.596,
+    "spearman": 0.427,
+    "p": 0.0532,
+    "n_eff": 11.0,
+    "p_neff": 0.0532,
+    "ci95": [
+     -0.01,
+     0.88
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   },
+   {
+    "target": "adj_eps_yoy_pct",
+    "feature": "saar_total_yoy",
+    "mode": "changes",
+    "lag": 0,
+    "n": 11,
+    "quarters": [
+     "2023Q4",
+     "2026Q2"
+    ],
+    "verdict": "not significant",
+    "r": 0.521,
+    "spearman": 0.382,
+    "p": 0.1006,
+    "n_eff": 10.8,
+    "p_neff": 0.1006,
+    "ci95": [
+     -0.12,
+     0.85
+    ],
+    "crit_r_05": 0.602,
+    "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+   },
+   {
+    "target": "adj_eps_yoy_pct",
+    "feature": "gas_yoy",
+    "mode": "levels",
+    "lag": 1,
+    "n": 12,
+    "quarters": [
+     "2023Q3",
+     "2026Q2"
+    ],
+    "verdict": "not significant",
+    "r": -0.48,
+    "spearman": -0.629,
+    "p": 0.1139,
+    "n_eff": 9.5,
+    "p_neff": 0.1599,
+    "ci95": [
+     -0.83,
+     0.13
+    ],
+    "crit_r_05": 0.576,
+    "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+   }
+  ]
+ },
+ "all_rows": [
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.797,
+   "spearman": 0.806,
+   "p": 0.0019,
+   "n_eff": 7.6,
+   "p_neff": 0.0179,
+   "ci95": [
+    0.41,
+    0.94
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.583,
+   "spearman": 0.592,
+   "p": 0.0465,
+   "n_eff": 5.8,
+   "p_neff": 0.2243,
+   "ci95": [
+    0.01,
+    0.87
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.801,
+   "spearman": 0.636,
+   "p": 0.003,
+   "n_eff": 11.0,
+   "p_neff": 0.003,
+   "ci95": [
+    0.39,
+    0.95
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.055,
+   "spearman": 0.082,
+   "p": 0.8722,
+   "n_eff": 11.0,
+   "p_neff": 0.8722,
+   "ci95": [
+    -0.63,
+    0.56
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.879,
+   "spearman": 0.83,
+   "p": 0.0002,
+   "n_eff": 4.0,
+   "p_neff": 0.1206,
+   "ci95": [
+    0.62,
+    0.97
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.868,
+   "spearman": 0.802,
+   "p": 0.0002,
+   "n_eff": 4.0,
+   "p_neff": 0.1318,
+   "ci95": [
+    0.59,
+    0.96
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.479,
+   "spearman": 0.636,
+   "p": 0.1361,
+   "n_eff": 11.0,
+   "p_neff": 0.1361,
+   "ci95": [
+    -0.17,
+    0.84
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.257,
+   "spearman": 0.218,
+   "p": 0.4464,
+   "n_eff": 11.0,
+   "p_neff": 0.4464,
+   "ci95": [
+    -0.41,
+    0.74
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.928,
+   "spearman": 0.921,
+   "p": 0.0,
+   "n_eff": 4.9,
+   "p_neff": 0.0231,
+   "ci95": [
+    0.76,
+    0.98
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.798,
+   "spearman": 0.753,
+   "p": 0.0019,
+   "n_eff": 4.0,
+   "p_neff": 0.2018,
+   "ci95": [
+    0.41,
+    0.94
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.833,
+   "spearman": 0.791,
+   "p": 0.0015,
+   "n_eff": 10.9,
+   "p_neff": 0.0015,
+   "ci95": [
+    0.47,
+    0.96
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.108,
+   "spearman": 0.045,
+   "p": 0.752,
+   "n_eff": 10.9,
+   "p_neff": 0.752,
+   "ci95": [
+    -0.53,
+    0.66
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.51,
+   "spearman": 0.48,
+   "p": 0.09,
+   "n_eff": 4.0,
+   "p_neff": 0.4897,
+   "ci95": [
+    -0.09,
+    0.84
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.338,
+   "spearman": 0.322,
+   "p": 0.2833,
+   "n_eff": 4.0,
+   "p_neff": 0.6625,
+   "ci95": [
+    -0.29,
+    0.76
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.552,
+   "spearman": -0.373,
+   "p": 0.0783,
+   "n_eff": 10.5,
+   "p_neff": 0.0783,
+   "ci95": [
+    -0.87,
+    0.07
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.044,
+   "spearman": 0.073,
+   "p": 0.8989,
+   "n_eff": 10.0,
+   "p_neff": 0.9049,
+   "ci95": [
+    -0.63,
+    0.57
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.541,
+   "spearman": 0.413,
+   "p": 0.069,
+   "n_eff": 4.0,
+   "p_neff": 0.4585,
+   "ci95": [
+    -0.05,
+    0.85
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.692,
+   "spearman": 0.662,
+   "p": 0.0126,
+   "n_eff": 4.0,
+   "p_neff": 0.308,
+   "ci95": [
+    0.2,
+    0.91
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.457,
+   "spearman": -0.373,
+   "p": 0.1576,
+   "n_eff": 10.0,
+   "p_neff": 0.1842,
+   "ci95": [
+    -0.83,
+    0.2
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.145,
+   "spearman": 0.273,
+   "p": 0.6697,
+   "n_eff": 10.8,
+   "p_neff": 0.6697,
+   "ci95": [
+    -0.5,
+    0.69
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.47,
+   "spearman": -0.553,
+   "p": 0.1232,
+   "n_eff": 4.8,
+   "p_neff": 0.4245,
+   "ci95": [
+    -0.82,
+    0.14
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": -0.687,
+   "spearman": -0.623,
+   "p": 0.0136,
+   "n_eff": 8.8,
+   "p_neff": 0.041,
+   "ci95": [
+    -0.9,
+    -0.19
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.155,
+   "spearman": 0.0,
+   "p": 0.6485,
+   "n_eff": 10.9,
+   "p_neff": 0.6485,
+   "ci95": [
+    -0.49,
+    0.69
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.341,
+   "spearman": -0.155,
+   "p": 0.3049,
+   "n_eff": 11.0,
+   "p_neff": 0.3049,
+   "ci95": [
+    -0.78,
+    0.33
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.36,
+   "spearman": -0.38,
+   "p": 0.2767,
+   "n_eff": 7.9,
+   "p_neff": 0.3809,
+   "ci95": [
+    -0.79,
+    0.31
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.422,
+   "spearman": 0.357,
+   "p": 0.1961,
+   "n_eff": 8.4,
+   "p_neff": 0.2977,
+   "ci95": [
+    -0.24,
+    0.82
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.202,
+   "spearman": 0.025,
+   "p": 0.6025,
+   "n_eff": 7.9,
+   "p_neff": 0.6316,
+   "ci95": [
+    -0.76,
+    0.53
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2025Q4"
+   ],
+   "verdict": "not significant",
+   "r": 0.478,
+   "spearman": 0.678,
+   "p": 0.1931,
+   "n_eff": 8.9,
+   "p_neff": 0.1931,
+   "ci95": [
+    -0.27,
+    0.87
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.215,
+   "spearman": -0.186,
+   "p": 0.5013,
+   "n_eff": 4.2,
+   "p_neff": 0.7846,
+   "ci95": [
+    -0.7,
+    0.41
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.655,
+   "spearman": -0.676,
+   "p": 0.0208,
+   "n_eff": 4.1,
+   "p_neff": 0.3449,
+   "ci95": [
+    -0.89,
+    -0.13
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.438,
+   "spearman": 0.3,
+   "p": 0.1776,
+   "n_eff": 10.7,
+   "p_neff": 0.1776,
+   "ci95": [
+    -0.22,
+    0.82
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.535,
+   "spearman": -0.718,
+   "p": 0.0902,
+   "n_eff": 10.7,
+   "p_neff": 0.0902,
+   "ci95": [
+    -0.86,
+    0.1
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.443,
+   "spearman": 0.263,
+   "p": 0.1488,
+   "n_eff": 4.0,
+   "p_neff": 0.5566,
+   "ci95": [
+    -0.18,
+    0.81
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.505,
+   "spearman": 0.186,
+   "p": 0.0941,
+   "n_eff": 4.0,
+   "p_neff": 0.4951,
+   "ci95": [
+    -0.1,
+    0.84
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.313,
+   "spearman": 0.082,
+   "p": 0.348,
+   "n_eff": 9.5,
+   "p_neff": 0.4115,
+   "ci95": [
+    -0.35,
+    0.77
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.044,
+   "spearman": -0.118,
+   "p": 0.8971,
+   "n_eff": 9.4,
+   "p_neff": 0.9099,
+   "ci95": [
+    -0.57,
+    0.63
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.323,
+   "spearman": -0.298,
+   "p": 0.3059,
+   "n_eff": 4.2,
+   "p_neff": 0.677,
+   "ci95": [
+    -0.76,
+    0.31
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.77,
+   "spearman": -0.795,
+   "p": 0.0034,
+   "n_eff": 4.0,
+   "p_neff": 0.2302,
+   "ci95": [
+    -0.93,
+    -0.35
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.394,
+   "spearman": 0.282,
+   "p": 0.2309,
+   "n_eff": 10.7,
+   "p_neff": 0.2309,
+   "ci95": [
+    -0.27,
+    0.8
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.571,
+   "spearman": -0.736,
+   "p": 0.0666,
+   "n_eff": 10.7,
+   "p_neff": 0.0666,
+   "ci95": [
+    -0.87,
+    0.04
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.432,
+   "spearman": -0.497,
+   "p": 0.1607,
+   "n_eff": 4.0,
+   "p_neff": 0.5679,
+   "ci95": [
+    -0.81,
+    0.19
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.393,
+   "spearman": -0.399,
+   "p": 0.2069,
+   "n_eff": 4.0,
+   "p_neff": 0.6075,
+   "ci95": [
+    -0.79,
+    0.23
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.438,
+   "spearman": 0.491,
+   "p": 0.178,
+   "n_eff": 11.0,
+   "p_neff": 0.178,
+   "ci95": [
+    -0.22,
+    0.82
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.749,
+   "spearman": 0.536,
+   "p": 0.008,
+   "n_eff": 11.0,
+   "p_neff": 0.008,
+   "ci95": [
+    0.27,
+    0.93
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.506,
+   "spearman": -0.812,
+   "p": 0.3054,
+   "n_eff": 4.0,
+   "p_neff": 0.4936,
+   "ci95": [
+    -0.93,
+    0.52
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": -0.88,
+   "spearman": -0.821,
+   "p": 0.0489,
+   "n_eff": 4.0,
+   "p_neff": 0.1198,
+   "ci95": [
+    -0.99,
+    0.01
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.611,
+   "spearman": 0.3,
+   "p": 0.2735,
+   "n_eff": 4.1,
+   "p_neff": 0.3889,
+   "ci95": [
+    -0.59,
+    0.97
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.491,
+   "spearman": -0.8,
+   "p": 0.5091,
+   "n_eff": 4.0,
+   "p_neff": 0.5091,
+   "ci95": [
+    -0.99,
+    0.89
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.402,
+   "spearman": -0.232,
+   "p": 0.4299,
+   "n_eff": 6.0,
+   "p_neff": 0.4299,
+   "ci95": [
+    -0.91,
+    0.61
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.55,
+   "spearman": -0.308,
+   "p": 0.3373,
+   "n_eff": 5.0,
+   "p_neff": 0.3373,
+   "ci95": [
+    -0.96,
+    0.65
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.103,
+   "spearman": 0.3,
+   "p": 0.8688,
+   "n_eff": 4.0,
+   "p_neff": 0.8968,
+   "ci95": [
+    -0.86,
+    0.9
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.729,
+   "spearman": -0.8,
+   "p": 0.271,
+   "n_eff": 4.0,
+   "p_neff": 0.271,
+   "ci95": [
+    -0.99,
+    0.78
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 7,
+   "quarters": [
+    "2024Q4",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": 0.851,
+   "spearman": 0.937,
+   "p": 0.0151,
+   "n_eff": 4.0,
+   "p_neff": 0.1487,
+   "ci95": [
+    0.27,
+    0.98
+   ],
+   "crit_r_05": 0.754,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.653,
+   "spearman": 0.812,
+   "p": 0.1598,
+   "n_eff": 4.0,
+   "p_neff": 0.3471,
+   "ci95": [
+    -0.34,
+    0.96
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.005,
+   "spearman": -0.086,
+   "p": 0.9924,
+   "n_eff": 4.6,
+   "p_neff": 0.9936,
+   "ci95": [
+    -0.81,
+    0.81
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.539,
+   "spearman": -0.3,
+   "p": 0.3483,
+   "n_eff": 4.0,
+   "p_neff": 0.4608,
+   "ci95": [
+    -0.96,
+    0.65
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.372,
+   "spearman": 0.294,
+   "p": 0.2332,
+   "n_eff": 9.6,
+   "p_neff": 0.2892,
+   "ci95": [
+    -0.26,
+    0.78
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.477,
+   "spearman": 0.336,
+   "p": 0.1165,
+   "n_eff": 8.6,
+   "p_neff": 0.1937,
+   "ci95": [
+    -0.13,
+    0.83
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.051,
+   "spearman": -0.055,
+   "p": 0.8814,
+   "n_eff": 10.2,
+   "p_neff": 0.8885,
+   "ci95": [
+    -0.57,
+    0.63
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.138,
+   "spearman": 0.236,
+   "p": 0.6859,
+   "n_eff": 10.2,
+   "p_neff": 0.7039,
+   "ci95": [
+    -0.5,
+    0.68
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.228,
+   "spearman": 0.245,
+   "p": 0.4756,
+   "n_eff": 7.2,
+   "p_neff": 0.6226,
+   "ci95": [
+    -0.4,
+    0.71
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.644,
+   "spearman": 0.497,
+   "p": 0.0238,
+   "n_eff": 6.4,
+   "p_neff": 0.1674,
+   "ci95": [
+    0.11,
+    0.89
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.463,
+   "spearman": -0.345,
+   "p": 0.1512,
+   "n_eff": 10.7,
+   "p_neff": 0.1512,
+   "ci95": [
+    -0.83,
+    0.19
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.257,
+   "spearman": 0.318,
+   "p": 0.4455,
+   "n_eff": 10.4,
+   "p_neff": 0.4735,
+   "ci95": [
+    -0.41,
+    0.74
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.293,
+   "spearman": 0.266,
+   "p": 0.3562,
+   "n_eff": 8.0,
+   "p_neff": 0.482,
+   "ci95": [
+    -0.34,
+    0.74
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.592,
+   "spearman": 0.476,
+   "p": 0.0427,
+   "n_eff": 6.9,
+   "p_neff": 0.1617,
+   "ci95": [
+    0.03,
+    0.87
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.175,
+   "spearman": -0.227,
+   "p": 0.6074,
+   "n_eff": 11.0,
+   "p_neff": 0.6074,
+   "ci95": [
+    -0.7,
+    0.47
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.207,
+   "spearman": 0.473,
+   "p": 0.5414,
+   "n_eff": 11.0,
+   "p_neff": 0.5414,
+   "ci95": [
+    -0.45,
+    0.72
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.343,
+   "spearman": 0.42,
+   "p": 0.2748,
+   "n_eff": 6.2,
+   "p_neff": 0.5055,
+   "ci95": [
+    -0.29,
+    0.77
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.374,
+   "spearman": 0.392,
+   "p": 0.231,
+   "n_eff": 6.8,
+   "p_neff": 0.4085,
+   "ci95": [
+    -0.25,
+    0.78
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.336,
+   "spearman": -0.364,
+   "p": 0.3118,
+   "n_eff": 11.0,
+   "p_neff": 0.3118,
+   "ci95": [
+    -0.78,
+    0.33
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.017,
+   "spearman": -0.2,
+   "p": 0.9604,
+   "n_eff": 11.0,
+   "p_neff": 0.9604,
+   "ci95": [
+    -0.61,
+    0.59
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.109,
+   "spearman": -0.091,
+   "p": 0.7367,
+   "n_eff": 6.0,
+   "p_neff": 0.8376,
+   "ci95": [
+    -0.5,
+    0.64
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.159,
+   "spearman": 0.091,
+   "p": 0.6206,
+   "n_eff": 6.1,
+   "p_neff": 0.7629,
+   "ci95": [
+    -0.46,
+    0.67
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.248,
+   "spearman": -0.2,
+   "p": 0.4629,
+   "n_eff": 11.0,
+   "p_neff": 0.4629,
+   "ci95": [
+    -0.74,
+    0.41
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": -0.749,
+   "spearman": -0.818,
+   "p": 0.0079,
+   "n_eff": 11.0,
+   "p_neff": 0.0079,
+   "ci95": [
+    -0.93,
+    -0.27
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": -0.754,
+   "spearman": -0.42,
+   "p": 0.0047,
+   "n_eff": 7.9,
+   "p_neff": 0.0309,
+   "ci95": [
+    -0.93,
+    -0.32
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.548,
+   "spearman": -0.385,
+   "p": 0.065,
+   "n_eff": 10.4,
+   "p_neff": 0.1009,
+   "ci95": [
+    -0.85,
+    0.04
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.309,
+   "spearman": -0.264,
+   "p": 0.3546,
+   "n_eff": 11.0,
+   "p_neff": 0.3546,
+   "ci95": [
+    -0.77,
+    0.36
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.405,
+   "spearman": -0.309,
+   "p": 0.2163,
+   "n_eff": 10.0,
+   "p_neff": 0.2453,
+   "ci95": [
+    -0.81,
+    0.26
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": -0.678,
+   "spearman": -0.691,
+   "p": 0.0219,
+   "n_eff": 9.5,
+   "p_neff": 0.0449,
+   "ci95": [
+    -0.91,
+    -0.13
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.432,
+   "spearman": -0.545,
+   "p": 0.1847,
+   "n_eff": 11.0,
+   "p_neff": 0.1847,
+   "ci95": [
+    -0.82,
+    0.23
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.453,
+   "spearman": -0.571,
+   "p": 0.2208,
+   "n_eff": 9.0,
+   "p_neff": 0.2208,
+   "ci95": [
+    -0.86,
+    0.3
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2025Q4"
+   ],
+   "verdict": "not significant",
+   "r": -0.431,
+   "spearman": -0.201,
+   "p": 0.2469,
+   "n_eff": 9.0,
+   "p_neff": 0.2469,
+   "ci95": [
+    -0.85,
+    0.33
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.16,
+   "spearman": 0.161,
+   "p": 0.6192,
+   "n_eff": 7.5,
+   "p_neff": 0.7317,
+   "ci95": [
+    -0.46,
+    0.67
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.01,
+   "spearman": -0.014,
+   "p": 0.975,
+   "n_eff": 7.4,
+   "p_neff": 0.9827,
+   "ci95": [
+    -0.58,
+    0.57
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.412,
+   "spearman": 0.591,
+   "p": 0.2083,
+   "n_eff": 11.0,
+   "p_neff": 0.2083,
+   "ci95": [
+    -0.25,
+    0.81
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.615,
+   "spearman": 0.718,
+   "p": 0.044,
+   "n_eff": 11.0,
+   "p_neff": 0.044,
+   "ci95": [
+    0.02,
+    0.89
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.078,
+   "spearman": -0.056,
+   "p": 0.8091,
+   "n_eff": 6.7,
+   "p_neff": 0.8676,
+   "ci95": [
+    -0.52,
+    0.62
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.08,
+   "spearman": -0.119,
+   "p": 0.8054,
+   "n_eff": 6.1,
+   "p_neff": 0.8807,
+   "ci95": [
+    -0.52,
+    0.63
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.14,
+   "spearman": 0.427,
+   "p": 0.6805,
+   "n_eff": 11.0,
+   "p_neff": 0.6805,
+   "ci95": [
+    -0.5,
+    0.68
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.103,
+   "spearman": 0.155,
+   "p": 0.7628,
+   "n_eff": 11.0,
+   "p_neff": 0.7628,
+   "ci95": [
+    -0.66,
+    0.53
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.14,
+   "spearman": 0.14,
+   "p": 0.6637,
+   "n_eff": 7.5,
+   "p_neff": 0.7642,
+   "ci95": [
+    -0.47,
+    0.66
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.036,
+   "spearman": -0.021,
+   "p": 0.9111,
+   "n_eff": 7.1,
+   "p_neff": 0.9386,
+   "ci95": [
+    -0.6,
+    0.55
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.4,
+   "spearman": 0.473,
+   "p": 0.2226,
+   "n_eff": 11.0,
+   "p_neff": 0.2226,
+   "ci95": [
+    -0.26,
+    0.81
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.669,
+   "spearman": 0.755,
+   "p": 0.0244,
+   "n_eff": 11.0,
+   "p_neff": 0.0244,
+   "ci95": [
+    0.12,
+    0.91
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.394,
+   "spearman": -0.35,
+   "p": 0.2044,
+   "n_eff": 6.8,
+   "p_neff": 0.3812,
+   "ci95": [
+    -0.79,
+    0.23
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.243,
+   "spearman": -0.161,
+   "p": 0.4475,
+   "n_eff": 6.8,
+   "p_neff": 0.6003,
+   "ci95": [
+    -0.72,
+    0.38
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.258,
+   "spearman": -0.236,
+   "p": 0.443,
+   "n_eff": 10.7,
+   "p_neff": 0.443,
+   "ci95": [
+    -0.74,
+    0.4
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.379,
+   "spearman": 0.391,
+   "p": 0.2505,
+   "n_eff": 10.9,
+   "p_neff": 0.2505,
+   "ci95": [
+    -0.29,
+    0.8
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": -0.87,
+   "spearman": -0.771,
+   "p": 0.0241,
+   "n_eff": 4.0,
+   "p_neff": 0.1296,
+   "ci95": [
+    -0.99,
+    -0.2
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.741,
+   "spearman": -0.9,
+   "p": 0.1521,
+   "n_eff": 4.0,
+   "p_neff": 0.2592,
+   "ci95": [
+    -0.98,
+    0.41
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.433,
+   "spearman": -0.1,
+   "p": 0.4669,
+   "n_eff": 5.0,
+   "p_neff": 0.4669,
+   "ci95": [
+    -0.95,
+    0.73
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.915,
+   "spearman": 0.8,
+   "p": 0.0852,
+   "n_eff": 4.0,
+   "p_neff": 0.0852,
+   "ci95": [
+    -0.38,
+    1.0
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.669,
+   "spearman": -0.657,
+   "p": 0.1464,
+   "n_eff": 6.0,
+   "p_neff": 0.1464,
+   "ci95": [
+    -0.96,
+    0.31
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.051,
+   "spearman": 0.0,
+   "p": 0.9345,
+   "n_eff": 5.0,
+   "p_neff": 0.9345,
+   "ci95": [
+    -0.89,
+    0.87
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.493,
+   "spearman": -0.4,
+   "p": 0.3987,
+   "n_eff": 5.0,
+   "p_neff": 0.3987,
+   "ci95": [
+    -0.96,
+    0.69
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.361,
+   "spearman": 0.8,
+   "p": 0.6391,
+   "n_eff": 4.0,
+   "p_neff": 0.6391,
+   "ci95": [
+    -0.92,
+    0.98
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 7,
+   "quarters": [
+    "2024Q4",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": 0.814,
+   "spearman": 0.786,
+   "p": 0.0257,
+   "n_eff": 4.0,
+   "p_neff": 0.1855,
+   "ci95": [
+    0.16,
+    0.97
+   ],
+   "crit_r_05": 0.754,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": 0.919,
+   "spearman": 0.829,
+   "p": 0.0096,
+   "n_eff": 4.0,
+   "p_neff": 0.0812,
+   "ci95": [
+    0.42,
+    0.99
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.012,
+   "spearman": -0.314,
+   "p": 0.9819,
+   "n_eff": 6.0,
+   "p_neff": 0.9819,
+   "ci95": [
+    -0.82,
+    0.81
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.536,
+   "spearman": 0.1,
+   "p": 0.3519,
+   "n_eff": 5.0,
+   "p_neff": 0.3519,
+   "ci95": [
+    -0.66,
+    0.96
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.367,
+   "spearman": 0.416,
+   "p": 0.2406,
+   "n_eff": 11.9,
+   "p_neff": 0.2406,
+   "ci95": [
+    -0.26,
+    0.78
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.116,
+   "spearman": 0.275,
+   "p": 0.7203,
+   "n_eff": 11.8,
+   "p_neff": 0.7203,
+   "ci95": [
+    -0.49,
+    0.65
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.101,
+   "spearman": 0.136,
+   "p": 0.7674,
+   "n_eff": 9.1,
+   "p_neff": 0.7958,
+   "ci95": [
+    -0.53,
+    0.66
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.559,
+   "spearman": -0.591,
+   "p": 0.0739,
+   "n_eff": 9.2,
+   "p_neff": 0.1178,
+   "ci95": [
+    -0.87,
+    0.06
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.533,
+   "spearman": 0.507,
+   "p": 0.0743,
+   "n_eff": 11.7,
+   "p_neff": 0.0743,
+   "ci95": [
+    -0.06,
+    0.85
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.584,
+   "spearman": 0.655,
+   "p": 0.046,
+   "n_eff": 11.6,
+   "p_neff": 0.046,
+   "ci95": [
+    0.02,
+    0.87
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.264,
+   "spearman": -0.273,
+   "p": 0.433,
+   "n_eff": 10.2,
+   "p_neff": 0.4613,
+   "ci95": [
+    -0.75,
+    0.4
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.378,
+   "spearman": 0.327,
+   "p": 0.2523,
+   "n_eff": 9.5,
+   "p_neff": 0.2821,
+   "ci95": [
+    -0.29,
+    0.8
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.519,
+   "spearman": 0.514,
+   "p": 0.0841,
+   "n_eff": 11.8,
+   "p_neff": 0.0841,
+   "ci95": [
+    -0.08,
+    0.84
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.394,
+   "spearman": 0.458,
+   "p": 0.2045,
+   "n_eff": 11.7,
+   "p_neff": 0.2045,
+   "ci95": [
+    -0.23,
+    0.79
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.026,
+   "spearman": -0.109,
+   "p": 0.9387,
+   "n_eff": 11.0,
+   "p_neff": 0.9387,
+   "ci95": [
+    -0.62,
+    0.58
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.285,
+   "spearman": -0.218,
+   "p": 0.3948,
+   "n_eff": 11.0,
+   "p_neff": 0.3948,
+   "ci95": [
+    -0.76,
+    0.38
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.345,
+   "spearman": 0.261,
+   "p": 0.2716,
+   "n_eff": 11.6,
+   "p_neff": 0.2716,
+   "ci95": [
+    -0.29,
+    0.77
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.239,
+   "spearman": 0.162,
+   "p": 0.4543,
+   "n_eff": 11.7,
+   "p_neff": 0.4543,
+   "ci95": [
+    -0.39,
+    0.71
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.28,
+   "spearman": -0.082,
+   "p": 0.4044,
+   "n_eff": 11.0,
+   "p_neff": 0.4044,
+   "ci95": [
+    -0.75,
+    0.38
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.083,
+   "spearman": 0.282,
+   "p": 0.8091,
+   "n_eff": 11.0,
+   "p_neff": 0.8091,
+   "ci95": [
+    -0.54,
+    0.65
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.492,
+   "spearman": 0.514,
+   "p": 0.1043,
+   "n_eff": 11.6,
+   "p_neff": 0.1043,
+   "ci95": [
+    -0.11,
+    0.83
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.586,
+   "spearman": 0.613,
+   "p": 0.0454,
+   "n_eff": 11.6,
+   "p_neff": 0.0454,
+   "ci95": [
+    0.02,
+    0.87
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.001,
+   "spearman": -0.082,
+   "p": 0.9985,
+   "n_eff": 11.0,
+   "p_neff": 0.9985,
+   "ci95": [
+    -0.6,
+    0.6
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.242,
+   "spearman": 0.291,
+   "p": 0.4737,
+   "n_eff": 11.0,
+   "p_neff": 0.4737,
+   "ci95": [
+    -0.42,
+    0.74
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.254,
+   "spearman": -0.366,
+   "p": 0.4263,
+   "n_eff": 11.8,
+   "p_neff": 0.4263,
+   "ci95": [
+    -0.72,
+    0.37
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.262,
+   "spearman": -0.197,
+   "p": 0.4107,
+   "n_eff": 11.9,
+   "p_neff": 0.4107,
+   "ci95": [
+    -0.73,
+    0.37
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.278,
+   "spearman": -0.464,
+   "p": 0.4072,
+   "n_eff": 11.0,
+   "p_neff": 0.4072,
+   "ci95": [
+    -0.75,
+    0.39
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.147,
+   "spearman": 0.336,
+   "p": 0.6659,
+   "n_eff": 8.6,
+   "p_neff": 0.7055,
+   "ci95": [
+    -0.5,
+    0.69
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.032,
+   "spearman": -0.097,
+   "p": 0.9257,
+   "n_eff": 11.0,
+   "p_neff": 0.9257,
+   "ci95": [
+    -0.62,
+    0.58
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.434,
+   "spearman": 0.379,
+   "p": 0.1828,
+   "n_eff": 10.1,
+   "p_neff": 0.2106,
+   "ci95": [
+    -0.22,
+    0.82
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.185,
+   "spearman": -0.227,
+   "p": 0.6345,
+   "n_eff": 9.0,
+   "p_neff": 0.6345,
+   "ci95": [
+    -0.76,
+    0.55
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2025Q4"
+   ],
+   "verdict": "not significant",
+   "r": 0.297,
+   "spearman": 0.393,
+   "p": 0.4373,
+   "n_eff": 9.0,
+   "p_neff": 0.4373,
+   "ci95": [
+    -0.46,
+    0.8
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.497,
+   "spearman": -0.43,
+   "p": 0.1005,
+   "n_eff": 11.7,
+   "p_neff": 0.1005,
+   "ci95": [
+    -0.83,
+    0.11
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.478,
+   "spearman": -0.43,
+   "p": 0.1161,
+   "n_eff": 11.7,
+   "p_neff": 0.1161,
+   "ci95": [
+    -0.83,
+    0.13
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.438,
+   "spearman": -0.382,
+   "p": 0.1784,
+   "n_eff": 11.0,
+   "p_neff": 0.1784,
+   "ci95": [
+    -0.82,
+    0.22
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.022,
+   "spearman": -0.164,
+   "p": 0.9498,
+   "n_eff": 11.0,
+   "p_neff": 0.9498,
+   "ci95": [
+    -0.59,
+    0.61
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.312,
+   "spearman": 0.254,
+   "p": 0.3237,
+   "n_eff": 11.7,
+   "p_neff": 0.3237,
+   "ci95": [
+    -0.32,
+    0.75
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.389,
+   "spearman": 0.31,
+   "p": 0.211,
+   "n_eff": 11.6,
+   "p_neff": 0.211,
+   "ci95": [
+    -0.24,
+    0.79
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.091,
+   "spearman": -0.036,
+   "p": 0.7902,
+   "n_eff": 11.0,
+   "p_neff": 0.7902,
+   "ci95": [
+    -0.54,
+    0.66
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.003,
+   "spearman": -0.2,
+   "p": 0.992,
+   "n_eff": 11.0,
+   "p_neff": 0.992,
+   "ci95": [
+    -0.6,
+    0.6
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.571,
+   "spearman": -0.556,
+   "p": 0.0526,
+   "n_eff": 11.7,
+   "p_neff": 0.0526,
+   "ci95": [
+    -0.86,
+    0.0
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.569,
+   "spearman": -0.563,
+   "p": 0.0537,
+   "n_eff": 11.7,
+   "p_neff": 0.0537,
+   "ci95": [
+    -0.86,
+    0.01
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.472,
+   "spearman": -0.418,
+   "p": 0.1424,
+   "n_eff": 11.0,
+   "p_neff": 0.1424,
+   "ci95": [
+    -0.84,
+    0.18
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.023,
+   "spearman": -0.155,
+   "p": 0.9455,
+   "n_eff": 11.0,
+   "p_neff": 0.9455,
+   "ci95": [
+    -0.58,
+    0.61
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.193,
+   "spearman": -0.204,
+   "p": 0.5476,
+   "n_eff": 11.7,
+   "p_neff": 0.5476,
+   "ci95": [
+    -0.69,
+    0.43
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.441,
+   "spearman": -0.444,
+   "p": 0.151,
+   "n_eff": 11.7,
+   "p_neff": 0.151,
+   "ci95": [
+    -0.81,
+    0.18
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.625,
+   "spearman": 0.727,
+   "p": 0.0398,
+   "n_eff": 10.2,
+   "p_neff": 0.0534,
+   "ci95": [
+    0.04,
+    0.89
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.231,
+   "spearman": -0.382,
+   "p": 0.4952,
+   "n_eff": 10.7,
+   "p_neff": 0.4952,
+   "ci95": [
+    -0.73,
+    0.43
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.116,
+   "spearman": -0.348,
+   "p": 0.8266,
+   "n_eff": 6.0,
+   "p_neff": 0.8266,
+   "ci95": [
+    -0.85,
+    0.77
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.505,
+   "spearman": -0.1,
+   "p": 0.3855,
+   "n_eff": 5.0,
+   "p_neff": 0.3855,
+   "ci95": [
+    -0.96,
+    0.68
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.29,
+   "spearman": -0.5,
+   "p": 0.6355,
+   "n_eff": 4.0,
+   "p_neff": 0.7096,
+   "ci95": [
+    -0.93,
+    0.8
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.632,
+   "spearman": -0.4,
+   "p": 0.3685,
+   "n_eff": 4.0,
+   "p_neff": 0.3685,
+   "ci95": [
+    -0.99,
+    0.84
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.682,
+   "spearman": -0.667,
+   "p": 0.1359,
+   "n_eff": 4.9,
+   "p_neff": 0.205,
+   "ci95": [
+    -0.96,
+    0.29
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.487,
+   "spearman": 0.6,
+   "p": 0.4054,
+   "n_eff": 4.1,
+   "p_neff": 0.513,
+   "ci95": [
+    -0.69,
+    0.96
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.877,
+   "spearman": -0.9,
+   "p": 0.0507,
+   "n_eff": 4.0,
+   "p_neff": 0.1229,
+   "ci95": [
+    -0.99,
+    0.02
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.637,
+   "spearman": 0.6,
+   "p": 0.3627,
+   "n_eff": 4.0,
+   "p_neff": 0.3627,
+   "ci95": [
+    -0.84,
+    0.99
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 7,
+   "quarters": [
+    "2024Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.137,
+   "spearman": 0.324,
+   "p": 0.7694,
+   "n_eff": 7.0,
+   "p_neff": 0.7694,
+   "ci95": [
+    -0.69,
+    0.81
+   ],
+   "crit_r_05": 0.754,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.129,
+   "spearman": 0.116,
+   "p": 0.8079,
+   "n_eff": 6.0,
+   "p_neff": 0.8079,
+   "ci95": [
+    -0.76,
+    0.85
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.63,
+   "spearman": -0.371,
+   "p": 0.1805,
+   "n_eff": 4.0,
+   "p_neff": 0.3705,
+   "ci95": [
+    -0.95,
+    0.37
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.341,
+   "spearman": 0.5,
+   "p": 0.5749,
+   "n_eff": 4.0,
+   "p_neff": 0.6594,
+   "ci95": [
+    -0.77,
+    0.94
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.087,
+   "spearman": -0.084,
+   "p": 0.7871,
+   "n_eff": 7.1,
+   "p_neff": 0.8522,
+   "ci95": [
+    -0.63,
+    0.51
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.343,
+   "spearman": -0.378,
+   "p": 0.2749,
+   "n_eff": 5.2,
+   "p_neff": 0.5719,
+   "ci95": [
+    -0.77,
+    0.29
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.175,
+   "spearman": 0.145,
+   "p": 0.6058,
+   "n_eff": 11.0,
+   "p_neff": 0.6058,
+   "ci95": [
+    -0.47,
+    0.7
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.218,
+   "spearman": -0.245,
+   "p": 0.5194,
+   "n_eff": 11.0,
+   "p_neff": 0.5194,
+   "ci95": [
+    -0.72,
+    0.44
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.616,
+   "spearman": -0.692,
+   "p": 0.0328,
+   "n_eff": 4.0,
+   "p_neff": 0.3835,
+   "ci95": [
+    -0.88,
+    -0.07
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.618,
+   "spearman": -0.608,
+   "p": 0.0321,
+   "n_eff": 4.0,
+   "p_neff": 0.3818,
+   "ci95": [
+    -0.88,
+    -0.07
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.123,
+   "spearman": -0.045,
+   "p": 0.7195,
+   "n_eff": 11.0,
+   "p_neff": 0.7195,
+   "ci95": [
+    -0.67,
+    0.52
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.442,
+   "spearman": 0.5,
+   "p": 0.1731,
+   "n_eff": 11.0,
+   "p_neff": 0.1731,
+   "ci95": [
+    -0.21,
+    0.82
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.376,
+   "spearman": -0.301,
+   "p": 0.2283,
+   "n_eff": 4.3,
+   "p_neff": 0.624,
+   "ci95": [
+    -0.78,
+    0.25
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.51,
+   "spearman": -0.448,
+   "p": 0.0904,
+   "n_eff": 4.0,
+   "p_neff": 0.4901,
+   "ci95": [
+    -0.84,
+    0.09
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.073,
+   "spearman": 0.018,
+   "p": 0.83,
+   "n_eff": 11.0,
+   "p_neff": 0.83,
+   "ci95": [
+    -0.55,
+    0.64
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.038,
+   "spearman": 0.136,
+   "p": 0.9121,
+   "n_eff": 11.0,
+   "p_neff": 0.9121,
+   "ci95": [
+    -0.58,
+    0.62
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.924,
+   "spearman": -0.804,
+   "p": 0.0,
+   "n_eff": 4.0,
+   "p_neff": 0.0764,
+   "ci95": [
+    -0.98,
+    -0.74
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.641,
+   "spearman": -0.441,
+   "p": 0.0248,
+   "n_eff": 4.0,
+   "p_neff": 0.3593,
+   "ci95": [
+    -0.89,
+    -0.11
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": -0.628,
+   "spearman": -0.6,
+   "p": 0.0385,
+   "n_eff": 10.9,
+   "p_neff": 0.0385,
+   "ci95": [
+    -0.89,
+    -0.05
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.352,
+   "spearman": -0.173,
+   "p": 0.2886,
+   "n_eff": 10.8,
+   "p_neff": 0.2886,
+   "ci95": [
+    -0.79,
+    0.31
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.831,
+   "spearman": -0.832,
+   "p": 0.0008,
+   "n_eff": 4.0,
+   "p_neff": 0.1692,
+   "ci95": [
+    -0.95,
+    -0.49
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": -0.897,
+   "spearman": -0.839,
+   "p": 0.0001,
+   "n_eff": 4.0,
+   "p_neff": 0.1035,
+   "ci95": [
+    -0.97,
+    -0.66
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.154,
+   "spearman": -0.318,
+   "p": 0.6505,
+   "n_eff": 10.8,
+   "p_neff": 0.6505,
+   "ci95": [
+    -0.69,
+    0.49
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.276,
+   "spearman": -0.4,
+   "p": 0.4115,
+   "n_eff": 11.0,
+   "p_neff": 0.4115,
+   "ci95": [
+    -0.75,
+    0.39
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.164,
+   "spearman": 0.0,
+   "p": 0.6101,
+   "n_eff": 4.1,
+   "p_neff": 0.8358,
+   "ci95": [
+    -0.45,
+    0.67
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.212,
+   "spearman": 0.161,
+   "p": 0.509,
+   "n_eff": 8.4,
+   "p_neff": 0.6148,
+   "ci95": [
+    -0.41,
+    0.7
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.47,
+   "spearman": -0.418,
+   "p": 0.145,
+   "n_eff": 11.0,
+   "p_neff": 0.145,
+   "ci95": [
+    -0.83,
+    0.18
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.131,
+   "spearman": -0.155,
+   "p": 0.7021,
+   "n_eff": 11.0,
+   "p_neff": 0.7021,
+   "ci95": [
+    -0.68,
+    0.51
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.141,
+   "spearman": 0.188,
+   "p": 0.6789,
+   "n_eff": 7.1,
+   "p_neff": 0.7628,
+   "ci95": [
+    -0.5,
+    0.68
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.074,
+   "spearman": 0.05,
+   "p": 0.8295,
+   "n_eff": 7.7,
+   "p_neff": 0.8623,
+   "ci95": [
+    -0.55,
+    0.65
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.024,
+   "spearman": -0.134,
+   "p": 0.9514,
+   "n_eff": 7.7,
+   "p_neff": 0.9553,
+   "ci95": [
+    -0.65,
+    0.68
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2025Q4"
+   ],
+   "verdict": "not significant",
+   "r": 0.103,
+   "spearman": 0.159,
+   "p": 0.7914,
+   "n_eff": 8.8,
+   "p_neff": 0.7914,
+   "ci95": [
+    -0.6,
+    0.72
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.692,
+   "spearman": 0.545,
+   "p": 0.0127,
+   "n_eff": 4.0,
+   "p_neff": 0.3084,
+   "ci95": [
+    0.2,
+    0.91
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.63,
+   "spearman": 0.524,
+   "p": 0.028,
+   "n_eff": 4.0,
+   "p_neff": 0.3695,
+   "ci95": [
+    0.09,
+    0.88
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.102,
+   "spearman": 0.1,
+   "p": 0.7644,
+   "n_eff": 10.9,
+   "p_neff": 0.7644,
+   "ci95": [
+    -0.66,
+    0.53
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.302,
+   "spearman": 0.336,
+   "p": 0.3671,
+   "n_eff": 10.9,
+   "p_neff": 0.3671,
+   "ci95": [
+    -0.36,
+    0.76
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.113,
+   "spearman": -0.035,
+   "p": 0.7266,
+   "n_eff": 4.0,
+   "p_neff": 0.887,
+   "ci95": [
+    -0.65,
+    0.49
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.482,
+   "spearman": -0.455,
+   "p": 0.1127,
+   "n_eff": 4.0,
+   "p_neff": 0.5182,
+   "ci95": [
+    -0.83,
+    0.13
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.374,
+   "spearman": 0.409,
+   "p": 0.2569,
+   "n_eff": 10.8,
+   "p_neff": 0.2569,
+   "ci95": [
+    -0.29,
+    0.8
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.148,
+   "spearman": 0.064,
+   "p": 0.6638,
+   "n_eff": 10.7,
+   "p_neff": 0.6638,
+   "ci95": [
+    -0.5,
+    0.69
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.716,
+   "spearman": 0.587,
+   "p": 0.0088,
+   "n_eff": 4.0,
+   "p_neff": 0.2838,
+   "ci95": [
+    0.24,
+    0.91
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.74,
+   "spearman": 0.643,
+   "p": 0.006,
+   "n_eff": 4.0,
+   "p_neff": 0.2605,
+   "ci95": [
+    0.29,
+    0.92
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.18,
+   "spearman": -0.018,
+   "p": 0.5967,
+   "n_eff": 11.0,
+   "p_neff": 0.5967,
+   "ci95": [
+    -0.7,
+    0.47
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.283,
+   "spearman": 0.355,
+   "p": 0.3999,
+   "n_eff": 11.0,
+   "p_neff": 0.3999,
+   "ci95": [
+    -0.38,
+    0.75
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.935,
+   "spearman": 0.958,
+   "p": 0.0,
+   "n_eff": 4.0,
+   "p_neff": 0.0649,
+   "ci95": [
+    0.78,
+    0.98
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.806,
+   "spearman": 0.741,
+   "p": 0.0015,
+   "n_eff": 4.0,
+   "p_neff": 0.1937,
+   "ci95": [
+    0.43,
+    0.94
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": 0.631,
+   "spearman": 0.664,
+   "p": 0.0374,
+   "n_eff": 11.0,
+   "p_neff": 0.0374,
+   "ci95": [
+    0.05,
+    0.89
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.038,
+   "spearman": -0.018,
+   "p": 0.9128,
+   "n_eff": 11.0,
+   "p_neff": 0.9128,
+   "ci95": [
+    -0.62,
+    0.58
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.339,
+   "spearman": -0.543,
+   "p": 0.5116,
+   "n_eff": 6.0,
+   "p_neff": 0.5116,
+   "ci95": [
+    -0.9,
+    0.65
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.821,
+   "spearman": -0.3,
+   "p": 0.0885,
+   "n_eff": 5.0,
+   "p_neff": 0.0885,
+   "ci95": [
+    -0.99,
+    0.22
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.307,
+   "spearman": -0.2,
+   "p": 0.6157,
+   "n_eff": 4.0,
+   "p_neff": 0.6933,
+   "ci95": [
+    -0.94,
+    0.79
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.506,
+   "spearman": -0.4,
+   "p": 0.4938,
+   "n_eff": 4.0,
+   "p_neff": 0.4938,
+   "ci95": [
+    -0.99,
+    0.89
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": -0.879,
+   "spearman": -0.943,
+   "p": 0.0212,
+   "n_eff": 4.2,
+   "p_neff": 0.1212,
+   "ci95": [
+    -0.99,
+    -0.23
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.272,
+   "spearman": 0.5,
+   "p": 0.6576,
+   "n_eff": 4.6,
+   "p_neff": 0.6576,
+   "ci95": [
+    -0.8,
+    0.93
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": -0.923,
+   "spearman": -0.8,
+   "p": 0.0254,
+   "n_eff": 4.0,
+   "p_neff": 0.077,
+   "ci95": [
+    -1.0,
+    -0.22
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.566,
+   "spearman": 0.6,
+   "p": 0.4337,
+   "n_eff": 4.0,
+   "p_neff": 0.4337,
+   "ci95": [
+    -0.87,
+    0.99
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 7,
+   "quarters": [
+    "2024Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.277,
+   "spearman": -0.286,
+   "p": 0.5475,
+   "n_eff": 7.0,
+   "p_neff": 0.5475,
+   "ci95": [
+    -0.85,
+    0.6
+   ],
+   "crit_r_05": 0.754,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.375,
+   "spearman": 0.314,
+   "p": 0.4634,
+   "n_eff": 6.0,
+   "p_neff": 0.4634,
+   "ci95": [
+    -0.63,
+    0.91
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.521,
+   "spearman": -0.6,
+   "p": 0.2888,
+   "n_eff": 4.9,
+   "p_neff": 0.3676,
+   "ci95": [
+    -0.94,
+    0.5
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.41,
+   "spearman": 0.2,
+   "p": 0.4933,
+   "n_eff": 4.0,
+   "p_neff": 0.5903,
+   "ci95": [
+    -0.74,
+    0.95
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "likely trend artefact",
+   "r": 0.628,
+   "spearman": 0.671,
+   "p": 0.0287,
+   "n_eff": 8.5,
+   "p_neff": 0.0699,
+   "ci95": [
+    0.09,
+    0.88
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.152,
+   "spearman": 0.42,
+   "p": 0.6379,
+   "n_eff": 7.0,
+   "p_neff": 0.7454,
+   "ci95": [
+    -0.46,
+    0.67
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.596,
+   "spearman": 0.427,
+   "p": 0.0532,
+   "n_eff": 11.0,
+   "p_neff": 0.0532,
+   "ci95": [
+    -0.01,
+    0.88
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_dom_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.174,
+   "spearman": -0.127,
+   "p": 0.6084,
+   "n_eff": 11.0,
+   "p_neff": 0.6084,
+   "ci95": [
+    -0.7,
+    0.48
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.184,
+   "spearman": 0.168,
+   "p": 0.5676,
+   "n_eff": 5.3,
+   "p_neff": 0.7674,
+   "ci95": [
+    -0.44,
+    0.69
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.231,
+   "spearman": 0.273,
+   "p": 0.4691,
+   "n_eff": 4.2,
+   "p_neff": 0.7685,
+   "ci95": [
+    -0.39,
+    0.71
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.126,
+   "spearman": 0.155,
+   "p": 0.7109,
+   "n_eff": 11.0,
+   "p_neff": 0.7109,
+   "ci95": [
+    -0.51,
+    0.68
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_imp_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.35,
+   "spearman": 0.355,
+   "p": 0.2913,
+   "n_eff": 11.0,
+   "p_neff": 0.2913,
+   "ci95": [
+    -0.32,
+    0.79
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.452,
+   "spearman": 0.594,
+   "p": 0.1405,
+   "n_eff": 6.2,
+   "p_neff": 0.3686,
+   "ci95": [
+    -0.17,
+    0.81
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.222,
+   "spearman": 0.476,
+   "p": 0.489,
+   "n_eff": 4.8,
+   "p_neff": 0.7203,
+   "ci95": [
+    -0.4,
+    0.71
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.521,
+   "spearman": 0.382,
+   "p": 0.1006,
+   "n_eff": 10.8,
+   "p_neff": 0.1006,
+   "ci95": [
+    -0.12,
+    0.85
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "saar_total_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.048,
+   "spearman": 0.136,
+   "p": 0.889,
+   "n_eff": 10.9,
+   "p_neff": 0.889,
+   "ci95": [
+    -0.57,
+    0.63
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.323,
+   "spearman": -0.203,
+   "p": 0.3063,
+   "n_eff": 4.0,
+   "p_neff": 0.6773,
+   "ci95": [
+    -0.76,
+    0.31
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.148,
+   "spearman": -0.021,
+   "p": 0.6466,
+   "n_eff": 4.8,
+   "p_neff": 0.8125,
+   "ci95": [
+    -0.67,
+    0.47
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "holds up",
+   "r": -0.699,
+   "spearman": -0.791,
+   "p": 0.0167,
+   "n_eff": 10.4,
+   "p_neff": 0.0245,
+   "ci95": [
+    -0.92,
+    -0.17
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "loan_rate_level",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.302,
+   "spearman": -0.245,
+   "p": 0.3675,
+   "n_eff": 9.7,
+   "p_neff": 0.3972,
+   "ci95": [
+    -0.76,
+    0.36
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.363,
+   "spearman": -0.469,
+   "p": 0.2456,
+   "n_eff": 4.0,
+   "p_neff": 0.6366,
+   "ci95": [
+    -0.78,
+    0.27
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.292,
+   "spearman": -0.21,
+   "p": 0.3567,
+   "n_eff": 4.0,
+   "p_neff": 0.7078,
+   "ci95": [
+    -0.74,
+    0.34
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.304,
+   "spearman": -0.291,
+   "p": 0.3629,
+   "n_eff": 9.7,
+   "p_neff": 0.3926,
+   "ci95": [
+    -0.76,
+    0.36
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "loan_rate_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.407,
+   "spearman": -0.491,
+   "p": 0.2138,
+   "n_eff": 10.7,
+   "p_neff": 0.2138,
+   "ci95": [
+    -0.81,
+    0.25
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.435,
+   "spearman": -0.469,
+   "p": 0.1572,
+   "n_eff": 6.1,
+   "p_neff": 0.3882,
+   "ci95": [
+    -0.81,
+    0.18
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.48,
+   "spearman": -0.629,
+   "p": 0.1139,
+   "n_eff": 9.5,
+   "p_neff": 0.1599,
+   "ci95": [
+    -0.83,
+    0.13
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.165,
+   "spearman": -0.264,
+   "p": 0.628,
+   "n_eff": 10.9,
+   "p_neff": 0.628,
+   "ci95": [
+    -0.7,
+    0.48
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "gas_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.463,
+   "spearman": -0.364,
+   "p": 0.1517,
+   "n_eff": 11.0,
+   "p_neff": 0.1517,
+   "ci95": [
+    -0.83,
+    0.19
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.212,
+   "spearman": -0.462,
+   "p": 0.5316,
+   "n_eff": 8.4,
+   "p_neff": 0.6144,
+   "ci95": [
+    -0.72,
+    0.44
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "levels",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.213,
+   "spearman": 0.128,
+   "p": 0.5291,
+   "n_eff": 8.8,
+   "p_neff": 0.5819,
+   "ci95": [
+    -0.44,
+    0.72
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 0,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.002,
+   "spearman": -0.168,
+   "p": 0.9963,
+   "n_eff": 9.0,
+   "p_neff": 0.9963,
+   "ci95": [
+    -0.67,
+    0.66
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "tx_unemp_chg",
+   "mode": "changes",
+   "lag": 1,
+   "n": 9,
+   "quarters": [
+    "2023Q4",
+    "2025Q4"
+   ],
+   "verdict": "not significant",
+   "r": 0.087,
+   "spearman": 0.042,
+   "p": 0.8242,
+   "n_eff": 8.9,
+   "p_neff": 0.8242,
+   "ci95": [
+    -0.61,
+    0.71
+   ],
+   "crit_r_05": 0.666,
+   "flag": "low power: |r| must exceed ~0.67 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.44,
+   "spearman": 0.49,
+   "p": 0.1521,
+   "n_eff": 5.6,
+   "p_neff": 0.3823,
+   "ci95": [
+    -0.18,
+    0.81
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.008,
+   "spearman": -0.021,
+   "p": 0.9792,
+   "n_eff": 5.5,
+   "p_neff": 0.9873,
+   "ci95": [
+    -0.58,
+    0.57
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.204,
+   "spearman": 0.336,
+   "p": 0.5478,
+   "n_eff": 10.6,
+   "p_neff": 0.5478,
+   "ci95": [
+    -0.45,
+    0.72
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_used_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.025,
+   "spearman": 0.164,
+   "p": 0.9416,
+   "n_eff": 10.6,
+   "p_neff": 0.9416,
+   "ci95": [
+    -0.58,
+    0.62
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.125,
+   "spearman": 0.266,
+   "p": 0.6978,
+   "n_eff": 4.7,
+   "p_neff": 0.8408,
+   "ci95": [
+    -0.48,
+    0.65
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.161,
+   "spearman": -0.238,
+   "p": 0.6167,
+   "n_eff": 4.0,
+   "p_neff": 0.8388,
+   "ci95": [
+    -0.67,
+    0.45
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.407,
+   "spearman": 0.509,
+   "p": 0.2136,
+   "n_eff": 9.1,
+   "p_neff": 0.2764,
+   "ci95": [
+    -0.25,
+    0.81
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_new_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.04,
+   "spearman": 0.173,
+   "p": 0.9077,
+   "n_eff": 9.0,
+   "p_neff": 0.9192,
+   "ci95": [
+    -0.57,
+    0.62
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.408,
+   "spearman": 0.406,
+   "p": 0.1884,
+   "n_eff": 5.6,
+   "p_neff": 0.4224,
+   "ci95": [
+    -0.22,
+    0.8
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.047,
+   "spearman": -0.007,
+   "p": 0.8858,
+   "n_eff": 5.1,
+   "p_neff": 0.9407,
+   "ci95": [
+    -0.54,
+    0.6
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.132,
+   "spearman": 0.164,
+   "p": 0.6994,
+   "n_eff": 10.7,
+   "p_neff": 0.6994,
+   "ci95": [
+    -0.51,
+    0.68
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "cpi_used_minus_new",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.017,
+   "spearman": 0.209,
+   "p": 0.96,
+   "n_eff": 10.6,
+   "p_neff": 0.96,
+   "ci95": [
+    -0.59,
+    0.61
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.41,
+   "spearman": 0.287,
+   "p": 0.1854,
+   "n_eff": 4.8,
+   "p_neff": 0.4928,
+   "ci95": [
+    -0.21,
+    0.8
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 12,
+   "quarters": [
+    "2023Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.312,
+   "spearman": 0.294,
+   "p": 0.323,
+   "n_eff": 4.8,
+   "p_neff": 0.6089,
+   "ci95": [
+    -0.32,
+    0.75
+   ],
+   "crit_r_05": 0.576,
+   "flag": "low power: |r| must exceed ~0.58 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.43,
+   "spearman": 0.491,
+   "p": 0.1874,
+   "n_eff": 11.0,
+   "p_neff": 0.1874,
+   "ci95": [
+    -0.23,
+    0.82
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "muvvi_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 11,
+   "quarters": [
+    "2023Q4",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.466,
+   "spearman": 0.445,
+   "p": 0.1482,
+   "n_eff": 11.0,
+   "p_neff": 0.1482,
+   "ci95": [
+    -0.19,
+    0.83
+   ],
+   "crit_r_05": 0.602,
+   "flag": "low power: |r| must exceed ~0.60 to be nominally significant"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.622,
+   "spearman": -0.943,
+   "p": 0.1874,
+   "n_eff": 4.0,
+   "p_neff": 0.3781,
+   "ci95": [
+    -0.95,
+    0.38
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": -0.975,
+   "spearman": -0.7,
+   "p": 0.0048,
+   "n_eff": 4.0,
+   "p_neff": 0.0253,
+   "ci95": [
+    -1.0,
+    -0.66
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.257,
+   "spearman": 0.2,
+   "p": 0.6759,
+   "n_eff": 4.1,
+   "p_neff": 0.7426,
+   "ci95": [
+    -0.81,
+    0.93
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "retail_listing_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.73,
+   "spearman": -0.6,
+   "p": 0.2697,
+   "n_eff": 4.0,
+   "p_neff": 0.2697,
+   "ci95": [
+    -0.99,
+    0.77
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.668,
+   "spearman": -0.771,
+   "p": 0.147,
+   "n_eff": 6.0,
+   "p_neff": 0.147,
+   "ci95": [
+    -0.96,
+    0.31
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "levels",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.27,
+   "spearman": 0.2,
+   "p": 0.66,
+   "n_eff": 5.0,
+   "p_neff": 0.66,
+   "ci95": [
+    -0.93,
+    0.8
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 0,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.545,
+   "spearman": -0.5,
+   "p": 0.3423,
+   "n_eff": 4.0,
+   "p_neff": 0.4552,
+   "ci95": [
+    -0.96,
+    0.65
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "retail_minus_wholesale",
+   "mode": "changes",
+   "lag": 1,
+   "n": 4,
+   "quarters": [
+    "2025Q3",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.336,
+   "spearman": -0.4,
+   "p": 0.6637,
+   "n_eff": 4.0,
+   "p_neff": 0.6637,
+   "ci95": [
+    -0.98,
+    0.92
+   ],
+   "crit_r_05": 0.95,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 0,
+   "n": 7,
+   "quarters": [
+    "2024Q4",
+    "2026Q2"
+   ],
+   "verdict": "too few observations",
+   "r": 0.771,
+   "spearman": 0.643,
+   "p": 0.0425,
+   "n_eff": 4.0,
+   "p_neff": 0.2292,
+   "ci95": [
+    0.04,
+    0.96
+   ],
+   "crit_r_05": 0.754,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "levels",
+   "lag": 1,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": 0.752,
+   "spearman": 0.886,
+   "p": 0.0848,
+   "n_eff": 4.0,
+   "p_neff": 0.2483,
+   "ci95": [
+    -0.15,
+    0.97
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 0,
+   "n": 6,
+   "quarters": [
+    "2025Q1",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.2,
+   "spearman": -0.6,
+   "p": 0.7038,
+   "n_eff": 6.0,
+   "p_neff": 0.7038,
+   "ci95": [
+    -0.87,
+    0.73
+   ],
+   "crit_r_05": 0.811,
+   "flag": "too few observations to interpret"
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "feature": "ford_trucks_yoy",
+   "mode": "changes",
+   "lag": 1,
+   "n": 5,
+   "quarters": [
+    "2025Q2",
+    "2026Q2"
+   ],
+   "verdict": "not significant",
+   "r": -0.121,
+   "spearman": -0.2,
+   "p": 0.8458,
+   "n_eff": 4.0,
+   "p_neff": 0.8786,
+   "ci95": [
+    -0.91,
+    0.85
+   ],
+   "crit_r_05": 0.878,
+   "flag": "too few observations to interpret"
+  }
+ ],
+ "loo": [
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "lag": 1,
+   "n_eval": 10,
+   "rmse_model": 4.01,
+   "rmse_mean": 4.99,
+   "rmse_persistence": 4.07,
+   "skill_vs_persistence": 0.02,
+   "skill_vs_mean": 0.2,
+   "direction_hit_rate_model": 0.7,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "saar_imp_yoy": 10,
+    "saar_total_yoy": 1
+   }
+  },
+  {
+   "target": "nv_ss_units_yoy_pct",
+   "lag": 0,
+   "n_eval": 10,
+   "rmse_model": 2.3,
+   "rmse_mean": 4.99,
+   "rmse_persistence": 3.19,
+   "skill_vs_persistence": 0.28,
+   "skill_vs_mean": 0.54,
+   "direction_hit_rate_model": 0.8,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "saar_total_yoy": 11
+   }
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "lag": 1,
+   "n_eval": 10,
+   "rmse_model": 5.61,
+   "rmse_mean": 4.95,
+   "rmse_persistence": 4.57,
+   "skill_vs_persistence": -0.23,
+   "skill_vs_mean": -0.13,
+   "direction_hit_rate_model": 0.6,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "saar_imp_yoy": 7,
+    "gas_yoy": 3,
+    "tx_unemp_chg": 1
+   }
+  },
+  {
+   "target": "uv_ss_units_yoy_pct",
+   "lag": 0,
+   "n_eval": 10,
+   "rmse_model": 4.53,
+   "rmse_mean": 5.2,
+   "rmse_persistence": 4.77,
+   "skill_vs_persistence": 0.05,
+   "skill_vs_mean": 0.13,
+   "direction_hit_rate_model": 0.8,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "gas_yoy": 9,
+    "tx_unemp_chg": 2
+   }
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "lag": 1,
+   "n_eval": 10,
+   "rmse_model": 4.7,
+   "rmse_mean": 4.17,
+   "rmse_persistence": 4.78,
+   "skill_vs_persistence": 0.02,
+   "skill_vs_mean": -0.13,
+   "direction_hit_rate_model": 0.7,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "saar_imp_yoy": 9,
+    "cpi_used_minus_new": 2
+   }
+  },
+  {
+   "target": "uv_ss_gpu_yoy_pct",
+   "lag": 0,
+   "n_eval": 10,
+   "rmse_model": 5.17,
+   "rmse_mean": 3.35,
+   "rmse_persistence": 5.52,
+   "skill_vs_persistence": 0.06,
+   "skill_vs_mean": -0.54,
+   "direction_hit_rate_model": 0.6,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "cpi_used_minus_new": 4,
+    "loan_rate_chg": 3,
+    "saar_imp_yoy": 2,
+    "cpi_new_yoy": 1,
+    "saar_dom_yoy": 1
+   }
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "lag": 1,
+   "n_eval": 10,
+   "rmse_model": 4.07,
+   "rmse_mean": 8.47,
+   "rmse_persistence": 4.56,
+   "skill_vs_persistence": 0.11,
+   "skill_vs_mean": 0.52,
+   "direction_hit_rate_model": 0.7,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "loan_rate_chg": 11
+   }
+  },
+  {
+   "target": "nv_ss_gpu_yoy_pct",
+   "lag": 0,
+   "n_eval": 10,
+   "rmse_model": 4.5,
+   "rmse_mean": 8.88,
+   "rmse_persistence": 4.68,
+   "skill_vs_persistence": 0.04,
+   "skill_vs_mean": 0.49,
+   "direction_hit_rate_model": 0.6,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "muvvi_yoy": 9,
+    "loan_rate_level": 2
+   }
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "lag": 1,
+   "n_eval": 10,
+   "rmse_model": 15.43,
+   "rmse_mean": 13.68,
+   "rmse_persistence": 11.97,
+   "skill_vs_persistence": -0.29,
+   "skill_vs_mean": -0.13,
+   "direction_hit_rate_model": 0.4,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "gas_yoy": 9,
+    "loan_rate_chg": 1,
+    "muvvi_yoy": 1
+   }
+  },
+  {
+   "target": "adj_eps_yoy_pct",
+   "lag": 0,
+   "n_eval": 10,
+   "rmse_model": 14.68,
+   "rmse_mean": 13.64,
+   "rmse_persistence": 9.98,
+   "skill_vs_persistence": -0.47,
+   "skill_vs_mean": -0.08,
+   "direction_hit_rate_model": 0.3,
+   "direction_calls": 10,
+   "indicator_picked_in_folds": {
+    "cpi_used_yoy": 5,
+    "saar_dom_yoy": 4,
+    "cpi_used_minus_new": 1,
+    "gas_yoy": 1
+   }
+  }
+ ],
+ "prediction": {
+  "quarter": "2026Q3",
+  "per_metric": {
+   "nv_ss_units_yoy_pct": {
+    "label": "New-vehicle same-store units, YoY %",
+    "last_actual_2026Q2": -2.8,
+    "model_lead1": {
+     "feature": "saar_imp_yoy",
+     "r_in_sample": 0.838,
+     "x_now": 4.17,
+     "pred": 1.5,
+     "n_fit": 11,
+     "loo": {
+      "target": "nv_ss_units_yoy_pct",
+      "lag": 1,
+      "n_eval": 10,
+      "rmse_model": 4.01,
+      "rmse_mean": 4.99,
+      "rmse_persistence": 4.07,
+      "skill_vs_persistence": 0.02,
+      "skill_vs_mean": 0.2,
+      "direction_hit_rate_model": 0.7,
+      "direction_calls": 10,
+      "indicator_picked_in_folds": {
+       "saar_imp_yoy": 10,
+       "saar_total_yoy": 1
+      }
+     }
+    },
+    "model_same_quarter": {
+     "feature": "saar_total_yoy",
+     "r_in_sample": 0.913,
+     "x_now": -1.23,
+     "pred": -0.9,
+     "n_fit": 11,
+     "loo": {
+      "target": "nv_ss_units_yoy_pct",
+      "lag": 0,
+      "n_eval": 10,
+      "rmse_model": 2.3,
+      "rmse_mean": 4.99,
+      "rmse_persistence": 3.19,
+      "skill_vs_persistence": 0.28,
+      "skill_vs_mean": 0.54,
+      "direction_hit_rate_model": 0.8,
+      "direction_calls": 10,
+      "indicator_picked_in_folds": {
+       "saar_total_yoy": 11
+      }
+     }
+    }
+   },
+   "uv_ss_units_yoy_pct": {
+    "label": "Used same-store retail units, YoY %",
+    "last_actual_2026Q2": -9.8,
+    "model_lead1": {
+     "feature": "saar_imp_yoy",
+     "r_in_sample": 0.596,
+     "x_now": 4.17,
+     "pred": 0.1,
+     "n_fit": 11,
+     "loo": {
+      "target": "uv_ss_units_yoy_pct",
+      "lag": 1,
+      "n_eval": 10,
+      "rmse_model": 5.61,
+      "rmse_mean": 4.95,
+      "rmse_persistence": 4.57,
+      "skill_vs_persistence": -0.23,
+      "skill_vs_mean": -0.13,
+      "direction_hit_rate_model": 0.6,
+      "direction_calls": 10,
+      "indicator_picked_in_folds": {
+       "saar_imp_yoy": 7,
+       "gas_yoy": 3,
+       "tx_unemp_chg": 1
+      }
+     }
+    },
+    "model_same_quarter": {
+     "feature": "gas_yoy",
+     "r_in_sample": -0.754,
+     "x_now": 30.79,
+     "pred": -8.7,
+     "n_fit": 11,
+     "loo": {
+      "target": "uv_ss_units_yoy_pct",
+      "lag": 0,
+      "n_eval": 10,
+      "rmse_model": 4.53,
+      "rmse_mean": 5.2,
+      "rmse_persistence": 4.77,
+      "skill_vs_persistence": 0.05,
+      "skill_vs_mean": 0.13,
+      "direction_hit_rate_model": 0.8,
+      "direction_calls": 10,
+      "indicator_picked_in_folds": {
+       "gas_yoy": 9,
+       "tx_unemp_chg": 2
+      }
+     }
+    }
+   },
+   "uv_ss_gpu_yoy_pct": {
+    "label": "Used same-store retail GPU, YoY %",
+    "last_actual_2026Q2": -5.3,
+    "model_lead1": {
+     "feature": "saar_imp_yoy",
+     "r_in_sample": 0.707,
+     "x_now": 4.17,
+     "pred": -4.7,
+     "n_fit": 11,
+     "loo": {
+      "target": "uv_ss_gpu_yoy_pct",
+      "lag": 1,
+      "n_eval": 10,
+      "rmse_model": 4.7,
+      "rmse_mean": 4.17,
+      "rmse_persistence": 4.78,
+      "skill_vs_persistence": 0.02,
+      "skill_vs_mean": -0.13,
+      "direction_hit_rate_model": 0.7,
+      "direction_calls": 10,
+      "indicator_picked_in_folds": {
+       "saar_imp_yoy": 9,
+       "cpi_used_minus_new": 2
+      }
+     }
+    },
+    "model_same_quarter": {
+     "feature": "loan_rate_chg",
+     "r_in_sample": 0.483,
+     "x_now": -0.04,
+     "pred": -3.0,
+     "n_fit": 11,
+     "loo": {
+      "target": "uv_ss_gpu_yoy_pct",
+      "lag": 0,
+      "n_eval": 10,
+      "rmse_model": 5.17,
+      "rmse_mean": 3.35,
+      "rmse_persistence": 5.52,
+      "skill_vs_persistence": 0.06,
+      "skill_vs_mean": -0.54,
+      "direction_hit_rate_model": 0.6,
+      "direction_calls": 10,
+      "indicator_picked_in_folds": {
+       "cpi_used_minus_new": 4,
+       "loan_rate_chg": 3,
+       "saar_imp_yoy": 2,
+       "cpi_new_yoy": 1,
+       "saar_dom_yoy": 1
+      }
+     }
+    }
+   },
+   "nv_ss_gpu_yoy_pct": {
+    "label": "New-vehicle same-store GPU, YoY %",
+    "last_actual_2026Q2": -9.0,
+    "model_lead1": {
+     "feature": "loan_rate_chg",
+     "r_in_sample": -0.896,
+     "x_now": -0.16,
+     "pred": -10.7,
+     "n_fit": 11,
+     "loo": {
+      "target": "nv_ss_gpu_yoy_pct",
+      "lag": 1,
+      "n_eval": 10,
+      "rmse_model": 4.07,
+      "rmse_mean": 8.47,
+      "rmse_persistence": 4.56,
+      "skill_vs_persistence": 0.11,
+      "skill_vs_mean": 0.52,
+      "direction_hit_rate_model": 0.7,
+      "direction_calls": 10,
+      "indicator_picked_in_folds": {
+       "loan_rate_chg": 11
+      }
+     }
+    },
+    "model_same_quarter": {
+     "feature": "muvvi_yoy",
+     "r_in_sample": 0.934,
+     "x_now": 0.37,
+     "pred": -10.0,
+     "n_fit": 11,
+     "loo": {
+      "target": "nv_ss_gpu_yoy_pct",
+      "lag": 0,
+      "n_eval": 10,
+      "rmse_model": 4.5,
+      "rmse_mean": 8.88,
+      "rmse_persistence": 4.68,
+      "skill_vs_persistence": 0.04,
+      "skill_vs_mean": 0.49,
+      "direction_hit_rate_model": 0.6,
+      "direction_calls": 10,
+      "indicator_picked_in_folds": {
+       "muvvi_yoy": 9,
+       "loan_rate_level": 2
+      }
+     }
+    }
+   }
+  },
+  "seasonal_benchmark": {
+   "uv_gpu": {
+    "label": "Used same-store retail GPU ($)",
+    "years_used": [
+     2024,
+     2025
+    ],
+    "q2_to_q3_ratios": {
+     "2024": 0.939,
+     "2025": 0.872
+    },
+    "q2_2026": 1534,
+    "q3_2025": 1441,
+    "implied_q3_2026_low": 1337.26,
+    "implied_q3_2026_high": 1439.89,
+    "implied_q3_2026_mean": 1388.58,
+    "implied_yoy_pct_low": -7.2,
+    "implied_yoy_pct_high": -0.1,
+    "implied_yoy_pct_mean": -3.6
+   },
+   "eps": {
+    "label": "Adjusted diluted EPS ($)",
+    "years_used": [
+     2023,
+     2024,
+     2025
+    ],
+    "q2_to_q3_ratios": {
+     "2023": 1.029,
+     "2024": 1.01,
+     "2025": 0.907
+    },
+    "q2_2026": 9.61,
+    "q3_2025": 10.45,
+    "implied_q3_2026_low": 8.72,
+    "implied_q3_2026_high": 9.89,
+    "implied_q3_2026_mean": 9.44,
+    "implied_yoy_pct_low": -16.6,
+    "implied_yoy_pct_high": -5.4,
+    "implied_yoy_pct_mean": -9.7
+   }
+  },
+  "persistence_benchmark": {
+   "nv_ss_units_yoy_pct": -2.8,
+   "uv_ss_units_yoy_pct": -9.8,
+   "uv_ss_gpu_yoy_pct": -5.3,
+   "nv_ss_gpu_yoy_pct": -9.0,
+   "adj_eps_yoy_pct": -16.6
+  },
+  "eps_context": {
+   "street_estimate": {
+    "fxempire_eps": 9.88,
+    "fxempire_analysts": 7,
+    "benzinga_eps": 10.11,
+    "note": "vendor-reported consensus for the Oct 28, 2026 print; secondary source"
+   },
+   "street_implied_yoy_pct": {
+    "fxempire_eps": -5.5,
+    "benzinga_eps": -3.3
+   },
+   "street_implied_q2_to_q3_ratio": {
+    "fxempire_eps": 1.028,
+    "benzinga_eps": 1.052
+   },
+   "q3_2025_eps": 10.45,
+   "q2_2026_eps": 9.61,
+   "recent_surprises": [
+    {
+     "quarter": "2025Q1",
+     "consensus_eps": 9.68,
+     "surprise_pct": 5.06,
+     "vendor": "Zacks"
+    },
+    {
+     "quarter": "2025Q2",
+     "consensus_eps": 10.31,
+     "surprise_pct": 11.74,
+     "vendor": "Zacks"
+    },
+    {
+     "quarter": "2025Q3",
+     "consensus_eps": 10.64,
+     "surprise_pct": -1.79,
+     "vendor": "Zacks"
+    },
+    {
+     "quarter": "2025Q4",
+     "consensus_eps": 9.36,
+     "surprise_pct": -9.25,
+     "vendor": "Zacks"
+    },
+    {
+     "quarter": "2026Q1",
+     "consensus_eps": 8.93,
+     "surprise_pct": -3.0,
+     "vendor": "Zacks (Benzinga est. 8.86)"
+    },
+    {
+     "quarter": "2026Q2",
+     "consensus_eps": 10.6,
+     "surprise_pct": -9.3,
+     "vendor": "vendors disagree: consensus $10.60-$10.91, surprise roughly -9% to -13% on the $9.61 adjusted figure; Benzinga -12.8%, FXEmpire -11.71%"
+    }
+   ],
+   "misses_in_last_6": 4,
+   "n_surprises": 6
+  }
+ },
+ "feature_meta": {
+  "saar_dom_yoy": {
+   "label": "Domestic light-truck SAAR, YoY %",
+   "first": "1968Q1",
+   "last": "2026Q3",
+   "n": 235,
+   "note": "FRED DLTRUCKSSAAR, quarterly average"
+  },
+  "saar_imp_yoy": {
+   "label": "Imported light-truck SAAR, YoY %",
+   "first": "1977Q1",
+   "last": "2026Q3",
+   "n": 199,
+   "note": "FRED FLTRUCKSSAAR"
+  },
+  "saar_total_yoy": {
+   "label": "Total light-vehicle SAAR, YoY %",
+   "first": "1977Q1",
+   "last": "2026Q3",
+   "n": 199,
+   "note": "FRED ALTSALES"
+  },
+  "loan_rate_level": {
+   "label": "48-mo new-auto loan rate, level %",
+   "first": "1972Q1",
+   "last": "2026Q3",
+   "n": 219,
+   "note": "FRED TERMCBAUTO48NS (one observation per quarter)"
+  },
+  "loan_rate_chg": {
+   "label": "48-mo auto loan rate, YoY change (pp)",
+   "first": "1973Q1",
+   "last": "2026Q3",
+   "n": 215,
+   "note": "FRED TERMCBAUTO48NS"
+  },
+  "gas_yoy": {
+   "label": "Regular gasoline price, YoY %",
+   "first": "1991Q3",
+   "last": "2026Q4",
+   "n": 142,
+   "note": "FRED GASREGW, quarterly average of weekly"
+  },
+  "tx_unemp_chg": {
+   "label": "Texas unemployment rate, YoY change (pp)",
+   "first": "1977Q1",
+   "last": "2026Q3",
+   "n": 198,
+   "note": "FRED TXUR"
+  },
+  "cpi_used_yoy": {
+   "label": "CPI used cars & trucks, YoY %",
+   "first": "1954Q1",
+   "last": "2026Q3",
+   "n": 291,
+   "note": "FRED CUSR0000SETA02"
+  },
+  "cpi_new_yoy": {
+   "label": "CPI new vehicles, YoY %",
+   "first": "1954Q1",
+   "last": "2026Q3",
+   "n": 291,
+   "note": "FRED CUSR0000SETA01"
+  },
+  "cpi_used_minus_new": {
+   "label": "CPI used YoY minus new YoY (pts)",
+   "first": "1954Q1",
+   "last": "2026Q3",
+   "n": 291,
+   "note": "derived from the two CPI series"
+  },
+  "muvvi_yoy": {
+   "label": "Manheim wholesale index (MUVVI), YoY %",
+   "first": "2023Q2",
+   "last": "2026Q3",
+   "n": 14,
+   "note": "Cox/Manheim monthly reports, quarterly average of monthly YoY (2023 months parsed from page text, unvalidated)"
+  },
+  "retail_listing_yoy": {
+   "label": "Retail used listing price, YoY % (Cox/vAuto)",
+   "first": "2025Q1",
+   "last": "2026Q3",
+   "n": 7,
+   "note": "2025 values rely on a regex parse of 2024 pages (unvalidated); history starts 2025"
+  },
+  "retail_minus_wholesale": {
+   "label": "Retail-minus-wholesale YoY spread (pts)",
+   "first": "2025Q1",
+   "last": "2026Q3",
+   "n": 7,
+   "note": "the tracker's Section 6 spread; history starts 2025"
+  },
+  "ford_trucks_yoy": {
+   "label": "Ford truck deliveries, YoY %",
+   "first": "2024Q4",
+   "last": "2026Q3",
+   "n": 8,
+   "note": "Ford sales releases; history starts 2024Q4 (GM unavailable)"
+  }
+ },
+ "targets": {
+  "nv_ss_units_yoy_pct": "New-vehicle same-store units, YoY %",
+  "uv_ss_units_yoy_pct": "Used same-store retail units, YoY %",
+  "uv_ss_gpu_yoy_pct": "Used same-store retail GPU, YoY %",
+  "nv_ss_gpu_yoy_pct": "New-vehicle same-store GPU, YoY %",
+  "adj_eps_yoy_pct": "Adjusted EPS, YoY %"
+ },
+ "track_record": [
+  {
+   "quarter": "2026Q3",
+   "metric": "nv_ss_units_yoy_pct",
+   "predicted": -0.9,
+   "actual": null,
+   "error": null,
+   "direction_vs_prior_called": null,
+   "direction_actual": null
+  },
+  {
+   "quarter": "2026Q3",
+   "metric": "uv_ss_units_yoy_pct",
+   "predicted": -9.8,
+   "actual": null,
+   "error": null,
+   "direction_vs_prior_called": null,
+   "direction_actual": null
+  },
+  {
+   "quarter": "2026Q3",
+   "metric": "uv_ss_gpu_yoy_pct",
+   "predicted": -5.3,
+   "actual": null,
+   "error": null,
+   "direction_vs_prior_called": null,
+   "direction_actual": null
+  },
+  {
+   "quarter": "2026Q3",
+   "metric": "nv_ss_gpu_yoy_pct",
+   "predicted": -9.0,
+   "actual": null,
+   "error": null,
+   "direction_vs_prior_called": null,
+   "direction_actual": null
+  },
+  {
+   "quarter": "2026Q3",
+   "metric": "adj_eps",
+   "predicted": 9.44,
+   "actual": null,
+   "error": null,
+   "direction_vs_prior_called": null,
+   "direction_actual": null
+  }
+ ],
+ "scatter": {
+  "x_label": "Total light-vehicle SAAR, YoY % (quarterly avg, FRED)",
+  "y_label": "GPI same-store new-vehicle units, YoY %",
+  "points": [
+   {
+    "q": "2023Q3",
+    "x": 15.59,
+    "y": 11.2
+   },
+   {
+    "q": "2023Q4",
+    "x": 10.42,
+    "y": 10.6
+   },
+   {
+    "q": "2024Q1",
+    "x": 2.92,
+    "y": 6.4
+   },
+   {
+    "q": "2024Q2",
+    "x": -0.27,
+    "y": -0.2
+   },
+   {
+    "q": "2024Q3",
+    "x": 0.25,
+    "y": 0.5
+   },
+   {
+    "q": "2024Q4",
+    "x": 6.19,
+    "y": 6.0
+   },
+   {
+    "q": "2025Q1",
+    "x": 5.99,
+    "y": 5.2
+   },
+   {
+    "q": "2025Q2",
+    "x": 2.88,
+    "y": 3.6
+   },
+   {
+    "q": "2025Q3",
+    "x": 5.28,
+    "y": 2.8
+   },
+   {
+    "q": "2025Q4",
+    "x": -4.27,
+    "y": -5.2
+   },
+   {
+    "q": "2026Q1",
+    "x": -5.92,
+    "y": -5.2
+   },
+   {
+    "q": "2026Q2",
+    "x": 1.56,
+    "y": -2.8
+   }
+  ],
+  "fit": {
+   "b0": -0.171,
+   "b1": 0.86
+  },
+  "nowcast": {
+   "q": "2026Q3",
+   "x": -1.23,
+   "y": -0.9
+  }
+ }
+}

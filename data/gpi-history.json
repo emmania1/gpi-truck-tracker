@@ -1,0 +1,224 @@
+{
+  "_readme": {
+    "purpose": "GPI historical quarterly results used by the backtest (scripts/backtest.py). Hand-entered from SEC 8-K Exhibit 99.1 releases; 'Same Store' = GPI's non-GAAP comparable-dealership metric (comparison base changes every year). After each GPI release add the new quarter here (and fill the actual in data/forecast-log.json).",
+    "street_consensus_note": "Consensus/surprise figures come from vendor articles (Zacks via Nasdaq/Yahoo, Benzinga, FXEmpire) surfaced by web search \u2014 NOT from GPI's releases, and vendors disagree on the estimate and on the EPS definition. Only six quarters were collected; quarters before 2025Q1 have none (not estimated). Do not treat as authoritative.",
+    "q3_2026_street_estimate": {
+      "fxempire_eps": 9.88,
+      "fxempire_analysts": 7,
+      "benzinga_eps": 10.11,
+      "note": "vendor-reported consensus for the Oct 28, 2026 print; secondary source"
+    }
+  },
+  "quarters": [
+    {
+      "quarter": "2023Q3",
+      "release_date": "2023-10-25",
+      "nv_ss_units": 42550,
+      "nv_ss_units_yoy_pct": 11.2,
+      "nv_ss_gpu_yoy_pct": -20.2,
+      "uv_ss_units": 48240,
+      "uv_ss_units_yoy_pct": 2.5,
+      "uv_ss_gpu": 1604,
+      "uv_ss_gpu_yoy_pct": 1.5,
+      "adj_eps": 12.07,
+      "adj_eps_prior_year": 12.0,
+      "adj_eps_yoy_pct": 0.6,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120323000037/a2023q3exhibit991.htm"
+    },
+    {
+      "quarter": "2023Q4",
+      "release_date": "2024-01-31",
+      "nv_ss_units": 43087,
+      "nv_ss_units_yoy_pct": 10.6,
+      "nv_ss_gpu_yoy_pct": -23.3,
+      "uv_ss_units": 42534,
+      "uv_ss_units_yoy_pct": 0.4,
+      "uv_ss_gpu": 1413,
+      "uv_ss_gpu_yoy_pct": 1.2,
+      "adj_eps": 9.5,
+      "adj_eps_prior_year": 10.86,
+      "adj_eps_yoy_pct": -12.5,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120324000008/a2023q4exhibit991.htm"
+    },
+    {
+      "quarter": "2024Q1",
+      "release_date": "2024-04-24",
+      "nv_ss_units": 40898,
+      "nv_ss_units_yoy_pct": 6.4,
+      "nv_ss_gpu_yoy_pct": -24.2,
+      "uv_ss_units": 46763,
+      "uv_ss_units_yoy_pct": 6.9,
+      "uv_ss_gpu": 1657,
+      "uv_ss_gpu_yoy_pct": -2.9,
+      "adj_eps": 9.49,
+      "adj_eps_prior_year": 10.93,
+      "adj_eps_yoy_pct": -13.2,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120324000031/a2024q1exhibit991.htm"
+    },
+    {
+      "quarter": "2024Q2",
+      "release_date": "2024-07-24",
+      "nv_ss_units": 42734,
+      "nv_ss_units_yoy_pct": -0.2,
+      "nv_ss_gpu_yoy_pct": -21.1,
+      "uv_ss_units": 46170,
+      "uv_ss_units_yoy_pct": 3.6,
+      "uv_ss_gpu": 1630,
+      "uv_ss_gpu_yoy_pct": -3.2,
+      "adj_eps": 9.8,
+      "adj_eps_prior_year": 11.73,
+      "adj_eps_yoy_pct": -16.5,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120324000055/a2024q2exhibit991.htm"
+    },
+    {
+      "quarter": "2024Q3",
+      "release_date": "2024-10-30",
+      "nv_ss_units": 44411,
+      "nv_ss_units_yoy_pct": 0.5,
+      "nv_ss_gpu_yoy_pct": -19.5,
+      "uv_ss_units": 47635,
+      "uv_ss_units_yoy_pct": -3.3,
+      "uv_ss_gpu": 1530,
+      "uv_ss_gpu_yoy_pct": -5.3,
+      "adj_eps": 9.9,
+      "adj_eps_prior_year": 12.07,
+      "adj_eps_yoy_pct": -18.0,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120324000071/a2024q3exhibit991.htm"
+    },
+    {
+      "quarter": "2024Q4",
+      "release_date": "2025-01-29",
+      "nv_ss_units": 47354,
+      "nv_ss_units_yoy_pct": 6.0,
+      "nv_ss_gpu_yoy_pct": -13.6,
+      "uv_ss_units": 44926,
+      "uv_ss_units_yoy_pct": 3.5,
+      "uv_ss_gpu": 1434,
+      "uv_ss_gpu_yoy_pct": 0.0,
+      "adj_eps": 10.02,
+      "adj_eps_prior_year": 9.5,
+      "adj_eps_yoy_pct": 5.5,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120325000006/a2024q4exhibit991.htm"
+    },
+    {
+      "quarter": "2025Q1",
+      "release_date": "2025-04-24",
+      "nv_ss_units": 45398,
+      "nv_ss_units_yoy_pct": 5.2,
+      "nv_ss_gpu_yoy_pct": -8.4,
+      "uv_ss_units": 49180,
+      "uv_ss_units_yoy_pct": 2.0,
+      "uv_ss_gpu": 1583,
+      "uv_ss_gpu_yoy_pct": -5.3,
+      "adj_eps": 10.17,
+      "adj_eps_prior_year": 9.49,
+      "adj_eps_yoy_pct": 7.2,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120325000027/a2025q1exhibit991.htm",
+      "street_consensus": {
+        "consensus_eps": 9.68,
+        "surprise_pct": 5.06,
+        "vendor": "Zacks"
+      }
+    },
+    {
+      "quarter": "2025Q2",
+      "release_date": "2025-07-24",
+      "nv_ss_units": 48565,
+      "nv_ss_units_yoy_pct": 3.6,
+      "nv_ss_gpu_yoy_pct": -0.5,
+      "uv_ss_units": 50968,
+      "uv_ss_units_yoy_pct": 4.9,
+      "uv_ss_gpu": 1653,
+      "uv_ss_gpu_yoy_pct": 1.1,
+      "adj_eps": 11.52,
+      "adj_eps_prior_year": 9.8,
+      "adj_eps_yoy_pct": 17.6,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120325000045/a2025q2exhibit991.htm",
+      "street_consensus": {
+        "consensus_eps": 10.31,
+        "surprise_pct": 11.74,
+        "vendor": "Zacks"
+      }
+    },
+    {
+      "quarter": "2025Q3",
+      "release_date": "2025-10-28",
+      "nv_ss_units": 53683,
+      "nv_ss_units_yoy_pct": 2.8,
+      "nv_ss_gpu_yoy_pct": -6.1,
+      "uv_ss_units": 55153,
+      "uv_ss_units_yoy_pct": 2.9,
+      "uv_ss_gpu": 1441,
+      "uv_ss_gpu_yoy_pct": -8.5,
+      "adj_eps": 10.45,
+      "adj_eps_prior_year": 9.9,
+      "adj_eps_yoy_pct": 5.6,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120325000058/a2025q3exhibit991.htm",
+      "street_consensus": {
+        "consensus_eps": 10.64,
+        "surprise_pct": -1.79,
+        "vendor": "Zacks"
+      }
+    },
+    {
+      "quarter": "2025Q4",
+      "release_date": "2026-01-29",
+      "nv_ss_units": 53414,
+      "nv_ss_units_yoy_pct": -5.2,
+      "nv_ss_gpu_yoy_pct": -9.6,
+      "uv_ss_units": 53654,
+      "uv_ss_units_yoy_pct": 1.2,
+      "uv_ss_gpu": 1296,
+      "uv_ss_gpu_yoy_pct": -10.7,
+      "adj_eps": 8.49,
+      "adj_eps_prior_year": 10.02,
+      "adj_eps_yoy_pct": -15.3,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120326000041/a2025q4exhibit991.htm",
+      "street_consensus": {
+        "consensus_eps": 9.36,
+        "surprise_pct": -9.25,
+        "vendor": "Zacks"
+      }
+    },
+    {
+      "quarter": "2026Q1",
+      "release_date": "2026-04-30",
+      "nv_ss_units": 50812,
+      "nv_ss_units_yoy_pct": -5.2,
+      "nv_ss_gpu_yoy_pct": -4.8,
+      "uv_ss_units": 55128,
+      "uv_ss_units_yoy_pct": -3.5,
+      "uv_ss_gpu": 1544,
+      "uv_ss_gpu_yoy_pct": -1.7,
+      "adj_eps": 8.66,
+      "adj_eps_prior_year": 10.17,
+      "adj_eps_yoy_pct": -14.8,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/1031203/000103120326000104/a2026q1exhibit991.htm",
+      "street_consensus": {
+        "consensus_eps": 8.93,
+        "surprise_pct": -3.0,
+        "vendor": "Zacks (Benzinga est. 8.86)"
+      }
+    },
+    {
+      "quarter": "2026Q2",
+      "release_date": "2026-07-30",
+      "nv_ss_units": 51840,
+      "nv_ss_units_yoy_pct": -2.8,
+      "nv_ss_gpu_yoy_pct": -9.0,
+      "uv_ss_units": 51907,
+      "uv_ss_units_yoy_pct": -9.8,
+      "uv_ss_gpu": 1534,
+      "uv_ss_gpu_yoy_pct": -5.3,
+      "adj_eps": 9.61,
+      "adj_eps_prior_year": 11.52,
+      "adj_eps_yoy_pct": -16.6,
+      "source": "GPI 8-K Ex. 99.1, Key Performance Metrics, 'Same Store' column: https://www.sec.gov/Archives/edgar/data/0001031203/000103120326000121/a2026q2exhibit991.htm",
+      "street_consensus": {
+        "consensus_eps": 10.6,
+        "surprise_pct": -9.3,
+        "vendor": "vendors disagree: consensus $10.60-$10.91, surprise roughly -9% to -13% on the $9.61 adjusted figure; Benzinga -12.8%, FXEmpire -11.71%"
+      }
+    }
+  ]
+}
