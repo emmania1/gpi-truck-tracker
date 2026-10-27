@@ -199,16 +199,45 @@
     return escaped.replace(/(https?:\/\/[^\s)]+)/g, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
   }
 
+  function firstUrl(src) {
+    const m = (src || "").match(/https?:\/\/[^\s)]+/);
+    return m ? m[0] : null;
+  }
+
+  function shortSourceLabel(src) {
+    let t = (src || "").split(/https?:\/\//)[0].trim();
+    t = t.replace(/[\s:—\-.,;]+$/, "");
+    if (t.length > 110) t = t.slice(0, 107).trimEnd() + "…";
+    return t || "source";
+  }
+
+  function compactSource(src) {
+    if (!src) return "";
+    const u = firstUrl(src);
+    const label = escapeHTML(shortSourceLabel(src));
+    return `<div class="src-compact">📎 ${u ? `<a href="${u}" target="_blank" rel="noopener">${label}</a>` : label}</div>`;
+  }
+
+  function disclosure(what, bodyHTML) {
+    return `<details class="disclosure"><summary><span class="lbl-closed">Show ${what}</span><span class="lbl-open">Hide ${what}</span></summary><div class="disclosure-body">${bodyHTML}</div></details>`;
+  }
+
+  const SRC_BASIS = {
+    primary: ["primary", "✓ Primary source", "Primary source — read directly from the OEM's own release."],
+    "primary-derived": ["primary", "✓ Primary source (derived)", "Primary source, derived — computed from two figures in the OEM's own release."],
+    relayed: ["relayed", "⚠ GM official table — relayed, spot-check", "GM official table — figures relayed second-hand because the PDF blocks automated access; arithmetically cross-checked but not opened directly. Spot-check recommended."],
+    secondary: ["secondary", "⚠ Secondary source — unverified", "Secondary source (trade press) — unverified."],
+  };
+
   function srcBadge(q) {
-    const map = {
-      primary: ["primary", "Primary source — read directly from the OEM's own release"],
-      "primary-derived": ["primary", "Primary source, derived (computed from two figures in the OEM's own release)"],
-      relayed: ["relayed", "GM official table — figures relayed second-hand (PDF blocks automated access); spot-check recommended"],
-      secondary: ["secondary", "Secondary source (trade press) — unverified"],
-    };
-    const m = map[q];
+    const m = SRC_BASIS[q];
     if (!m) return "";
-    return `<div><span class="src-badge ${m[0]}">${m[0] === "primary" ? "✓" : "⚠"} ${escapeHTML(m[1])}</span></div>`;
+    return `<div><span class="src-badge ${m[0]}" title="${escapeHTML(m[2])}">${escapeHTML(m[1])}</span></div>`;
+  }
+
+  function srcBasisLine(q) {
+    const m = SRC_BASIS[q];
+    return m ? `<div class="real-datapoint-note"><strong>Source basis:</strong> ${escapeHTML(m[2])}</div>` : "";
   }
 
   function renderOemTable(containerEl, seriesObj) {
@@ -232,8 +261,8 @@
             <span class="oem-field"><span class="oem-field-label">YoY %</span>${escapeHTML(yoy)}</span>
           </div>
           ${srcBadge(d.source_quality)}
-          ${d.note ? `<div class="real-datapoint-note">${escapeHTML(d.note)}</div>` : ""}
-          ${d.source ? `<div class="real-datapoint-source">📎 Source: ${linkify(d.source)}</div>` : ""}
+          ${compactSource(d.source)}
+          ${disclosure("details &amp; sourcing", `${srcBasisLine(d.source_quality)}${d.note ? `<div class="real-datapoint-note">${escapeHTML(d.note)}</div>` : ""}${d.source ? `<div class="real-datapoint-source">📎 Source: ${linkify(d.source)}</div>` : ""}`)}
         </div>`;
       })
       .join("");
@@ -253,17 +282,29 @@
     const cards = seriesObj.data
       .slice()
       .reverse()
-      .map(
-        (d) => `
-        <div class="real-datapoint">
+      .map((d) => {
+        const collapsed = (d.note || "").length > 260 || !!d.headline;
+        const head = `
           <div class="real-datapoint-head">
             <span class="real-datapoint-period">${escapeHTML(d.period ?? "—")}</span>
             <span class="real-datapoint-value">${escapeHTML(String(d.value ?? "—"))}</span>
-          </div>
+          </div>`;
+        if (!collapsed) {
+          return `
+        <div class="real-datapoint">
+          ${head}
           ${d.note ? `<div class="real-datapoint-note">${escapeHTML(d.note)}</div>` : ""}
           ${d.source ? `<div class="real-datapoint-source">📎 Source: ${linkify(d.source)}</div>` : ""}
-        </div>`
-      )
+        </div>`;
+        }
+        return `
+        <div class="real-datapoint">
+          ${head}
+          ${d.headline ? `<div class="real-datapoint-headline">${escapeHTML(d.headline)}</div>` : ""}
+          ${compactSource(d.source)}
+          ${disclosure("full note &amp; sourcing", `${d.note ? `<div class="real-datapoint-note">${escapeHTML(d.note)}</div>` : ""}${d.source ? `<div class="real-datapoint-source">📎 Source: ${linkify(d.source)}</div>` : ""}`)}
+        </div>`;
+      })
       .join("");
     containerEl.innerHTML = `
       <div class="real-datapoint-label">${escapeHTML(seriesObj.label)} <span style="color:var(--text-muted);font-weight:400;">(${escapeHTML(columns[1])})</span></div>
@@ -287,7 +328,7 @@
         <div>
           <div class="tracked-status">${note.status}</div>
           ${note.target ? `<div class="tracked-target">Target: ${note.target}</div>` : ""}
-          <div class="tracked-detail">${note.detail}</div>
+          ${note.detail ? disclosure("detail", `<div class="tracked-detail">${note.detail}</div>`) : ""}
         </div>
         <div class="tracked-updated">Updated ${note.last_updated ?? "—"}</div>
       </div>
@@ -521,13 +562,13 @@
           <tbody>${body}</tbody>
         </table>
       </div>
-      <p class="table-note">Spread = retail listing price YoY % minus MUVVI YoY % (computed here; Cox rounds listing-price YoY to whole percents, so ±0.5 pt). MUVVI is a mix/mileage/seasonally adjusted index (Jan 1997 = 100). Values are as first reported; Cox revises prior months. Hand-entered monthly from Cox Automotive — last updated ${escapeHTML(seriesObj.last_updated ?? "—")}.</p>
       ${(() => {
         const di = dueInfo(seriesObj.maintenance);
         if (!di) return "";
-        return `<p class="table-note ${di.overdue ? "overdue-note" : ""}">${di.overdue ? "OVERDUE — " : ""}Next monthly update due ${escapeHTML(di.date)} (${di.overdue ? `${-di.days} days ago` : `in ${di.days} days`}): ${escapeHTML(seriesObj.maintenance.next_due_what ?? "")}</p>`;
+        return `<p class="table-note ${di.overdue ? "overdue-note" : ""}">Hand-entered from Cox Automotive · last updated ${escapeHTML(seriesObj.last_updated ?? "—")} · ${di.overdue ? "OVERDUE — " : ""}next monthly update due ${escapeHTML(di.date)} (${di.overdue ? `${-di.days} days ago` : `in ${di.days} days`})</p>`;
       })()}
-      <div class="row-notes"><details><summary>Notes by month (revisions, caveats, Cox commentary)</summary><div>${notes}</div></details></div>
+      ${disclosure("definitions &amp; update notes", `<p class="table-note">Spread = retail listing price YoY % minus MUVVI YoY % (computed here; Cox rounds listing-price YoY to whole percents, so ±0.5 pt). MUVVI is a mix/mileage/seasonally adjusted index (Jan 1997 = 100). Values are as first reported; Cox revises prior months. Hand-entered monthly from Cox Automotive — last updated ${escapeHTML(seriesObj.last_updated ?? "—")}.</p>${seriesObj.maintenance?.next_due_what ? `<p class="table-note">Next update: ${escapeHTML(seriesObj.maintenance.next_due_what)}</p>` : ""}`)}
+      ${disclosure("notes by month (revisions &amp; caveats)", notes)}
     `;
   }
 
@@ -615,8 +656,9 @@
           <tbody>${pendingRow}${body}</tbody>
         </table>
       </div>
-      <p class="table-note">U.S. = reported retail units and GPU at period; days' supply is quarter-end (consolidated in grey beneath). "Same-store" = GPI's non-GAAP comparable-dealership metric, consolidated U.S.+U.K. Mkt retail pace = Cox's retail used unit sales pace YoY. Used share = total used (retail + wholesale) ÷ consolidated total, computed here from the dollar figures in each release. Market pace = simple average of Cox's three monthly YoY readings (Section 6) — not unit-weighted. Hand-entered from GPI 8-K Exhibit 99.1; last updated ${escapeHTML(seriesObj.last_updated ?? "—")}.</p>
-      <div class="row-notes"><details><summary>Notes by quarter (GPI call commentary, reported-basis figures, caveats)</summary><div>${notes}</div></details></div>
+      <p class="table-note">Hand-entered from GPI 8-K Exhibit 99.1 · last updated ${escapeHTML(seriesObj.last_updated ?? "—")}</p>
+      ${disclosure("definitions &amp; methodology", `<p class="table-note">U.S. = reported retail units and GPU at period; days' supply is quarter-end (consolidated in grey beneath). "Same-store" = GPI's non-GAAP comparable-dealership metric, consolidated U.S.+U.K. Mkt retail pace = Cox's retail used unit sales pace YoY. Used share = total used (retail + wholesale) ÷ consolidated total, computed here from the dollar figures in each release. Market pace = simple average of Cox's three monthly YoY readings (Section 6) — not unit-weighted. Hand-entered from GPI 8-K Exhibit 99.1; last updated ${escapeHTML(seriesObj.last_updated ?? "—")}.</p>`)}
+      ${disclosure("notes by quarter (call commentary &amp; caveats)", notes)}
     `;
   }
 
@@ -788,6 +830,10 @@
 
     renderFreshnessBar(fredData, manual);
     renderExecSummary(fredData, manual);
+
+    const setAll = (open) => document.querySelectorAll("details.disclosure").forEach((d) => (d.open = open));
+    document.getElementById("expand-all")?.addEventListener("click", () => setAll(true));
+    document.getElementById("collapse-all")?.addEventListener("click", () => setAll(false));
   }
 
   document.addEventListener("DOMContentLoaded", init);

@@ -575,3 +575,63 @@ table.data-table a { color: var(--accent); white-space: nowrap; font-size: 0.74r
 .table-note {
   overflow-wrap: anywhere;
 }
+
+/* ---- progressive disclosure ---- */
+details.disclosure { margin: 6px 0 2px; font-size: 0.8rem; }
+details.disclosure > summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.76rem;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  user-select: none;
+}
+details.disclosure > summary::-webkit-details-marker { display: none; }
+details.disclosure > summary::before {
+  content: "▸";
+  display: inline-block;
+  transition: transform 0.15s;
+}
+details.disclosure[open] > summary::before { transform: rotate(90deg); }
+details.disclosure[open] .lbl-closed,
+details.disclosure:not([open]) .lbl-open { display: none; }
+details.disclosure > summary:hover { text-decoration: underline; }
+details.disclosure > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.disclosure-body {
+  margin-top: 6px;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+}
+.real-datapoint-headline {
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin: 3px 0 4px;
+}
+.src-compact {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin: 2px 0 2px;
+}
+.src-compact a { color: var(--accent); }
+.disclosure-controls {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.disclosure-controls button {
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 12px;
+  cursor: pointer;
+}
+.disclosure-controls button:hover { border-color: var(--accent); }
