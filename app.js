@@ -199,6 +199,18 @@
     return escaped.replace(/(https?:\/\/[^\s)]+)/g, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
   }
 
+  function srcBadge(q) {
+    const map = {
+      primary: ["primary", "Primary source — read directly from the OEM's own release"],
+      "primary-derived": ["primary", "Primary source, derived (computed from two figures in the OEM's own release)"],
+      relayed: ["relayed", "GM official table — figures relayed second-hand (PDF blocks automated access); spot-check recommended"],
+      secondary: ["secondary", "Secondary source (trade press) — unverified"],
+    };
+    const m = map[q];
+    if (!m) return "";
+    return `<div><span class="src-badge ${m[0]}">${m[0] === "primary" ? "✓" : "⚠"} ${escapeHTML(m[1])}</span></div>`;
+  }
+
   function renderOemTable(containerEl, seriesObj) {
     if (!seriesObj || !seriesObj.data || seriesObj.data.length === 0) {
       containerEl.innerHTML = emptyStateHTML(seriesObj ? seriesObj.label : "This series", seriesObj ? seriesObj.source_guidance : "", seriesObj ? seriesObj.flag : null);
@@ -219,6 +231,7 @@
             <span class="oem-field"><span class="oem-field-label">Truck Units</span>${escapeHTML(fmtNum(d.truck_units, 0))}</span>
             <span class="oem-field"><span class="oem-field-label">YoY %</span>${escapeHTML(yoy)}</span>
           </div>
+          ${srcBadge(d.source_quality)}
           ${d.note ? `<div class="real-datapoint-note">${escapeHTML(d.note)}</div>` : ""}
           ${d.source ? `<div class="real-datapoint-source">📎 Source: ${linkify(d.source)}</div>` : ""}
         </div>`;
@@ -509,6 +522,11 @@
         </table>
       </div>
       <p class="table-note">Spread = retail listing price YoY % minus MUVVI YoY % (computed here; Cox rounds listing-price YoY to whole percents, so ±0.5 pt). MUVVI is a mix/mileage/seasonally adjusted index (Jan 1997 = 100). Values are as first reported; Cox revises prior months. Hand-entered monthly from Cox Automotive — last updated ${escapeHTML(seriesObj.last_updated ?? "—")}.</p>
+      ${(() => {
+        const di = dueInfo(seriesObj.maintenance);
+        if (!di) return "";
+        return `<p class="table-note ${di.overdue ? "overdue-note" : ""}">${di.overdue ? "OVERDUE — " : ""}Next monthly update due ${escapeHTML(di.date)} (${di.overdue ? `${-di.days} days ago` : `in ${di.days} days`}): ${escapeHTML(seriesObj.maintenance.next_due_what ?? "")}</p>`;
+      })()}
       <div class="row-notes"><details><summary>Notes by month (revisions, caveats, Cox commentary)</summary><div>${notes}</div></details></div>
     `;
   }
@@ -680,6 +698,14 @@
     }
   }
 
+  function dueInfo(maint) {
+    if (!maint || !maint.next_due) return null;
+    const due = new Date(`${maint.next_due}T00:00:00Z`);
+    if (Number.isNaN(due.getTime())) return null;
+    const days = Math.ceil((due.getTime() - Date.now()) / 86400000);
+    return { date: maint.next_due, days, overdue: days < 0, soon: days >= 0 && days <= 7 };
+  }
+
   function renderFreshnessBar(fredData, manualData) {
     const bar = document.getElementById("freshness-bar");
     if (!bar) return;
@@ -708,6 +734,12 @@
         <span class="dot" style="background:var(--real)"></span>
         Manual/tracked entries last edited: <strong>${manualLatest ?? "unknown"}</strong>
       </span>
+      ${(() => {
+        const di = dueInfo(rs.used_market_monthly?.maintenance);
+        if (!di) return "";
+        const flag = di.overdue ? `<span class="due-flag overdue">OVERDUE by ${-di.days}d</span>` : di.soon ? `<span class="due-flag soon">due in ${di.days}d</span>` : `<span class="due-flag">in ${di.days}d</span>`;
+        return `<span class="freshness-item"><span class="dot" style="background:var(--real)"></span>Section 6 (used market) next update due: <strong>${escapeHTML(di.date)}</strong> ${flag}</span>`;
+      })()}
     `;
   }
 

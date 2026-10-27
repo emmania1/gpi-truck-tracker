@@ -17,6 +17,8 @@
       "  - `yoy_pct` (number or null — year-over-year % change if the source discloses one for this exact figure, OR if it can be cleanly derived by subtracting/dividing two totals already disclosed in that same source (as done for Ford Q1 2026 and GM Silverado Q1 2026); use null rather than estimating one from unrelated figures)",
       "  - `note` (string — 1-2 sentences of qualitative color: what exactly `truck_units` covers, incentive/backlog commentary, etc.)",
       "  - `source` (string — publication + date + URL)",
+      "  - `source_quality` (string — 'primary' = you read the OEM's own table/release directly; 'primary-derived' = computed from two primary figures; 'relayed' = OEM's official table but content obtained second-hand (e.g. via a search index) because the document blocks automated access; 'secondary' = trade press only. The page shows a badge for each; 'relayed' and 'secondary' are flagged visibly.)",
+      "  - BASIS RULE for GM: always use GM's TOTAL Silverado / TOTAL Sierra lines (Silverado includes medium duty and the EV; Sierra includes the EV), with the % change printed on that same line — never pair LD+HD units with a total-line YoY (that caused the Q1/Q2 errors fixed 2026-10-27).",
       "Append new quarters as new objects to `data`; never overwrite prior entries. Update the series' `last_updated` to today's date (YYYY-MM-DD) whenever you add a row."
     ],
     "how_to_update_a_tracked_note": [
@@ -49,9 +51,10 @@
         "truck_units",
         "yoy_pct",
         "note",
-        "source"
+        "source",
+        "source_quality"
       ],
-      "source_guidance": "Ford: Ford IR quarterly sales release (media.ford.com / fromtheroad.ford.com) — primary source, full sales table. GM: GM U.S. deliveries table (investor.gm.com) is NOT reachable by automated fetch (HTTP 403), so GM rows are taken from GM Authority / trade-press coverage of GM's release and should be spot-checked against GM's own PDF.",
+      "source_guidance": "Ford: Ford IR quarterly sales release (fromtheroad.ford.com / q4cdn PDF) — primary, full sales table read directly. GM: GM's official 'U.S. Deliveries' table per quarter (investor.gm.com static-files). Those PDFs return HTTP 403 to automated fetch, so line items are relayed through a search-index extraction and cross-checked arithmetically (components sum to totals; totals sum to the combined full-size figure; totals/year-ago reproduce the printed % change). All GM rows use GM's TOTAL line basis: Silverado incl. medium duty and EV; Sierra incl. EV.",
       "status": "populated",
       "last_updated": "2026-10-27",
       "data": [
@@ -61,23 +64,8 @@
           "truck_units": 257475,
           "yoy_pct": -11.3,
           "note": "Ford-brand 'Trucks' category. Not directly reported by Ford as a standalone Q1 figure — computed by subtraction from the two cumulative totals in the Q2 2026 release (H1 2026 truck total of 576,288 minus reported Q2 2026 truck total of 318,813; Q1 2025 comparable of 290,387 computed the same way).",
-          "source": "Derived from Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf"
-        },
-        {
-          "quarter": "2026Q1",
-          "oem": "GM - Silverado",
-          "truck_units": 127412,
-          "yoy_pct": 0.1,
-          "note": "Chevrolet Silverado, incl. Silverado EV (1,406 units). Q1 2026 total of 127,412 vs Q1 2025's 127,331 — essentially flat; +0.1% YoY is derived from these two totals disclosed in the same article (article's own language called it 'nearly flat' without stating a precise %).",
-          "source": "GM Authority, compiling GM's Q1 2026 U.S. sales release: \"GM Sold A Lot More Full-Size Trucks Than Ford In Q1 2026,\" April 2026. https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/"
-        },
-        {
-          "quarter": "2026Q1",
-          "oem": "GM - Sierra",
-          "truck_units": 74319,
-          "yoy_pct": -3.9,
-          "note": "GMC Sierra, incl. Sierra EV (1,288 units). -3.9% YoY as stated directly in the source.",
-          "source": "GM Authority, compiling GM's Q1 2026 U.S. sales release: \"GM Sold A Lot More Full-Size Trucks Than Ford In Q1 2026,\" April 2026. https://gmauthority.com/blog/2026/04/full-size-gm-truck-sales-numbers-figures-results-first-quarter-2026-q1/"
+          "source": "Derived from Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf",
+          "source_quality": "primary-derived"
         },
         {
           "quarter": "2026Q2",
@@ -85,23 +73,8 @@
           "truck_units": 318813,
           "yoy_pct": -7.0,
           "note": "Ford-brand 'Trucks' category (F-Series, Ranger, Maverick, Transit, E-Series, Heavy Trucks); vs 342,761 in Q2 2025. F-Series alone: 197,900 units in Q2 (-11.0% YoY); H1 F-Series 357,801 units.",
-          "source": "Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf"
-        },
-        {
-          "quarter": "2026Q2",
-          "oem": "GM - Silverado",
-          "truck_units": 142745,
-          "yoy_pct": -7.7,
-          "note": "Chevrolet Silverado, incl. EV variant. -7.7% YoY as stated directly in the source. [Definition caveat added 2026-10-27: Silverado 142,745 + Sierra 93,391 = 236,136, which does not equal the 242,403 combined figure cited by the same coverage — the nameplate rows may exclude EV variants despite the label above. Unverified; GM's own table was not retrievable. Treat Q2 GM nameplate units/YoY as secondary-source.]",
-          "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/"
-        },
-        {
-          "quarter": "2026Q2",
-          "oem": "GM - Sierra",
-          "truck_units": 93391,
-          "yoy_pct": 5.0,
-          "note": "GMC Sierra, incl. EV variant. +5.0% YoY as stated directly in the source — best-performing full-size pickup nameplate this quarter among Ford/GM. [Definition caveat added 2026-10-27: Silverado 142,745 + Sierra 93,391 = 236,136, which does not equal the 242,403 combined figure cited by the same coverage — the nameplate rows may exclude EV variants despite the label above. Unverified; GM's own table was not retrievable. Treat Q2 GM nameplate units/YoY as secondary-source.]",
-          "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/"
+          "source": "Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf",
+          "source_quality": "primary"
         },
         {
           "quarter": "2026Q1",
@@ -109,7 +82,8 @@
           "truck_units": 159901,
           "yoy_pct": -16.0,
           "note": "F-Series only (within Ford's Trucks category). Not reported as a standalone Q1 figure — derived by subtraction from Ford's Q2 2026 release: H1 2026 F-Series 357,801 minus Q2 197,900; Q1 2025 comparable 412,848 minus 222,459 = 190,389 (-16.0%). Matches GM Authority's separately reported 'F-Series fell 16%' for Q1.",
-          "source": "Derived from Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf"
+          "source": "Derived from Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf",
+          "source_quality": "primary-derived"
         },
         {
           "quarter": "2026Q2",
@@ -117,7 +91,8 @@
           "truck_units": 197900,
           "yoy_pct": -11.0,
           "note": "F-Series only, as printed in Ford's Q2 sales table (vs 222,459 in Q2 2025). Ford attributed the weakness to a retiming of commercial production after last year's aluminum supply shortages.",
-          "source": "Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf"
+          "source": "Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf",
+          "source_quality": "primary"
         },
         {
           "quarter": "2026Q3",
@@ -125,7 +100,8 @@
           "truck_units": 315112,
           "yoy_pct": 0.5,
           "note": "Ford-brand 'Trucks' category (F-Series, Ranger, Maverick, Transit, E-Series, Heavy Trucks) as printed in Ford's Q3 sales table, vs 313,654 in Q3 2025 — first flat-to-up quarter of 2026 after -11.3% in Q1 and -7.0% in Q2. Maverick +20.4% (41,970), Ranger +14.8%, Transit -5.3%. Ford says retail share +0.4pt to 12.1% ex-Escape/Corsair phase-out and F-Series had the lowest incentive spend in the segment. Total Ford sales 509,764 (-6.6%) on the planned Escape/Corsair exit.",
-          "source": "Ford Motor Company Third Quarter 2026 U.S. Sales Release, October 2, 2026 (sales table, p.8). https://s205.q4cdn.com/882619693/files/doc_news/2026/Oct/02/Ford-U-S-Q3-2026-Sales-Release.pdf"
+          "source": "Ford Motor Company Third Quarter 2026 U.S. Sales Release, October 2, 2026 (sales table, p.8). https://s205.q4cdn.com/882619693/files/doc_news/2026/Oct/02/Ford-U-S-Q3-2026-Sales-Release.pdf",
+          "source_quality": "primary"
         },
         {
           "quarter": "2026Q3",
@@ -133,23 +109,62 @@
           "truck_units": 203707,
           "yoy_pct": -1.9,
           "note": "F-Series only, as printed in Ford's Q3 sales table (vs 207,732 in Q3 2025). Improving trend: -16.0% Q1, -11.0% Q2, -1.9% Q3; September alone +2.4% to 67,448. YTD 561,508 (-9.5%), >140,000 ahead of Silverado. NOTE: one trade-press article reported F-Series Q3 as +3.0% / 203,718 — that conflicts with Ford's own table and is not used. F-Series gross stock rose to 215.4k at end-Sept from 190.4k at end-June (Ford's gross-stock tables). F-150 output was hit late in September by a short-term (non-aluminum) supplier issue Ford says is containable within its $10-11B 2026 adj. EBIT guidance; Super Duty production was a 19-year high.",
-          "source": "Ford Motor Company Third Quarter 2026 U.S. Sales Release, October 2, 2026 (sales table, p.8; gross stocks p.9). https://s205.q4cdn.com/882619693/files/doc_news/2026/Oct/02/Ford-U-S-Q3-2026-Sales-Release.pdf"
+          "source": "Ford Motor Company Third Quarter 2026 U.S. Sales Release, October 2, 2026 (sales table, p.8; gross stocks p.9). https://s205.q4cdn.com/882619693/files/doc_news/2026/Oct/02/Ford-U-S-Q3-2026-Sales-Release.pdf",
+          "source_quality": "primary"
+        },
+        {
+          "quarter": "2026Q1",
+          "oem": "GM - Silverado",
+          "truck_units": 128818,
+          "yoy_pct": -0.7,
+          "note": "GM TOTAL Silverado line, incl. Silverado EV and medium duty: 128,818 vs 129,714 a year earlier (-0.7%). Components: light duty (1500) 84,401 (+7.9%) + heavy duty 41,738 (-11.4%) + medium duty 1,273 (-37.4%) + Silverado EV 1,406 (-41%). CORRECTION (2026-10-27): the prior row showed 127,412 labeled 'incl. EV' with a derived +0.1%; 127,412 is actually LD+HD+MD and EXCLUDES the EV, and its year-ago baseline came from a different source.",
+          "source": "GM U.S. Deliveries for Quarter 1 2026, official delivery table (investor.gm.com): https://investor.gm.com/static-files/f788ea75-6312-4816-8180-62c9b7a9058b — line items relayed via search-index extraction of the PDF; the PDF itself returns HTTP 403 to automated fetch, so it was NOT opened directly. Spot-check against the PDF in a browser.",
+          "source_quality": "relayed"
+        },
+        {
+          "quarter": "2026Q1",
+          "oem": "GM - Sierra",
+          "truck_units": 75607,
+          "yoy_pct": -3.7,
+          "note": "GM TOTAL Sierra line, incl. Sierra EV: 75,607 vs 78,541 a year earlier (-3.7%) = 74,319 ex-EV (GM Authority: -3.9%) + Sierra EV 1,288. Silverado + Sierra = 204,425, the combined incl.-EV figure used by trade press. CORRECTION (2026-10-27): prior row showed 74,319 (ex-EV) labeled 'incl. EV'. One search extraction of the Q1 table returned a garbled Sierra total row; this value was accepted because it ties exactly to 74,319 + 1,288 and to the 204,425 combined total.",
+          "source": "GM U.S. Deliveries for Quarter 1 2026, official delivery table (investor.gm.com): https://investor.gm.com/static-files/f788ea75-6312-4816-8180-62c9b7a9058b — line items relayed via search-index extraction of the PDF; the PDF itself returns HTTP 403 to automated fetch, so it was NOT opened directly. Spot-check against the PDF in a browser.",
+          "source_quality": "relayed"
+        },
+        {
+          "quarter": "2026Q2",
+          "oem": "GM - Silverado",
+          "truck_units": 147256,
+          "yoy_pct": -7.7,
+          "note": "GM TOTAL Silverado line, incl. Silverado EV and medium duty: 147,256 (-7.7%) vs 159,537 a year earlier (sum of GM's year-ago lines: 95,881 LD + 57,420 HD + 3,180 MD + 3,056 EV). Components: light duty 94,992 (-0.9%) + heavy duty 47,753 (-16.8%) + medium duty 2,245 (-29.4%) + Silverado EV 2,266 (-25.9%). EXPLAINS THE Q2 DISCREPANCY: the prior row (142,745) was LD + HD only — it excluded medium duty (2,245) and the EV (2,266) — yet carried the -7.7% from GM's TOTAL line.",
+          "source": "GM U.S. Deliveries for Quarter 2 2026, official delivery table (investor.gm.com): https://investor.gm.com/static-files/3cd8e3e3-2da9-452e-9062-b0321ed256d0 — line items relayed via search-index extraction of the PDF; the PDF itself returns HTTP 403 to automated fetch, so it was NOT opened directly. Spot-check against the PDF in a browser.",
+          "source_quality": "relayed"
+        },
+        {
+          "quarter": "2026Q2",
+          "oem": "GM - Sierra",
+          "truck_units": 95147,
+          "yoy_pct": 5.0,
+          "note": "GM TOTAL Sierra line, incl. Sierra EV: 95,147 (+5.0%) vs 90,641 a year earlier (59,488 LD + 29,629 HD + 1,524 EV). Components: light duty 66,211 (+11.3%) + heavy duty 27,180 (-8.3%) + Sierra EV 1,756 (+15.2%). GM called it its best-ever Sierra quarter. EXPLAINS THE Q2 DISCREPANCY: the prior row (93,391) was LD + HD only, excluding the EV (1,756), yet carried the +5.0% from GM's TOTAL line. Silverado 147,256 + Sierra 95,147 = 242,403, which now ties to the combined figure used elsewhere (-3.1% vs 250,178 year-ago, derived).",
+          "source": "GM U.S. Deliveries for Quarter 2 2026, official delivery table (investor.gm.com): https://investor.gm.com/static-files/3cd8e3e3-2da9-452e-9062-b0321ed256d0 — line items relayed via search-index extraction of the PDF; the PDF itself returns HTTP 403 to automated fetch, so it was NOT opened directly. Spot-check against the PDF in a browser.",
+          "source_quality": "relayed"
         },
         {
           "quarter": "2026Q3",
           "oem": "GM - Silverado",
           "truck_units": 146639,
-          "yoy_pct": null,
-          "note": "Chevrolet Silverado total incl. Silverado EV (1,655, -58%) and the medium-duty chassis cab. Components: Silverado 1500 light duty 100,221 (+13.3%), heavy duty 44,278 (-10.1%). Coverage disagrees on the total's YoY (+2.7% / +4.9% / +7.0%, apparently different Q3 2025 baselines), so yoy_pct is left null rather than picking one. Last full quarter before the 2027 redesign reaches dealers. SECONDARY SOURCE — GM's own deliveries PDF returned 403 to automated access; verify against investor.gm.com.",
-          "source": "GM Authority coverage of GM's Q3 2026 U.S. deliveries, October 2026 (via search-result summary; page itself blocked to automated fetch). https://gmauthority.com/blog/2026/10/full-size-gm-truck-sales-numbers-figures-results-third-quarter-2026-q3/"
+          "yoy_pct": 2.7,
+          "note": "GM TOTAL Silverado line, incl. Silverado EV and medium duty: 146,639 vs 142,813 a year earlier (+2.7%) — the official table resolves the +2.7% / +4.9% / +7.0% disagreement among trade-press sources. Components: light duty 100,221 (+13.3%) + heavy duty 44,278 (-10.1%) + medium duty 485 + Silverado EV 1,655 (-58%). Last full quarter before the 2027 redesign reaches dealers.",
+          "source": "GM U.S. Deliveries for Quarter 3 2026, official delivery table (investor.gm.com): https://investor.gm.com/static-files/1294f515-0131-4d38-986e-f4d3160e7a68 — line items relayed via search-index extraction of the PDF; the PDF itself returns HTTP 403 to automated fetch, so it was NOT opened directly. Spot-check against the PDF in a browser.",
+          "source_quality": "relayed"
         },
         {
           "quarter": "2026Q3",
           "oem": "GM - Sierra",
-          "truck_units": 84929,
-          "yoy_pct": -0.6,
-          "note": "GMC Sierra 1500 light duty 56,325 (+2.9%) + heavy duty 28,604 (-6.9%) = 84,929 (-0.6%). This EXCLUDES Sierra EV (1,661, -50.8%), so it is not like-for-like with the 'incl. EV' labels on earlier GM rows; including EVs the implied total is 86,590 (= GM's 233,229 combined full-size figure, +<1% YoY incl. EVs, minus Silverado 146,639). GM total company Q3 deliveries 670,974 (-5.5%). SECONDARY SOURCE — verify against GM's own table.",
-          "source": "GM Authority coverage of GM's Q3 2026 U.S. deliveries, October 2026 (via search-result summary; page itself blocked to automated fetch). https://gmauthority.com/blog/2026/10/full-size-gm-truck-sales-numbers-figures-results-third-quarter-2026-q3/"
+          "truck_units": 86590,
+          "yoy_pct": -2.5,
+          "note": "GM TOTAL Sierra line, incl. Sierra EV: 86,590 vs 88,810 a year earlier (-2.5%). Components: light duty 56,325 (+2.9%) + heavy duty 28,604 (-6.9%) = 84,929 (trade press reported this ex-EV subtotal as '-0.6%') + Sierra EV 1,661 (-50.8%). Silverado + Sierra = 233,229, +0.7% vs 231,623 year-ago (derived), i.e. combined full-size GM pickups were roughly flat.",
+          "source": "GM U.S. Deliveries for Quarter 3 2026, official delivery table (investor.gm.com): https://investor.gm.com/static-files/1294f515-0131-4d38-986e-f4d3160e7a68 — line items relayed via search-index extraction of the PDF; the PDF itself returns HTTP 403 to automated fetch, so it was NOT opened directly. Spot-check against the PDF in a browser.",
+          "source_quality": "relayed"
         }
       ]
     },
@@ -404,7 +419,19 @@
           "note": "PARTIAL MONTH, wholesale only. MUVVI +0.7% vs September; non-seasonally-adjusted prices fell ~2% in the first half of October (steeper than the usual ~1.5% full-month drop); wholesale days' supply 28.2 as of Oct 15 vs 28.7 at end-Sept; sales conversion 54.3%. Cox read it as tighter supply, not stronger demand. Retail October data not yet published.",
           "source": "Manheim/Cox MUVVI mid-October report (Oct 19): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-mid-october-2026-trends/"
         }
-      ]
+      ],
+      "maintenance": {
+        "cadence": "monthly",
+        "next_due": "2026-11-06",
+        "next_due_what": "Full-month October MUVVI (wholesale) report — Cox publishes on the 5th business day of the month (Nov 6, 2026). Replace the partial '2026-10 (first 15 days)' row with a full '2026-10' row.",
+        "retail_expected": "Cox's retail used-vehicle inventory report for October (listing price, days' supply, sales pace) usually lands mid-month (recent releases: 11th-17th) — expect ~Nov 13-17; fill the retail fields of the 2026-10 row then. Not officially scheduled.",
+        "after_updating": "Bump `next_due` to the 5th business day of the following month (Dec 2026: Dec 7) and `last_updated` to today.",
+        "where_to_look": {
+          "wholesale": "https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-october-2026-trends/ (URL pattern: manheim-used-vehicle-value-index-{month}-{year}-trends)",
+          "retail": "https://www.coxautoinc.com/insights/used-vehicle-inventory-october-2026/ (URL pattern: used-vehicle-inventory-{month}-{year})"
+        },
+        "note": "The page reads `next_due` and shows a warning in the freshness bar and under the Section 6 table once it is past due."
+      }
     },
     "gpi_used_vehicle": {
       "label": "GPI Used-Vehicle Results — Retail Units, Retail GPU, Days' Supply, Mix",

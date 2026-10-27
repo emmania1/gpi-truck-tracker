@@ -523,3 +523,42 @@ table.data-table.compact th { font-size: 0.66rem; line-height: 1.25; }
 table.data-table.compact td .sub { margin-top: 1px; line-height: 1.25; }
 
 table.data-table a { color: var(--accent); white-space: nowrap; font-size: 0.74rem; }
+
+/* ---- source-quality badges & caution palette ---- */
+:root { --caution: #8a5a00; --caution-bg: #fff3d1; }
+@media (prefers-color-scheme: dark) {
+  :root { --caution: #e3b341; --caution-bg: #3a2f0d; }
+}
+.src-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin: 2px 0 4px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: transparent;
+}
+.src-badge.relayed {
+  color: var(--caution);
+  background: var(--caution-bg);
+  border-color: var(--caution);
+}
+.src-badge.secondary {
+  color: var(--warn);
+  background: var(--warn-bg);
+  border-color: var(--warn);
+}
+.due-flag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-left: 4px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.due-flag.overdue { color: var(--warn); background: var(--warn-bg); border-color: var(--warn); }
+.due-flag.soon { color: var(--caution); background: var(--caution-bg); border-color: var(--caution); }
+.table-note.overdue-note { color: var(--warn); font-weight: 600; }

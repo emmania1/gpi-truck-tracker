@@ -29,3 +29,9 @@ Edit `data/manual-data.json` directly, following the `_instructions` block insid
 ## Deployment
 
 Static site served via GitHub Pages from the `main` branch root.
+
+## Monthly maintenance (manual series)
+
+- **Section 6 (used market)** — update monthly from Cox Automotive: wholesale (Manheim MUVVI) on the 5th business day (next: **Nov 6, 2026**), retail (vAuto inventory report) around mid-month. The due date lives in `data/manual-data.json` → `real_series.used_market_monthly.maintenance.next_due`; the page shows it in the freshness bar and flags it when overdue. After updating, bump `next_due` to the 5th business day of the following month.
+- **GPI quarterly series** (`gpi_new_vehicle_sss`, `gpi_used_vehicle`) — add a row after each GPI earnings release (Q3 2026: Oct 28, 2026).
+- **OEM deliveries** — add rows after Ford/GM quarterly sales releases (early Jan for Q4). Use GM's TOTAL lines; see `_instructions` in the data file.
