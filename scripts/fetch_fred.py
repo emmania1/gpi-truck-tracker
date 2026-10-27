@@ -48,6 +48,14 @@ SERIES = {
         "name": "Texas Unemployment Rate",
         "unit": "Percent",
     },
+    "CUSR0000SETA02": {
+        "name": "CPI: Used Cars and Trucks, U.S. City Average (SA)",
+        "unit": "Index 1982-84=100",
+    },
+    "CUSR0000SETA01": {
+        "name": "CPI: New Vehicles, U.S. City Average (SA)",
+        "unit": "Index 1982-84=100",
+    },
 }
 
 FRED_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"

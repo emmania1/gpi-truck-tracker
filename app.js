@@ -294,19 +294,312 @@
     return (Date.now() - d.getTime()) / 86400000;
   }
 
-  function findPointNearDaysAgo(data, days) {
-    if (!data || !data.length) return null;
-    const target = Date.now() - days * 86400000;
-    let best = data[0];
-    let bestDiff = Math.abs(new Date(data[0].date).getTime() - target);
-    for (const p of data) {
-      const diff = Math.abs(new Date(p.date).getTime() - target);
-      if (diff < bestDiff) {
-        best = p;
-        bestDiff = diff;
-      }
+  function yoyFromSeries(seriesObj, date) {
+    const pts = seriesObj?.data;
+    if (!pts || !pts.length) return null;
+    const y = parseInt(date.slice(0, 4), 10);
+    const prevDate = `${y - 1}${date.slice(4)}`;
+    const cur = pts.find((p) => p.date === date);
+    const prev = pts.find((p) => p.date === prevDate);
+    if (!cur || !prev) return null;
+    return { value: cur.value, prev: prev.value, pct: (cur.value / prev.value - 1) * 100 };
+  }
+
+  function fmtSigned(v, d = 1, suffix = "%") {
+    if (v === null || v === undefined || Number.isNaN(v)) return "—";
+    return `${v > 0 ? "+" : ""}${fmtNum(v, d)}${suffix}`;
+  }
+
+  function monthLabel(m) {
+    if (m.startsWith("2026-10")) return "Oct 1–15";
+    const d = new Date(`${m.slice(0, 7)}-01T00:00:00Z`);
+    return d.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" });
+  }
+
+  function quarterOfMonth(m) {
+    const y = m.slice(0, 4);
+    const mm = parseInt(m.slice(5, 7), 10);
+    return `${y}Q${Math.ceil(mm / 3)}`;
+  }
+
+  function usedMonthsFor(usedMkt, quarter) {
+    return (usedMkt?.data ?? []).filter((r) => /^\d{4}-\d{2}$/.test(r.month) && quarterOfMonth(r.month) === quarter);
+  }
+
+  function avgOf(rows, key) {
+    const vals = rows.map((r) => r[key]).filter((v) => v !== null && v !== undefined);
+    if (vals.length !== rows.length || !vals.length) return null;
+    return vals.reduce((a, b) => a + b, 0) / vals.length;
+  }
+
+  function spreadOf(r) {
+    if (r.retail_listing_yoy_pct === null || r.retail_listing_yoy_pct === undefined) return null;
+    if (r.muvvi_yoy_pct === null || r.muvvi_yoy_pct === undefined) return null;
+    return r.retail_listing_yoy_pct - r.muvvi_yoy_pct;
+  }
+
+  function renderCPIChart(fredData) {
+    const used = fredData?.series?.CUSR0000SETA02;
+    const neu = fredData?.series?.CUSR0000SETA01;
+    const ctx = document.getElementById("chart-cpi");
+    const oneLiner = document.getElementById("sec3-oneliner");
+    if (!ctx || !used?.data?.length || !neu?.data?.length) {
+      if (oneLiner) oneLiner.textContent = "CPI data unavailable — check data/fred-series.json.";
+      return;
     }
-    return best;
+    const cutoff = new Date();
+    cutoff.setFullYear(cutoff.getFullYear() - YEARS_LOOKBACK);
+    const build = (series) =>
+      series.data
+        .filter((p) => new Date(p.date) >= cutoff)
+        .map((p) => {
+          const y = yoyFromSeries(series, p.date);
+          return y ? { x: p.date, y: y.pct } : null;
+        })
+        .filter(Boolean);
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        datasets: [
+          { label: "CPI used cars & trucks — YoY %", data: build(used), borderColor: "#c0562b", backgroundColor: "#c0562b", borderWidth: 2, pointRadius: 0, tension: 0.15 },
+          { label: "CPI new vehicles — YoY %", data: build(neu), borderColor: "#1f5c8b", backgroundColor: "#1f5c8b", borderWidth: 2, pointRadius: 0, tension: 0.15 },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        scales: {
+          x: { type: "time", time: { unit: "quarter" }, ticks: { color: axisColor() }, grid: { color: gridColor() } },
+          y: {
+            ticks: { color: axisColor(), callback: (v) => `${fmtNum(v, 0)}%` },
+            grid: { color: (c) => (c.tick && c.tick.value === 0 ? axisColor() : gridColor()) },
+            title: { display: true, text: "Year-over-year % change", color: axisColor() },
+          },
+        },
+        plugins: {
+          legend: { position: "bottom", labels: { color: axisColor(), boxWidth: 12, font: { size: 11 } } },
+          tooltip: { callbacks: { title: (items) => fmtDate(items[0].parsed.x), label: (item) => `${item.dataset.label}: ${fmtSigned(item.parsed.y, 1)}` } },
+        },
+      },
+    });
+
+    const lu = used.data[used.data.length - 1];
+    const ln = neu.data[neu.data.length - 1];
+    const yu = yoyFromSeries(used, lu.date);
+    const yn = yoyFromSeries(neu, ln.date);
+    if (oneLiner && yu && yn) {
+      const gap = yn.pct - yu.pct;
+      oneLiner.textContent = `Latest (${fmtDate(lu.date)}): used cars & trucks CPI ${fmtSigned(yu.pct)} YoY vs new vehicles ${fmtSigned(yn.pct)} YoY — used is running ${fmtNum(Math.abs(gap), 1)} pts ${gap >= 0 ? "below" : "above"} new.`;
+    }
+  }
+
+  function chartBase(extraScales) {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      scales: extraScales,
+      plugins: { legend: { position: "bottom", labels: { color: axisColor(), boxWidth: 12, font: { size: 10 } } } },
+    };
+  }
+
+  function renderUsedMarket(containerEl, seriesObj) {
+    const oneLiner = document.getElementById("sec6-oneliner");
+    if (!seriesObj?.data?.length) {
+      containerEl.innerHTML = emptyStateHTML("Used-market series", seriesObj?.source_guidance ?? "", null);
+      return;
+    }
+    const rows = seriesObj.data.slice();
+    const labels = rows.map((r) => monthLabel(r.month));
+    const spreads = rows.map(spreadOf);
+
+    const c1 = document.getElementById("chart-spread");
+    if (c1) {
+      new Chart(c1, {
+        data: {
+          labels,
+          datasets: [
+            { type: "bar", label: "Spread (retail YoY − wholesale YoY, pts)", data: spreads, backgroundColor: isDarkMode() ? "rgba(224,176,79,0.55)" : "rgba(138,90,0,0.35)", order: 3 },
+            { type: "line", label: "Retail listing price YoY % (Cox/vAuto)", data: rows.map((r) => r.retail_listing_yoy_pct), borderColor: "#c0562b", backgroundColor: "#c0562b", borderWidth: 2, pointRadius: 3, tension: 0.1, spanGaps: false, order: 1 },
+            { type: "line", label: "Wholesale MUVVI YoY % (Manheim)", data: rows.map((r) => r.muvvi_yoy_pct), borderColor: "#1f5c8b", backgroundColor: "#1f5c8b", borderWidth: 2, pointRadius: 3, tension: 0.1, order: 2 },
+          ],
+        },
+        options: {
+          ...chartBase({
+            x: { ticks: { color: axisColor(), font: { size: 10 } }, grid: { color: gridColor() } },
+            y: { ticks: { color: axisColor(), font: { size: 10 }, callback: (v) => `${fmtNum(v, 0)}` }, grid: { color: (c) => (c.tick && c.tick.value === 0 ? axisColor() : gridColor()) } },
+          }),
+        },
+      });
+    }
+
+    const c2 = document.getElementById("chart-dayssupply");
+    if (c2) {
+      new Chart(c2, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            { label: "Retail days' supply (Cox/vAuto)", data: rows.map((r) => r.retail_days_supply), borderColor: "#c0562b", backgroundColor: "#c0562b", borderWidth: 2, pointRadius: 3, tension: 0.1, spanGaps: false },
+            { label: "Wholesale days' supply (Manheim)", data: rows.map((r) => r.wholesale_days_supply), borderColor: "#1f5c8b", backgroundColor: "#1f5c8b", borderWidth: 2, pointRadius: 3, tension: 0.1 },
+          ],
+        },
+        options: {
+          ...chartBase({
+            x: { ticks: { color: axisColor(), font: { size: 10 } }, grid: { color: gridColor() } },
+            y: { beginAtZero: true, ticks: { color: axisColor(), font: { size: 10 } }, grid: { color: gridColor() } },
+          }),
+        },
+      });
+    }
+
+    const full = rows.filter((r) => /^\d{4}-\d{2}$/.test(r.month));
+    const last = full[full.length - 1];
+    const prev = full[full.length - 2];
+    const apr = full.find((r) => r.month === "2026-04");
+    const partial = rows.find((r) => !/^\d{4}-\d{2}$/.test(r.month));
+    if (oneLiner && last) {
+      const sp = spreadOf(last);
+      const spApr = apr ? spreadOf(apr) : null;
+      oneLiner.textContent =
+        `${monthLabel(last.month)} 2026: retail listing prices ${fmtSigned(last.retail_listing_yoy_pct, 0)} YoY vs wholesale (MUVVI) ${fmtSigned(last.muvvi_yoy_pct)} YoY → spread ${fmtSigned(sp, 1, " pts")}` +
+        `${spApr !== null ? ` (April: ${fmtSigned(spApr, 1, " pts")})` : ""}. ` +
+        `Days' supply: retail ${last.retail_days_supply}${prev ? ` (${monthLabel(prev.month)} ${prev.retail_days_supply})` : ""}, wholesale ${fmtNum(last.wholesale_days_supply, 1)}${prev ? ` (${monthLabel(prev.month)} ${fmtNum(prev.wholesale_days_supply, 1)})` : ""}.` +
+        `${partial ? ` Early October: MUVVI ${fmtSigned(partial.muvvi_yoy_pct)} YoY, wholesale days' supply ${fmtNum(partial.wholesale_days_supply, 1)}.` : ""}`;
+    }
+
+    const body = rows
+      .slice()
+      .reverse()
+      .map((r) => {
+        const sp = spreadOf(r);
+        const manUrl = (r.source.match(/https?:\/\/[^\s)]+/g) || [])[0];
+        const retUrl = (r.source.match(/https?:\/\/[^\s)]+/g) || [])[1];
+        const srcCell = [manUrl ? `<a href="${manUrl}" target="_blank" rel="noopener">📎 Manheim</a>` : "", retUrl ? `<a href="${retUrl}" target="_blank" rel="noopener">📎 Cox</a>` : ""].filter(Boolean).join("<br>");
+        return `<tr>
+          <td style="white-space:nowrap">${escapeHTML(r.month.length > 7 ? "2026-10 (1–15)" : r.month)}</td>
+          <td class="num">${fmtNum(r.muvvi_index, 1)}<span class="sub">${fmtSigned(r.muvvi_yoy_pct)} YoY</span></td>
+          <td class="num">${r.wholesale_days_supply === null ? "—" : fmtNum(r.wholesale_days_supply, 1)}</td>
+          <td class="num">${r.retail_avg_listing_price === null ? "—" : "$" + fmtNum(r.retail_avg_listing_price, 0)}<span class="sub">${r.retail_listing_yoy_pct === null ? "YoY n/a" : fmtSigned(r.retail_listing_yoy_pct, 0) + " YoY"}</span></td>
+          <td class="num">${r.retail_days_supply === null ? "—" : r.retail_days_supply}</td>
+          <td class="num">${r.retail_sales_pace_yoy_pct === null ? "—" : fmtSigned(r.retail_sales_pace_yoy_pct)}</td>
+          <td class="num"><strong>${sp === null ? "—" : fmtSigned(sp, 1, "")}</strong></td>
+          <td>${srcCell}</td>
+        </tr>`;
+      })
+      .join("");
+
+    const notes = rows
+      .slice()
+      .reverse()
+      .map((r) => `<p style="margin:4px 0;"><strong>${escapeHTML(r.month)}</strong> — ${escapeHTML(r.note)}</p>`)
+      .join("");
+
+    containerEl.innerHTML = `
+      <div class="table-scroll">
+        <table class="data-table compact">
+          <thead><tr>
+            <th>Month</th><th class="num">Wholesale MUVVI</th><th class="num">Whsl days' supply</th>
+            <th class="num">Retail avg listing</th><th class="num">Retail days' supply</th>
+            <th class="num">Retail pace YoY</th><th class="num">Spread (pts)</th><th>Source</th>
+          </tr></thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>
+      <p class="table-note">Spread = retail listing price YoY % minus MUVVI YoY % (computed here; Cox rounds listing-price YoY to whole percents, so ±0.5 pt). MUVVI is a mix/mileage/seasonally adjusted index (Jan 1997 = 100). Values are as first reported; Cox revises prior months. Hand-entered monthly from Cox Automotive — last updated ${escapeHTML(seriesObj.last_updated ?? "—")}.</p>
+      <div class="row-notes"><details><summary>Notes by month (revisions, caveats, Cox commentary)</summary><div>${notes}</div></details></div>
+    `;
+  }
+
+  function renderGpiUsed(containerEl, seriesObj, usedMkt) {
+    const oneLiner = document.getElementById("sec8-oneliner");
+    if (!seriesObj?.data?.length) {
+      containerEl.innerHTML = emptyStateHTML("GPI used-vehicle series", seriesObj?.source_guidance ?? "", null);
+      return;
+    }
+    const rows = seriesObj.data.slice().sort((a, b) => b.quarter.localeCompare(a.quarter));
+    const latest = rows[0];
+    const yearAgo = rows.find((r) => r.quarter === `${parseInt(latest.quarter.slice(0, 4), 10) - 1}Q${latest.quarter.slice(5)}`);
+    const nextQ = (() => {
+      const y = parseInt(latest.quarter.slice(0, 4), 10);
+      const q = parseInt(latest.quarter.slice(5), 10);
+      return q === 4 ? `${y + 1}Q1` : `${y}Q${q + 1}`;
+    })();
+    const pendingMonths = usedMonthsFor(usedMkt, nextQ);
+    const pendingComp = rows.find((r) => r.quarter === `${parseInt(nextQ.slice(0, 4), 10) - 1}Q${nextQ.slice(5)}`);
+
+    const cls = (v) => (v === null || v === undefined ? "" : v < 0 ? "neg" : v > 0 ? "pos" : "");
+    const cell = (val, yoy, fmtVal) =>
+      `${fmtVal(val)}<span class="sub ${cls(yoy)}">${yoy === null || yoy === undefined ? "" : fmtSigned(yoy) + " YoY"}</span>`;
+    const units = (v) => fmtNum(v, 0);
+    const gpu = (v) => "$" + fmtNum(v, 0);
+
+    const mktPace = (q) => {
+      const m = usedMonthsFor(usedMkt, q);
+      return m.length === 3 ? avgOf(m, "retail_sales_pace_yoy_pct") : null;
+    };
+
+    let pendingRow = "";
+    if (pendingMonths.length === 3 && pendingComp) {
+      const pace = avgOf(pendingMonths, "retail_sales_pace_yoy_pct");
+      const muv = avgOf(pendingMonths, "muvvi_yoy_pct");
+      const lastM = pendingMonths[pendingMonths.length - 1];
+      pendingRow = `<tr class="pending-row">
+        <td><strong>${nextQ}</strong><span class="sub">reports Oct 28</span></td>
+        <td class="num" colspan="2">awaiting GPI release<span class="sub">comp: ${units(pendingComp.us_retail_units)} units, ${gpu(pendingComp.us_retail_gpu)} GPU</span></td>
+        <td class="num">awaiting<span class="sub">comp: ${pendingComp.us_days_supply}</span></td>
+        <td class="num" colspan="2">awaiting GPI release<span class="sub">comp: ${gpu(pendingComp.ss_retail_gpu)} GPU</span></td>
+        <td class="num">—</td>
+        <td class="num">${fmtSigned(pace)}<span class="sub">MUVVI qtr avg ${fmtSigned(muv)} YoY · Sep retail days' supply ${lastM.retail_days_supply}</span></td>
+        <td></td>
+      </tr>`;
+    }
+
+    const body = rows
+      .map((r) => {
+        const usedRevShare = (r.used_rev_musd / r.total_rev_musd) * 100;
+        const usedGpShare = (r.used_gp_musd / r.total_gp_musd) * 100;
+        const pace = mktPace(r.quarter);
+        const url = (r.source.match(/https?:\/\/[^\s)]+/g) || [])[0];
+        return `<tr>
+          <td style="white-space:nowrap"><strong>${r.quarter}</strong></td>
+          <td class="num">${cell(r.us_retail_units, r.us_units_yoy_pct, units)}</td>
+          <td class="num">${cell(r.us_retail_gpu, r.us_gpu_yoy_pct, gpu)}</td>
+          <td class="num">${r.us_days_supply}<span class="sub">cons. ${r.cons_days_supply}</span></td>
+          <td class="num">${cell(r.ss_retail_units, r.ss_units_yoy_pct, units)}</td>
+          <td class="num">${cell(r.ss_retail_gpu, r.ss_gpu_yoy_pct, gpu)}</td>
+          <td class="num">${fmtNum(usedRevShare, 1)}% rev<span class="sub">${fmtNum(usedGpShare, 1)}% of gross profit</span></td>
+          <td class="num">${pace === null ? "—" : fmtSigned(pace)}</td>
+          <td>${url ? `<a href="${url}" target="_blank" rel="noopener">📎 8-K Ex. 99.1</a>` : ""}</td>
+        </tr>`;
+      })
+      .join("");
+
+    const notes = rows.map((r) => `<p style="margin:4px 0;"><strong>${r.quarter}</strong> — ${linkify(r.note)}</p>`).join("");
+
+    if (oneLiner) {
+      oneLiner.textContent =
+        `Latest (${latest.quarter}): same-store used retail units ${fmtSigned(latest.ss_units_yoy_pct)} YoY; U.S. used retail GPU ${gpu(latest.us_retail_gpu)} (${fmtSigned(latest.us_gpu_yoy_pct)}); U.S. days' supply ${latest.us_days_supply}. ` +
+        (pendingComp ? `Q3 2026 results are scheduled for Oct 28 — year-ago comps: U.S. used retail units ${units(pendingComp.us_retail_units)}, U.S. used retail GPU ${gpu(pendingComp.us_retail_gpu)}, consolidated same-store GPU ${gpu(pendingComp.ss_retail_gpu)}, U.S. days' supply ${pendingComp.us_days_supply}.` : "");
+    }
+
+    containerEl.innerHTML = `
+      <div class="table-scroll">
+        <table class="data-table compact">
+          <thead><tr>
+            <th>Quarter</th><th class="num">U.S. used units</th><th class="num">U.S. used GPU</th>
+            <th class="num">U.S. days' supply</th><th class="num">Same-store used units</th>
+            <th class="num">Same-store used GPU</th><th class="num">Used % of rev / GP</th>
+            <th class="num">Mkt retail pace</th><th>Source</th>
+          </tr></thead>
+          <tbody>${pendingRow}${body}</tbody>
+        </table>
+      </div>
+      <p class="table-note">U.S. = reported retail units and GPU at period; days' supply is quarter-end (consolidated in grey beneath). "Same-store" = GPI's non-GAAP comparable-dealership metric, consolidated U.S.+U.K. Mkt retail pace = Cox's retail used unit sales pace YoY. Used share = total used (retail + wholesale) ÷ consolidated total, computed here from the dollar figures in each release. Market pace = simple average of Cox's three monthly YoY readings (Section 6) — not unit-weighted. Hand-entered from GPI 8-K Exhibit 99.1; last updated ${escapeHTML(seriesObj.last_updated ?? "—")}.</p>
+      <div class="row-notes"><details><summary>Notes by quarter (GPI call commentary, reported-basis figures, caveats)</summary><div>${notes}</div></details></div>
+    `;
   }
 
   function renderExecSummary(fredData, manualData) {
@@ -316,41 +609,71 @@
       const rs = manualData?.real_series ?? {};
       const tn = manualData?.tracked_notes ?? {};
       const series = fredData?.series ?? {};
+      const parts = [];
 
-      // 1. GPI same-store new-vehicle unit trend (narrowing/holding/widening)
+      // 1. New-vehicle same-store trend
       const sssPts = (rs.gpi_new_vehicle_sss?.data ?? []).slice().sort((a, b) => a.period.localeCompare(b.period));
-      let sssSentence = "GPI's same-store new-vehicle trend isn't yet populated in the tracker.";
+      const newLatest = sssPts[sssPts.length - 1];
       if (sssPts.length >= 2) {
         const prev = sssPts[sssPts.length - 2];
-        const cur = sssPts[sssPts.length - 1];
-        const direction = Math.abs(cur.value) < Math.abs(prev.value) ? "narrowed" : Math.abs(cur.value) > Math.abs(prev.value) ? "widened" : "held steady";
-        sssSentence = `GPI's own same-store new-vehicle unit decline ${direction} from ${fmtNum(prev.value, 1)}% YoY in ${prev.period} to ${fmtNum(cur.value, 1)}% YoY in ${cur.period} — the tracker doesn't carry a peer same-store series, so this reflects GPI's own trajectory only, not a peer-relative gap.`;
+        const direction = Math.abs(newLatest.value) < Math.abs(prev.value) ? "narrowed" : Math.abs(newLatest.value) > Math.abs(prev.value) ? "widened" : "held steady";
+        parts.push(`GPI's same-store new-vehicle unit decline ${direction} from ${fmtNum(prev.value, 1)}% YoY in ${prev.period} to ${fmtNum(newLatest.value, 1)}% in ${newLatest.period} (the tracker carries no peer same-store series, so this is GPI's own trajectory, not a peer-relative gap).`);
       }
 
-      // 2. Leverage trajectory — reuse the already-sourced status string verbatim
-      const lev = tn.leverage_trajectory;
-      const levSentence = lev?.status
-        ? `Leverage stood at ${lev.status}.`
-        : "Leverage data isn't yet populated in the tracker.";
+      // 2. Used — where the shortfall sat
+      const usedRows = (rs.gpi_used_vehicle?.data ?? []).slice().sort((a, b) => a.quarter.localeCompare(b.quarter));
+      const uL = usedRows[usedRows.length - 1];
+      const mkt = rs.used_market_monthly?.data ?? [];
+      if (uL) {
+        const revShare = (uL.used_rev_musd / uL.total_rev_musd) * 100;
+        const gpShare = (uL.used_gp_musd / uL.total_gp_musd) * 100;
+        const qMonths = usedMonthsFor(rs.used_market_monthly, uL.quarter);
+        const pace = qMonths.length === 3 ? avgOf(qMonths, "retail_sales_pace_yoy_pct") : null;
+        let s = `Used is where the ${uL.quarter} shortfall was concentrated: same-store used retail units were ${fmtSigned(uL.ss_units_yoy_pct)} YoY${newLatest ? ` vs ${fmtSigned(newLatest.value)} for new` : ""}, U.S. used retail GPU was $${fmtNum(uL.us_retail_gpu, 0)} (${fmtSigned(uL.us_gpu_yoy_pct)}), and used is ${fmtNum(revShare, 0)}% of revenue but only ${fmtNum(gpShare, 0)}% of gross profit.`;
+        if (pace !== null) s += ` The market was softer too (Cox retail used sales pace averaged ${fmtSigned(pace)} YoY over the quarter), but GPI trailed it by ~${fmtNum(Math.abs(uL.ss_units_yoy_pct - pace), 0)} pts, pointing at sourcing/execution rather than demand alone.`;
+        const fullM = mkt.filter((r) => /^\d{4}-\d{2}$/.test(r.month));
+        const m = fullM[fullM.length - 1];
+        const mPrev = fullM[fullM.length - 2];
+        if (m && spreadOf(m) !== null) {
+          s += ` Heading into the Q3 print: ${monthLabel(m.month)} wholesale (MUVVI) was ${fmtSigned(m.muvvi_yoy_pct)} YoY against retail listing prices ${fmtSigned(m.retail_listing_yoy_pct, 0)}, a ${fmtNum(spreadOf(m), 1)}-pt spread, but retail days' supply rose to ${m.retail_days_supply}${mPrev ? ` from ${mPrev.retail_days_supply}` : ""}.`;
+        }
+        parts.push(s);
+      }
 
-      // 3. Truck SAAR stability vs affordability backdrop (Sections 1-2 only)
-      let saarSentence = "Live SAAR/affordability data isn't yet available to characterize truck-specific softness.";
-      const dlData = series.DLTRUCKSSAAR?.data;
+      // 3. Leverage
+      const lev = tn.leverage_trajectory;
+      parts.push(lev?.status ? `Leverage stood at ${lev.status}.` : "Leverage data isn't yet populated in the tracker.");
+
+      // 4. Trucks: SAAR, OEM, affordability
+      const dl = series.DLTRUCKSSAAR;
+      const fl = series.FLTRUCKSSAAR;
+      const al = series.ALTSALES;
       const loanData = series.TERMCBAUTO48NS?.data;
       const gasData = series.GASREGW?.data;
       const txurData = series.TXUR?.data;
-      if (dlData?.length && loanData?.length && gasData?.length && txurData?.length) {
-        const dlLatest = dlData[dlData.length - 1];
-        const dlYearAgo = findPointNearDaysAgo(dlData, 365);
-        const dlChangePct = dlYearAgo ? ((dlLatest.value - dlYearAgo.value) / dlYearAgo.value) * 100 : null;
-        const dlWord = dlChangePct === null ? "moved" : Math.abs(dlChangePct) < 3 ? "held roughly stable" : dlChangePct > 0 ? "risen" : "declined";
-        const loanLatest = loanData[loanData.length - 1];
-        const gasLatest = gasData[gasData.length - 1];
-        const txurLatest = txurData[txurData.length - 1];
-        saarSentence = `Meanwhile, domestic light-truck SAAR has ${dlWord}${dlChangePct !== null ? ` (${dlChangePct >= 0 ? "+" : ""}${fmtNum(dlChangePct, 1)}% vs a year earlier)` : ""} at ${fmtNum(dlLatest.value, 2)}M units (Section 1), even as the 48-month new-auto loan rate (${fmtNum(loanLatest.value, 2)}%), gas prices ($${fmtNum(gasLatest.value, 2)}/gal), and Texas unemployment (${fmtNum(txurLatest.value, 1)}%) — all cited by GPI management as demand drags (Section 2) — stay elevated, suggesting the truck softness GPI describes reads more as an affordability/execution story than a broad SAAR collapse.`;
+      if (dl?.data?.length && fl?.data?.length && al?.data?.length) {
+        const date = dl.data[dl.data.length - 1].date;
+        const yd = yoyFromSeries(dl, date);
+        const yf = yoyFromSeries(fl, date);
+        const ya = yoyFromSeries(al, date);
+        let s = "";
+        if (yd && yf && ya) {
+          s += `On trucks, domestic light-truck SAAR was ${fmtNum(yd.value, 2)}M in ${fmtDate(date)} (${fmtSigned(yd.pct)} YoY) while imported trucks were ${fmtSigned(yf.pct)} and total light-vehicle SAAR ${fmtSigned(ya.pct)} (Section 1)`;
+        }
+        const oem = rs.oem_truck_deliveries?.data ?? [];
+        const fordRows = oem.filter((r) => r.oem === "Ford").sort((a, b) => b.quarter.localeCompare(a.quarter));
+        const fseries = oem.filter((r) => r.oem === "Ford - F-Series").sort((a, b) => b.quarter.localeCompare(a.quarter));
+        if (fordRows.length >= 2 && fordRows[0].yoy_pct !== null && fordRows[1].yoy_pct !== null) {
+          const fs = fseries.find((r) => r.quarter === fordRows[0].quarter);
+          s += `${s ? "; " : "On trucks, "}Ford's ${fordRows[0].quarter} truck sales were ${fmtSigned(fordRows[0].yoy_pct)} YoY${fs ? ` (F-Series ${fmtSigned(fs.yoy_pct)})` : ""} vs ${fmtSigned(fordRows[1].yoy_pct)} in ${fordRows[1].quarter} (Section 4)`;
+        }
+        if (loanData?.length && gasData?.length && txurData?.length) {
+          s += `; financing and fuel remain headwinds GPI management has cited — 48-month auto loan rate ${fmtNum(loanData[loanData.length - 1].value, 2)}%, gas $${fmtNum(gasData[gasData.length - 1].value, 2)}/gal, Texas unemployment ${fmtNum(txurData[txurData.length - 1].value, 1)}% (Section 2)`;
+        }
+        if (s) parts.push(s + ".");
       }
 
-      el.textContent = `${sssSentence} ${levSentence} ${saarSentence}`;
+      el.textContent = parts.join(" ");
     } catch (e) {
       console.error(e);
       el.textContent = "Could not compute executive summary from current data.";
@@ -394,12 +717,13 @@
       fredData = await loadJSON("data/fred-series.json");
       renderSAARChart(fredData);
       renderDemandBackdrop(fredData);
+      renderCPIChart(fredData);
     } catch (e) {
       console.error(e);
-      const oneLiner1 = document.getElementById("sec1-oneliner");
-      if (oneLiner1) oneLiner1.textContent = "Could not load live FRED data.";
-      const oneLiner2 = document.getElementById("sec2-oneliner");
-      if (oneLiner2) oneLiner2.textContent = "Could not load live FRED data.";
+      ["sec1-oneliner", "sec2-oneliner", "sec3-oneliner"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = "Could not load live FRED data.";
+      });
     }
 
     let manual = null;
@@ -408,22 +732,24 @@
       const rs = manual.real_series || {};
       const tn = manual.tracked_notes || {};
 
-      renderOemTable(document.getElementById("sec3-content"), rs.oem_truck_deliveries);
+      renderOemTable(document.getElementById("content-oem"), rs.oem_truck_deliveries);
+      renderRealTable(document.getElementById("content-atp"), rs.truck_atp, ["Period", "ATP ($)"]);
+      renderUsedMarket(document.getElementById("content-used-mkt"), rs.used_market_monthly);
 
-      renderRealTable(document.getElementById("sec4-content"), rs.truck_atp, ["Period", "ATP ($)"]);
+      const sss = document.getElementById("content-gpi-sss");
+      renderRealTable(sss, rs.gpi_new_vehicle_sss, ["Period", "SSS % YoY"]);
+      const tx = document.createElement("div");
+      sss.appendChild(tx);
+      renderRealTable(tx, rs.gpi_texas_new_unit_growth, ["Period", "Texas Growth % YoY"]);
 
-      const sec5a = document.getElementById("sec5-content");
-      renderRealTable(sec5a, rs.gpi_new_vehicle_sss, ["Period", "SSS % YoY"]);
-      const sec5b = document.createElement("div");
-      sec5a.appendChild(sec5b);
-      renderRealTable(sec5b, rs.gpi_texas_new_unit_growth, ["Period", "Texas Growth % YoY"]);
+      renderGpiUsed(document.getElementById("content-gpi-used"), rs.gpi_used_vehicle, rs.used_market_monthly);
 
-      renderTrackedCard(document.getElementById("sec6-content"), tn.rebranding_seo);
-      renderTrackedCard(document.getElementById("sec7-content"), tn.val_u_line);
-      renderTrackedCard(document.getElementById("sec8-content"), tn.dealership_disposal);
-      renderTrackedCard(document.getElementById("sec9-content"), tn.leverage_trajectory);
+      renderTrackedCard(document.getElementById("content-rebrand"), tn.rebranding_seo);
+      renderTrackedCard(document.getElementById("content-valuline"), tn.val_u_line);
+      renderTrackedCard(document.getElementById("content-disposal"), tn.dealership_disposal);
+      renderTrackedCard(document.getElementById("content-leverage"), tn.leverage_trajectory);
 
-      renderRealTable(document.getElementById("sec10-content"), rs.gpi_ps_growth, ["Period", "P&S Customer-Pay SSS % YoY"]);
+      renderRealTable(document.getElementById("content-ps"), rs.gpi_ps_growth, ["Period", "P&S Customer-Pay SSS % YoY"]);
     } catch (e) {
       console.error(e);
     }

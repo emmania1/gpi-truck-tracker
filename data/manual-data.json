@@ -12,7 +12,7 @@
     "how_to_add_an_oem_truck_delivery_data_point": [
       "The 'oem_truck_deliveries' series (Section 3) uses a STRICT explicit schema instead of freeform note text — every entry MUST have exactly these fields, in this order:",
       "  - `quarter` (string, e.g. \"2026Q2\")",
-      "  - `oem` (string — \"Ford\" for Ford's aggregate Trucks category; GM is reported per nameplate as \"GM - Silverado\" / \"GM - Sierra\" since GM Authority discloses each separately with its own YoY %, unlike Ford's single blended Trucks total. Keep these exact strings consistent across entries so the UI can group/filter by OEM.)",
+      "  - `oem` (string — \"Ford\" for Ford's aggregate Trucks category; \"Ford - F-Series\" for the F-Series line alone; GM is reported per nameplate as \"GM - Silverado\" / \"GM - Sierra\" since GM Authority discloses each separately. Keep these exact strings consistent across entries so the UI can group/filter by OEM.)",
       "  - `truck_units` (number — total truck/pickup units delivered that quarter, as defined in `note`)",
       "  - `yoy_pct` (number or null — year-over-year % change if the source discloses one for this exact figure, OR if it can be cleanly derived by subtracting/dividing two totals already disclosed in that same source (as done for Ford Q1 2026 and GM Silverado Q1 2026); use null rather than estimating one from unrelated figures)",
       "  - `note` (string — 1-2 sentences of qualitative color: what exactly `truck_units` covers, incentive/backlog commentary, etc.)",
@@ -25,18 +25,35 @@
       "3. Update `last_updated` to today's date (YYYY-MM-DD).",
       "4. Optionally append the prior status to `history` as {\"date\": ..., \"status\": ...} before overwriting, to keep a paper trail."
     ],
-    "data_honesty_rule": "Every value in this file must trace to a specific report, filing, or call — cite it in `source`. If you don't have a real figure, leave the series/note empty with status 'awaiting data' rather than estimating."
+    "data_honesty_rule": "Every value in this file must trace to a specific report, filing, or call — cite it in `source`. If you don't have a real figure, leave the series/note empty with status 'awaiting data' rather than estimating.",
+    "how_to_add_a_used_market_month": [
+      "Series `used_market_monthly` (Section 6). One object per month, STRICT fields: month ('YYYY-MM'), muvvi_index, muvvi_yoy_pct, wholesale_days_supply, retail_avg_listing_price, retail_listing_yoy_pct, retail_days_supply, retail_sales_pace_yoy_pct, note, source.",
+      "Wholesale fields come from Cox's Manheim Used Vehicle Value Index report (released ~5th business day of the following month); retail fields from Cox's used-vehicle inventory report (~mid-month, vAuto Live Market View).",
+      "Record values as FIRST reported; if Cox later revises, say so in `note`. Use null (never an estimate) when Cox gives only a vague phrase like 'up over 1%'.",
+      "Update the series' `last_updated` whenever you add a row. The page computes the retail-vs-wholesale spread (retail_listing_yoy_pct minus muvvi_yoy_pct) itself."
+    ],
+    "how_to_add_a_gpi_used_vehicle_quarter": [
+      "Series `gpi_used_vehicle` (Section 8). One object per quarter from GPI's 8-K Ex. 99.1; fields listed in the series' `schema`.",
+      "us_* from the 'Reported Operating Data — U.S.' table; ss_* from Key Performance Metrics (same-store, consolidated); days' supply from 'Days' Supply in Inventory'; *_musd from the consolidated reported revenue / gross profit blocks (used = retail + wholesale).",
+      "GPI reports Q3 2026 on Oct 28, 2026 — add a 2026Q3 row from that release."
+    ]
   },
-
   "real_series": {
     "oem_truck_deliveries": {
       "label": "OEM Truck Deliveries",
       "tier": "real",
       "cadence": "quarterly",
-      "schema": ["quarter", "oem", "truck_units", "yoy_pct", "note", "source"],
-      "source_guidance": "Ford: Ford IR quarterly sales release (media.ford.com / fromtheroad.ford.com). GM: GM U.S. sales release (news.gm.com / investor.gm.com), as compiled by GM Authority — GM stopped publishing a detailed numeric sales table in its own releases.",
+      "schema": [
+        "quarter",
+        "oem",
+        "truck_units",
+        "yoy_pct",
+        "note",
+        "source"
+      ],
+      "source_guidance": "Ford: Ford IR quarterly sales release (media.ford.com / fromtheroad.ford.com) — primary source, full sales table. GM: GM U.S. deliveries table (investor.gm.com) is NOT reachable by automated fetch (HTTP 403), so GM rows are taken from GM Authority / trade-press coverage of GM's release and should be spot-checked against GM's own PDF.",
       "status": "populated",
-      "last_updated": "2026-09-07",
+      "last_updated": "2026-10-27",
       "data": [
         {
           "quarter": "2026Q1",
@@ -75,7 +92,7 @@
           "oem": "GM - Silverado",
           "truck_units": 142745,
           "yoy_pct": -7.7,
-          "note": "Chevrolet Silverado, incl. EV variant. -7.7% YoY as stated directly in the source.",
+          "note": "Chevrolet Silverado, incl. EV variant. -7.7% YoY as stated directly in the source. [Definition caveat added 2026-10-27: Silverado 142,745 + Sierra 93,391 = 236,136, which does not equal the 242,403 combined figure cited by the same coverage — the nameplate rows may exclude EV variants despite the label above. Unverified; GM's own table was not retrievable. Treat Q2 GM nameplate units/YoY as secondary-source.]",
           "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/"
         },
         {
@@ -83,8 +100,56 @@
           "oem": "GM - Sierra",
           "truck_units": 93391,
           "yoy_pct": 5.0,
-          "note": "GMC Sierra, incl. EV variant. +5.0% YoY as stated directly in the source — best-performing full-size pickup nameplate this quarter among Ford/GM.",
+          "note": "GMC Sierra, incl. EV variant. +5.0% YoY as stated directly in the source — best-performing full-size pickup nameplate this quarter among Ford/GM. [Definition caveat added 2026-10-27: Silverado 142,745 + Sierra 93,391 = 236,136, which does not equal the 242,403 combined figure cited by the same coverage — the nameplate rows may exclude EV variants despite the label above. Unverified; GM's own table was not retrievable. Treat Q2 GM nameplate units/YoY as secondary-source.]",
           "source": "GM Authority, compiling GM's Q2 2026 U.S. sales release: \"Q2 2026 GM Sales: The Winners, The Losers, Our Commentary\" and \"U.S. GM Sales Slightly In The Red During Second Quarter 2026,\" July 2026. https://gmauthority.com/blog/2026/07/gm-sales-q2-2026-winners-losers-commentary/"
+        },
+        {
+          "quarter": "2026Q1",
+          "oem": "Ford - F-Series",
+          "truck_units": 159901,
+          "yoy_pct": -16.0,
+          "note": "F-Series only (within Ford's Trucks category). Not reported as a standalone Q1 figure — derived by subtraction from Ford's Q2 2026 release: H1 2026 F-Series 357,801 minus Q2 197,900; Q1 2025 comparable 412,848 minus 222,459 = 190,389 (-16.0%). Matches GM Authority's separately reported 'F-Series fell 16%' for Q1.",
+          "source": "Derived from Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf"
+        },
+        {
+          "quarter": "2026Q2",
+          "oem": "Ford - F-Series",
+          "truck_units": 197900,
+          "yoy_pct": -11.0,
+          "note": "F-Series only, as printed in Ford's Q2 sales table (vs 222,459 in Q2 2025). Ford attributed the weakness to a retiming of commercial production after last year's aluminum supply shortages.",
+          "source": "Ford Motor Company Second Quarter 2026 U.S. Sales Release, July 2, 2026. https://s205.q4cdn.com/882619693/files/doc_news/2026/Jul/02/Ford-U-S-Q2-2026-Sales-Release.pdf"
+        },
+        {
+          "quarter": "2026Q3",
+          "oem": "Ford",
+          "truck_units": 315112,
+          "yoy_pct": 0.5,
+          "note": "Ford-brand 'Trucks' category (F-Series, Ranger, Maverick, Transit, E-Series, Heavy Trucks) as printed in Ford's Q3 sales table, vs 313,654 in Q3 2025 — first flat-to-up quarter of 2026 after -11.3% in Q1 and -7.0% in Q2. Maverick +20.4% (41,970), Ranger +14.8%, Transit -5.3%. Ford says retail share +0.4pt to 12.1% ex-Escape/Corsair phase-out and F-Series had the lowest incentive spend in the segment. Total Ford sales 509,764 (-6.6%) on the planned Escape/Corsair exit.",
+          "source": "Ford Motor Company Third Quarter 2026 U.S. Sales Release, October 2, 2026 (sales table, p.8). https://s205.q4cdn.com/882619693/files/doc_news/2026/Oct/02/Ford-U-S-Q3-2026-Sales-Release.pdf"
+        },
+        {
+          "quarter": "2026Q3",
+          "oem": "Ford - F-Series",
+          "truck_units": 203707,
+          "yoy_pct": -1.9,
+          "note": "F-Series only, as printed in Ford's Q3 sales table (vs 207,732 in Q3 2025). Improving trend: -16.0% Q1, -11.0% Q2, -1.9% Q3; September alone +2.4% to 67,448. YTD 561,508 (-9.5%), >140,000 ahead of Silverado. NOTE: one trade-press article reported F-Series Q3 as +3.0% / 203,718 — that conflicts with Ford's own table and is not used. F-Series gross stock rose to 215.4k at end-Sept from 190.4k at end-June (Ford's gross-stock tables). F-150 output was hit late in September by a short-term (non-aluminum) supplier issue Ford says is containable within its $10-11B 2026 adj. EBIT guidance; Super Duty production was a 19-year high.",
+          "source": "Ford Motor Company Third Quarter 2026 U.S. Sales Release, October 2, 2026 (sales table, p.8; gross stocks p.9). https://s205.q4cdn.com/882619693/files/doc_news/2026/Oct/02/Ford-U-S-Q3-2026-Sales-Release.pdf"
+        },
+        {
+          "quarter": "2026Q3",
+          "oem": "GM - Silverado",
+          "truck_units": 146639,
+          "yoy_pct": null,
+          "note": "Chevrolet Silverado total incl. Silverado EV (1,655, -58%) and the medium-duty chassis cab. Components: Silverado 1500 light duty 100,221 (+13.3%), heavy duty 44,278 (-10.1%). Coverage disagrees on the total's YoY (+2.7% / +4.9% / +7.0%, apparently different Q3 2025 baselines), so yoy_pct is left null rather than picking one. Last full quarter before the 2027 redesign reaches dealers. SECONDARY SOURCE — GM's own deliveries PDF returned 403 to automated access; verify against investor.gm.com.",
+          "source": "GM Authority coverage of GM's Q3 2026 U.S. deliveries, October 2026 (via search-result summary; page itself blocked to automated fetch). https://gmauthority.com/blog/2026/10/full-size-gm-truck-sales-numbers-figures-results-third-quarter-2026-q3/"
+        },
+        {
+          "quarter": "2026Q3",
+          "oem": "GM - Sierra",
+          "truck_units": 84929,
+          "yoy_pct": -0.6,
+          "note": "GMC Sierra 1500 light duty 56,325 (+2.9%) + heavy duty 28,604 (-6.9%) = 84,929 (-0.6%). This EXCLUDES Sierra EV (1,661, -50.8%), so it is not like-for-like with the 'incl. EV' labels on earlier GM rows; including EVs the implied total is 86,590 (= GM's 233,229 combined full-size figure, +<1% YoY incl. EVs, minus Silverado 146,639). GM total company Q3 deliveries 670,974 (-5.5%). SECONDARY SOURCE — verify against GM's own table.",
+          "source": "GM Authority coverage of GM's Q3 2026 U.S. deliveries, October 2026 (via search-result summary; page itself blocked to automated fetch). https://gmauthority.com/blog/2026/10/full-size-gm-truck-sales-numbers-figures-results-third-quarter-2026-q3/"
         }
       ]
     },
@@ -194,12 +259,260 @@
           "period": "2026Q2",
           "value": 4.0,
           "source": "GPI Q2 2026 earnings call transcript, July 30, 2026 (via Investing.com). https://www.investing.com/news/transcripts/earnings-call-transcript-group-1-automotive-posts-q2-2026-miss-shares-sink-93CH-4825412",
-          "note": "CFO Daniel McHenry, verbatim: \"Same-store customer pay and warranty revenues increased approximately 4% and 1% respectively\" (Q2 2026 vs Q2 2025). CEO Daryl Kenningham added this 4% customer-pay growth \"lapped a 14% growth quarter last year, and it was 10% before the CDK impact\" — i.e. a tough prior-year comp, not a clean run-rate read. Neither figure is a formally tabled same-store metric (unlike the NV same-store data in Section 5) — both are spoken remarks only. VS. THE 6%/4% ASSUMPTION: at +4% same-store customer-pay growth on a tough comp, the actual disclosed trend sits at or below the ~4% revised-down case, not the historical ~6% assumption. The formally tabled numbers reinforce this: consolidated same-store P&S gross profit was actually -0.2% YoY with same-store gross margin down 1.3pts (56.0% vs 57.3%), and consolidated REPORTED P&S gross profit was -3.4% YoY ($389.0M vs $402.8M) — so even the revenue-side +4% isn't converting to GP growth. Context: Q2 2025 had one-time same-store U.S. warranty revenue growth of ~32% (Tundra + GM engine recalls), inflating the comp base GPI is lapping this quarter — Kenningham: \"Setting aside last year's one-time recall benefit, the underlying performance of the after-sales business remains resilient.\" RETENTION/COMPETITIVE COLOR (same call): vehicles bought during the low-volume 2020-2022 period are now reaching the end of factory warranty, \"which is generally a high defection point\" to independent/aftermarket service; Kenningham called the aftermarket \"our real competition as franchise dealers,\" noting consumers have \"more provider options, and they have more increased affordability pressures.\" GPI's response: a $17.76 oil-change promotion the company says \"recaptured some at-risk customers that were going to the aftermarket,\" and a chain-wide rollout of \"One Care,\" a discounted maintenance plan targeting 4-7 year-old-vehicle owners. Could not verify the 'underbenchmarking' comment on deals referenced in the request — searched the freely-accessible portions of the Q1 and Q2 2026 call transcripts (Investing.com, Motley Fool) and could not locate that specific term; omitting rather than guessing at its content. Source for the P&S GP/GM figures: GPI Q2 2026 earnings release (8-K Ex. 99.1, filed 2026-07-30), Key Performance Metrics table. https://www.sec.gov/Archives/edgar/data/0001031203/000103120326000121/a2026q2exhibit991.htm"
+          "note": "CFO Daniel McHenry, verbatim: \"Same-store customer pay and warranty revenues increased approximately 4% and 1% respectively\" (Q2 2026 vs Q2 2025). CEO Daryl Kenningham added this 4% customer-pay growth \"lapped a 14% growth quarter last year, and it was 10% before the CDK impact\" — i.e. a tough prior-year comp, not a clean run-rate read. Neither figure is a formally tabled same-store metric (unlike the NV same-store data in Section 7) — both are spoken remarks only. VS. THE 6%/4% ASSUMPTION: at +4% same-store customer-pay growth on a tough comp, the actual disclosed trend sits at or below the ~4% revised-down case, not the historical ~6% assumption. The formally tabled numbers reinforce this: consolidated same-store P&S gross profit was actually -0.2% YoY with same-store gross margin down 1.3pts (56.0% vs 57.3%), and consolidated REPORTED P&S gross profit was -3.4% YoY ($389.0M vs $402.8M) — so even the revenue-side +4% isn't converting to GP growth. Context: Q2 2025 had one-time same-store U.S. warranty revenue growth of ~32% (Tundra + GM engine recalls), inflating the comp base GPI is lapping this quarter — Kenningham: \"Setting aside last year's one-time recall benefit, the underlying performance of the after-sales business remains resilient.\" RETENTION/COMPETITIVE COLOR (same call): vehicles bought during the low-volume 2020-2022 period are now reaching the end of factory warranty, \"which is generally a high defection point\" to independent/aftermarket service; Kenningham called the aftermarket \"our real competition as franchise dealers,\" noting consumers have \"more provider options, and they have more increased affordability pressures.\" GPI's response: a $17.76 oil-change promotion the company says \"recaptured some at-risk customers that were going to the aftermarket,\" and a chain-wide rollout of \"One Care,\" a discounted maintenance plan targeting 4-7 year-old-vehicle owners. Could not verify the 'underbenchmarking' comment on deals referenced in the request — searched the freely-accessible portions of the Q1 and Q2 2026 call transcripts (Investing.com, Motley Fool) and could not locate that specific term; omitting rather than guessing at its content. Source for the P&S GP/GM figures: GPI Q2 2026 earnings release (8-K Ex. 99.1, filed 2026-07-30), Key Performance Metrics table. https://www.sec.gov/Archives/edgar/data/0001031203/000103120326000121/a2026q2exhibit991.htm"
+        }
+      ]
+    },
+    "used_market_monthly": {
+      "label": "Used-Vehicle Market — Wholesale (Manheim) vs. Retail (Cox/vAuto) and Days' Supply",
+      "tier": "real",
+      "cadence": "monthly",
+      "schema": [
+        "month",
+        "muvvi_index",
+        "muvvi_yoy_pct",
+        "wholesale_days_supply",
+        "retail_avg_listing_price",
+        "retail_listing_yoy_pct",
+        "retail_days_supply",
+        "retail_sales_pace_yoy_pct",
+        "note",
+        "source"
+      ],
+      "unit": "muvvi_index = Manheim Used Vehicle Value Index (Jan 1997=100, seasonally/mix/mileage adjusted); muvvi_yoy_pct = % YoY; days' supply in days; retail_avg_listing_price in $; retail_sales_pace_yoy_pct = Cox's estimated retail used unit sales pace vs a year ago.",
+      "source_guidance": "Cox Automotive monthly Manheim Used Vehicle Value Index report (~5th business day) + Cox Automotive monthly used-vehicle inventory report from vAuto Live Market View (~mid-month). Values are as FIRST reported; Cox revises the prior month in the following report (noted per row). Cox publishes the Manheim index in index points, not dollars, so a dollar wholesale-retail spread cannot be built from public data; the page shows the YoY-momentum spread (retail listing YoY minus MUVVI YoY) instead.",
+      "status": "populated",
+      "last_updated": "2026-10-27",
+      "data": [
+        {
+          "month": "2026-01",
+          "muvvi_index": 210.5,
+          "muvvi_yoy_pct": 2.4,
+          "wholesale_days_supply": 26.6,
+          "retail_avg_listing_price": 25533,
+          "retail_listing_yoy_pct": null,
+          "retail_days_supply": null,
+          "retail_sales_pace_yoy_pct": 3.3,
+          "note": "Cox called listing prices 'up over 1%' YoY without a precise figure (left null); first-print days' supply not extracted (null).",
+          "source": "Manheim/Cox MUVVI report (Feb 6): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-january-2026-trends/ ; Cox vAuto used-vehicle inventory report (Feb 13): https://www.coxautoinc.com/insights/used-vehicle-inventory-january-2026/"
+        },
+        {
+          "month": "2026-02",
+          "muvvi_index": 212.3,
+          "muvvi_yoy_pct": 4.0,
+          "wholesale_days_supply": 26.7,
+          "retail_avg_listing_price": 25287,
+          "retail_listing_yoy_pct": null,
+          "retail_days_supply": 42,
+          "retail_sales_pace_yoy_pct": 5.5,
+          "note": "Listing price later revised to $25,209.",
+          "source": "Manheim/Cox MUVVI report (Mar 6): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-february-2026-trends/ ; Cox vAuto used-vehicle inventory report (Mar 13): https://www.coxautoinc.com/insights/used-vehicle-inventory-february-2026/"
+        },
+        {
+          "month": "2026-03",
+          "muvvi_index": 215.3,
+          "muvvi_yoy_pct": 6.2,
+          "wholesale_days_supply": 24.5,
+          "retail_avg_listing_price": 25390,
+          "retail_listing_yoy_pct": null,
+          "retail_days_supply": 37,
+          "retail_sales_pace_yoy_pct": -2.9,
+          "note": "Record-low retail inventory (1.95M units); listing price up 'less than 1%' YoY (null). Wholesale days' supply 24.5 was the 2026 low.",
+          "source": "Manheim/Cox MUVVI report (Apr 7): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-march-2026-trends/ ; Cox vAuto used-vehicle inventory report (Apr 17): https://www.coxautoinc.com/insights/used-vehicle-inventory-march-2026/"
+        },
+        {
+          "month": "2026-04",
+          "muvvi_index": 211.9,
+          "muvvi_yoy_pct": 1.8,
+          "wholesale_days_supply": 25.2,
+          "retail_avg_listing_price": 26342,
+          "retail_listing_yoy_pct": 3.0,
+          "retail_days_supply": 43,
+          "retail_sales_pace_yoy_pct": -6.5,
+          "note": "This report also revised March's listing price to $25,370.",
+          "source": "Manheim/Cox MUVVI report (May 7): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-april-2026-trends/ ; Cox vAuto used-vehicle inventory report (May 15): https://www.coxautoinc.com/insights/used-vehicle-inventory-april-2026/"
+        },
+        {
+          "month": "2026-05",
+          "muvvi_index": 212.6,
+          "muvvi_yoy_pct": 3.6,
+          "wholesale_days_supply": 26.0,
+          "retail_avg_listing_price": 26918,
+          "retail_listing_yoy_pct": 6,
+          "retail_days_supply": 45,
+          "retail_sales_pace_yoy_pct": -3.9,
+          "note": "Retail listing price highest since mid-2023.",
+          "source": "Manheim/Cox MUVVI report (Jun 5): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-may-2026-trends/ ; Cox vAuto used-vehicle inventory report (Jun 12): https://www.coxautoinc.com/insights/used-vehicle-inventory-may-2026/"
+        },
+        {
+          "month": "2026-06",
+          "muvvi_index": 212.9,
+          "muvvi_yoy_pct": 2.1,
+          "wholesale_days_supply": 26.9,
+          "retail_avg_listing_price": 27027,
+          "retail_listing_yoy_pct": 6,
+          "retail_days_supply": 47,
+          "retail_sales_pace_yoy_pct": -1.6,
+          "note": "Cox later revised June to $27,010 and days' supply to 46.",
+          "source": "Manheim/Cox MUVVI report (Jul 8): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-june-2026-trends/ ; Cox vAuto used-vehicle inventory report (Jul 17): https://www.coxautoinc.com/insights/used-vehicle-inventory-june-2026/"
+        },
+        {
+          "month": "2026-07",
+          "muvvi_index": 210.0,
+          "muvvi_yoy_pct": 1.3,
+          "wholesale_days_supply": 28.0,
+          "retail_avg_listing_price": 27028,
+          "retail_listing_yoy_pct": 6,
+          "retail_days_supply": 46,
+          "retail_sales_pace_yoy_pct": -2.2,
+          "note": "Cox later revised the July listing price to just below $27,000.",
+          "source": "Manheim/Cox MUVVI report (Aug 7): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-july-2026-trends/ ; Cox vAuto used-vehicle inventory report (Aug 14): https://www.coxautoinc.com/insights/used-vehicle-inventory-july-2026/"
+        },
+        {
+          "month": "2026-08",
+          "muvvi_index": 208.2,
+          "muvvi_yoy_pct": 0.4,
+          "wholesale_days_supply": 27.0,
+          "retail_avg_listing_price": 27239,
+          "retail_listing_yoy_pct": 7,
+          "retail_days_supply": 44,
+          "retail_sales_pace_yoy_pct": -3.2,
+          "note": "Cox later revised August to $27,223. Highest retail listing price since Dec 2022 at the time.",
+          "source": "Manheim/Cox MUVVI report (Sep 8): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-august-2026-trends/ ; Cox vAuto used-vehicle inventory report (Sep 11): https://www.coxautoinc.com/insights/used-vehicle-inventory-august-2026/"
+        },
+        {
+          "month": "2026-09",
+          "muvvi_index": 205.9,
+          "muvvi_yoy_pct": -0.6,
+          "wholesale_days_supply": 28.0,
+          "retail_avg_listing_price": 27235,
+          "retail_listing_yoy_pct": 6,
+          "retail_days_supply": 49,
+          "retail_sales_pace_yoy_pct": 2.0,
+          "note": "Manheim's first YoY decline of 2026; Cox attributes it to fuel costs and rates, with pickups/SUVs the weak wholesale segments (non-EV index -1.6% YoY, -1.7% MoM). Retail inventory 2.21M (+3.3% YoY); sub-$15k vehicles only 34 days' supply. Cox cut its year-end MUVVI forecast to +0.2% YoY (from +2% in July).",
+          "source": "Manheim/Cox MUVVI report (Oct 7): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-september-2026-trends/ ; Cox vAuto used-vehicle inventory report (Oct 16): https://www.coxautoinc.com/insights/used-vehicle-inventory-september-2026/"
+        },
+        {
+          "month": "2026-10 (first 15 days)",
+          "muvvi_index": 207.4,
+          "muvvi_yoy_pct": 2.2,
+          "wholesale_days_supply": 28.2,
+          "retail_avg_listing_price": null,
+          "retail_listing_yoy_pct": null,
+          "retail_days_supply": null,
+          "retail_sales_pace_yoy_pct": null,
+          "note": "PARTIAL MONTH, wholesale only. MUVVI +0.7% vs September; non-seasonally-adjusted prices fell ~2% in the first half of October (steeper than the usual ~1.5% full-month drop); wholesale days' supply 28.2 as of Oct 15 vs 28.7 at end-Sept; sales conversion 54.3%. Cox read it as tighter supply, not stronger demand. Retail October data not yet published.",
+          "source": "Manheim/Cox MUVVI mid-October report (Oct 19): https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-mid-october-2026-trends/"
+        }
+      ]
+    },
+    "gpi_used_vehicle": {
+      "label": "GPI Used-Vehicle Results — Retail Units, Retail GPU, Days' Supply, Mix",
+      "tier": "real",
+      "cadence": "quarterly",
+      "schema": [
+        "quarter",
+        "us_retail_units",
+        "us_units_yoy_pct",
+        "us_retail_gpu",
+        "us_gpu_yoy_pct",
+        "us_days_supply",
+        "ss_retail_units",
+        "ss_units_yoy_pct",
+        "ss_retail_gpu",
+        "ss_gpu_yoy_pct",
+        "cons_days_supply",
+        "total_rev_musd",
+        "used_rev_musd",
+        "total_gp_musd",
+        "used_gp_musd",
+        "note",
+        "source"
+      ],
+      "unit": "us_* = U.S. reported; ss_* = consolidated same-store (non-GAAP, U.S.+U.K.); retail GPU in $; days' supply at period end; *_musd = consolidated reported $ millions (used = retail + wholesale).",
+      "source_guidance": "GPI quarterly earnings release, 8-K Exhibit 99.1: Key Performance Metrics, Reported Operating Data (U.S.), and Days' Supply in Inventory tables.",
+      "status": "populated",
+      "last_updated": "2026-10-27",
+      "data": [
+        {
+          "quarter": "2025Q3",
+          "us_retail_units": 39636,
+          "us_units_yoy_pct": 2.2,
+          "us_retail_gpu": 1529,
+          "us_gpu_yoy_pct": -3.1,
+          "us_days_supply": 31,
+          "ss_retail_units": 55153,
+          "ss_units_yoy_pct": 2.9,
+          "ss_retail_gpu": 1441,
+          "ss_gpu_yoy_pct": -8.5,
+          "cons_days_supply": 36,
+          "total_rev_musd": 5782.7,
+          "used_rev_musd": 2000.5,
+          "total_gp_musd": 919.7,
+          "used_gp_musd": 85.1,
+          "note": "Year-ago comp for the Q3 2026 print (due Oct 28, 2026). U.S. total used GPU (retail+wholesale) $1,243. Consolidated reported retail used units 59,574 (+6.6%), GPU $1,433 (-9.0%). Same-store column mapping is inferred from table layout (the reported columns tie to the operating-data table exactly).",
+          "source": "GPI Q3 2025 earnings release (8-K Ex. 99.1, Oct 28, 2025): https://www.sec.gov/Archives/edgar/data/1031203/000103120325000058/a2025q3exhibit991.htm"
+        },
+        {
+          "quarter": "2025Q4",
+          "us_retail_units": 37596,
+          "us_units_yoy_pct": -0.3,
+          "us_retail_gpu": 1358,
+          "us_gpu_yoy_pct": -7.9,
+          "us_days_supply": 29,
+          "ss_retail_units": 53654,
+          "ss_units_yoy_pct": 1.2,
+          "ss_retail_gpu": 1296,
+          "ss_gpu_yoy_pct": -10.7,
+          "cons_days_supply": 36,
+          "total_rev_musd": 5579.9,
+          "used_rev_musd": 1882.8,
+          "total_gp_musd": 874.4,
+          "used_gp_musd": 69.1,
+          "note": "U.S. total used GPU $1,091. Consolidated reported retail used units 55,474 (+0.2%), GPU $1,295 (-9.6%). Release had no used-specific narrative.",
+          "source": "GPI Q4/FY2025 earnings release (8-K Ex. 99.1, Jan 29, 2026): https://www.sec.gov/Archives/edgar/data/1031203/000103120326000041/a2025q4exhibit991.htm"
+        },
+        {
+          "quarter": "2026Q1",
+          "us_retail_units": 36097,
+          "us_units_yoy_pct": -6.5,
+          "us_retail_gpu": 1650,
+          "us_gpu_yoy_pct": -3.1,
+          "us_days_supply": 26,
+          "ss_retail_units": 55128,
+          "ss_units_yoy_pct": -3.5,
+          "ss_retail_gpu": 1544,
+          "ss_gpu_yoy_pct": -1.7,
+          "cons_days_supply": 32,
+          "total_rev_musd": 5407.1,
+          "used_rev_musd": 1924.4,
+          "total_gp_musd": 877.9,
+          "used_gp_musd": 89.3,
+          "note": "U.S. total used GPU $1,355. Consolidated reported retail used units 56,985 (-4.4%), GPU $1,540 (-1.9%). Q1 call (summary, not verbatim): used GPUs pressured by acquisition costs; cheaper high-margin used inventory 'very light'; auctions ~11% of sourcing.",
+          "source": "GPI Q1 2026 earnings release (8-K Ex. 99.1, Apr 30, 2026): https://www.sec.gov/Archives/edgar/data/1031203/000103120326000104/a2026q1exhibit991.htm"
+        },
+        {
+          "quarter": "2026Q2",
+          "us_retail_units": 34261,
+          "us_units_yoy_pct": -13.6,
+          "us_retail_gpu": 1642,
+          "us_gpu_yoy_pct": -5.1,
+          "us_days_supply": 32,
+          "ss_retail_units": 51907,
+          "ss_units_yoy_pct": -9.8,
+          "ss_retail_gpu": 1534,
+          "ss_gpu_yoy_pct": -5.3,
+          "cons_days_supply": 36,
+          "total_rev_musd": 5385.1,
+          "used_rev_musd": 1869.8,
+          "total_gp_musd": 860.6,
+          "used_gp_musd": 81.2,
+          "note": "U.S. total used GPU $1,358; consolidated reported retail used units 53,469 (-11.2%), GPU $1,532 (-4.3%); consolidated used wholesale GPU -$47. Used volume fell far more than new (same-store new units -2.8%). CEO Daryl Kenningham, Q2 call, verbatim: \"Persistent affordability challenges for the automotive consumer, challenges sourcing used vehicles, and short-term disruption from our largely completed corporate rebranding efforts combined to lower our new and used vehicle volumes.\" On days' supply: \"We began the quarter with 26 days supply, and in some markets, we never really recovered from that low days supply.\" On restocking: \"An easy solution would've been to restock by purchasing auction units. However, in our minds, that's not a great outcome given the potential gross profit impact that can have.\" On GPU: \"we're encouraged by steady GPU performance in both new and used vehicles.\" Investing.com's call-outlook bullet (not a speaker quote): 'Used vehicle sourcing should improve in the second half of 2026.' Val-U-Line was not discussed in the verbatim portion of either call transcript. Call quotes: https://www.investing.com/news/transcripts/earnings-call-transcript-group-1-automotive-posts-q2-2026-miss-shares-sink-93CH-4825412",
+          "source": "GPI Q2 2026 earnings release (8-K Ex. 99.1, Jul 30, 2026): https://www.sec.gov/Archives/edgar/data/0001031203/000103120326000121/a2026q2exhibit991.htm"
         }
       ]
     }
   },
-
   "tracked_notes": {
     "rebranding_seo": {
       "label": "Rebranding Progress / SEO Recovery",

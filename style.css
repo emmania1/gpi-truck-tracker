@@ -430,3 +430,96 @@ footer.disclosure code {
   border-radius: 4px;
   padding: 1px 5px;
 }
+
+/* ---- used-market / GPI used tables ---- */
+.two-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 720px) {
+  .two-chart-grid { grid-template-columns: 1fr; }
+}
+
+.chart-wrap.short {
+  height: 230px;
+  margin-bottom: 4px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  margin-bottom: 8px;
+}
+
+table.data-table td.num,
+table.data-table th.num {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+table.data-table td .sub {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+table.data-table td .pos { color: var(--live); }
+table.data-table td .neg { color: var(--warn); }
+
+table.data-table tr.pending-row td {
+  background: var(--real-bg);
+  color: var(--text);
+}
+
+table.data-table tr.pending-row td .sub { color: var(--text-muted); }
+
+.table-note {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin: 0 0 6px;
+}
+
+.src-list {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin: 6px 0 4px;
+  word-break: break-word;
+}
+
+.src-list a { color: var(--accent); }
+
+.row-notes {
+  margin: 8px 0 4px;
+}
+
+.row-notes details {
+  font-size: 0.8rem;
+  border-top: 1px dashed var(--border);
+  padding: 6px 0;
+}
+
+.row-notes summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.row-notes details > div {
+  margin-top: 4px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+table.data-table.compact th,
+table.data-table.compact td {
+  padding: 5px 7px;
+  font-size: 0.78rem;
+  vertical-align: top;
+}
+table.data-table.compact th { font-size: 0.66rem; line-height: 1.25; }
+table.data-table.compact td .sub { margin-top: 1px; line-height: 1.25; }
+
+table.data-table a { color: var(--accent); white-space: nowrap; font-size: 0.74rem; }
