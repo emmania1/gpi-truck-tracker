@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPI Backtest — Do the Indicators Predict Results?</title>
+  <link rel="stylesheet" href="style.css?v=e7ed33a9" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="page-head">
+    <p class="ticker-line"><a href="index.html">&larr; Back to the GPI Truck Volume Exposure Tracker</a></p>
+    <h1>Backtest: do the tracker's indicators predict GPI's results?</h1>
+    <p class="subtitle">Correlating the leading indicators in the tracker with 12 quarters of GPI's reported same-store results (2023Q3–2026Q2), and what that implies for the Q3 2026 print on Oct 28. Methodology, real correlation numbers, and plain-language caveats.</p>
+    <div class="freshness-bar" id="bt-meta">Loading…</div>
+    <div class="disclosure-controls">
+      <button type="button" id="expand-all">Expand all details</button>
+      <button type="button" id="collapse-all">Collapse all</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="exec-summary" id="bt-bottom">
+      <div class="exec-summary-label">Bottom line (frozen before the release)</div>
+      <div id="bt-bottom-body">Loading…</div>
+    </div>
+
+    <section class="tracker-section" id="bt-reads-sec">
+      <div class="sec-head"><h2 class="sec-title">1. The Q3 2026 read — metric by metric</h2><span class="tier-tag analysis">Analysis</span></div>
+      <p class="one-liner">A data-driven lean, not a forecast. Estimates are only driven by an indicator model where that model demonstrated out-of-sample skill; otherwise the estimate is simply "same as last quarter" or a seasonal benchmark, and the row says so.</p>
+      <div id="bt-reads"></div>
+      <div id="bt-eps"></div>
+    </section>
+
+    <section class="tracker-section" id="bt-log-sec">
+      <div class="sec-head"><h2 class="sec-title">2. Predicted vs. actual — fill in after GPI reports</h2><span class="tier-tag analysis">Analysis</span></div>
+      <p class="one-liner">The Q3 prediction was frozen in <code>data/forecast-log.json</code> before the release (see the timestamp). After the print, the actuals go next to it and become a new data point for the next backtest run.</p>
+      <div id="bt-log"></div>
+      <div class="why-box"><strong>After the release:</strong> (1) in <code>data/forecast-log.json</code> fill each metric's <code>actual</code> (YoY % for same-store metrics, $ for EPS); (2) add 2026Q3 to <code>data/gpi-history.json</code> (same-store NV/UV units and GPU YoY, adjusted EPS, plus the consensus surprise if available); (3) run <code>python3 scripts/backtest.py</code> and commit. The error column and the refreshed correlations update automatically.</div>
+    </section>
+
+    <section class="tracker-section" id="bt-find-sec">
+      <div class="sec-head"><h2 class="sec-title">3. What the correlations actually show</h2><span class="tier-tag analysis">Analysis</span></div>
+      <p class="one-liner" id="bt-tests-line">Loading…</p>
+      <div id="bt-findings"></div>
+      <div class="two-chart-grid" style="margin-top:12px">
+        <div>
+          <div class="mini-chart-label">The one relationship that holds up: new-vehicle units vs total SAAR (same quarter)</div>
+          <div class="chart-wrap short"><canvas id="bt-scatter"></canvas></div>
+        </div>
+        <div id="bt-scatter-note" class="why-box" style="border-top:none;margin:0;padding-top:0"></div>
+      </div>
+    </section>
+
+    <section class="tracker-section" id="bt-corr-sec">
+      <div class="sec-head"><h2 class="sec-title">4. Correlation detail — strongest relationships per result</h2><span class="tier-tag analysis">Analysis</span></div>
+      <p class="one-liner">Top 5 per target by |r| (n ≥ 8). <strong>r</strong> = Pearson correlation; <strong>p</strong> = nominal significance; <strong>adj. p</strong> = recomputed with an autocorrelation-adjusted sample size (trending series carry fewer independent observations than quarters). "Holds up" requires n ≥ 10 and adj. p &lt; 0.05. Nothing here is a trading signal on its own.</p>
+      <div id="bt-corr"></div>
+    </section>
+
+    <section class="tracker-section" id="bt-loo-sec">
+      <div class="sec-head"><h2 class="sec-title">5. Out-of-sample skill — would using the indicator have helped?</h2><span class="tier-tag analysis">Analysis</span></div>
+      <p class="one-liner">Leave-one-out test: for each quarter, pick the best indicator using only the other quarters, predict the held-out quarter, and compare its error to two naive baselines. Skill &gt; 0 means lower error than the baseline.</p>
+      <div id="bt-loo"></div>
+      <div class="why-box" id="bt-rule"></div>
+    </section>
+
+    <section class="tracker-section" id="bt-data-sec">
+      <div class="sec-head"><h2 class="sec-title">6. Data used and data limits</h2><span class="tier-tag analysis">Analysis</span></div>
+      <div id="bt-avail"></div>
+    </section>
+
+    <section class="tracker-section" id="bt-method-sec">
+      <div class="sec-head"><h2 class="sec-title">7. Methodology &amp; caveats (read these)</h2><span class="tier-tag analysis">Analysis</span></div>
+      <ul class="bt-list">
+        <li><strong>Targets (12 quarters):</strong> GPI's same-store new-vehicle units and GPU, same-store used retail units and GPU (all YoY %), and adjusted diluted EPS YoY %, taken from each 8-K Exhibit 99.1 (<code>data/gpi-history.json</code>; each release's printed prior-year EPS reconciles to the earlier year's reported EPS). Quarter-over-quarter "changes" tests use the change in each YoY series.</li>
+        <li><strong>Indicators:</strong> domestic/imported/total SAAR, auto-loan rate (level and YoY change), gas price, Texas unemployment, CPI used and new (all FRED, long history); Manheim wholesale index; Cox retail listing prices; Ford truck deliveries. Lags tested: same quarter, and indicator one quarter earlier ("1Q lead").</li>
+        <li><strong>Small sample:</strong> with n = 12, |r| must exceed about 0.58 to be nominally significant at 5%. A correlation of 0.6 or 0.7 with this few points is weak evidence, not strong.</li>
+        <li><strong>Many comparisons:</strong> the grid tests hundreds of indicator × result × lag combinations; roughly 5% would look "significant" by chance alone. The counts are shown in Section 3.</li>
+        <li><strong>Trending series:</strong> YoY growth rates drift smoothly (e.g. GPI's new-vehicle GPU recovered steadily from -24% to -5% while the wholesale index also climbed). Such series correlate strongly without any causal link, which is why the adjusted p-value and the out-of-sample test matter more than the raw r.</li>
+        <li><strong>Same-store base changes every year:</strong> GPI's "same-store" set is redefined annually, so YoY figures from different quarters are not on a common base. For the same reason unit-count seasonality (Q2→Q3 ratios) was not used as a benchmark; only GPU and EPS were.</li>
+        <li><strong>One-off events inside the window</strong> (the mid-2024 CDK dealer-software outage, tariff pull-forward buying in early 2025, GPI's 2026 rebranding disruption, portfolio acquisitions/disposals) are not modelled and can swamp any indicator relationship.</li>
+        <li><strong>Leave-one-out is generous:</strong> it uses future quarters to predict past ones, which a real forecaster could not do. A strict walk-forward test would be even harsher and would have too few points to run.</li>
+        <li><strong>Data quality:</strong> Manheim 2023 monthly YoY and Cox 2024 retail listing prices were parsed from page text and could not be independently validated (later periods were cross-checked and mostly agreed); series that could not be parsed reliably were excluded rather than patched. Section 6 lists what was and wasn't used.</li>
+        <li><strong>Street consensus</strong> comes from vendor articles (Zacks, Benzinga, FXEmpire) surfaced by web search — six quarters only, vendors disagree on both the estimate and the EPS definition. It is context, not an input to any correlation.</li>
+        <li><strong>Not a forecast:</strong> the purpose is to see what the indicators can and cannot say. A short sample means "we don't have enough history to say this reliably" is the correct answer for most of the metrics that matter.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="disclosure">
+    <h2>Reproducibility</h2>
+    <p>Everything on this page is computed by <code>scripts/backtest.py</code> from <code>data/fred-series.json</code>, <code>data/gpi-history.json</code>, <code>data/indicator-history.json</code>, <code>data/manual-data.json</code> and <code>data/forecast-log.json</code>, and written to <code>data/backtest.json</code>. Re-run it any time; the page re-renders from that file.</p>
+  </footer>
+
+  <script src="backtest.js?v=a60ff28b"></script>
+</body>
+</html>
